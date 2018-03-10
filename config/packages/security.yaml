@@ -18,27 +18,31 @@ security:
                         roles: 'ROLE_USER'
         provider:
             entity:
-                class: App\Entity\User
+                class:    App\Entity\User
                 property: email
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: ~
+        global:
             pattern:    ^/
-            provider: provider
+            provider:   provider
+            anonymous:  ~
 
             form_login:
-                login_path: login
-                check_path: login
-                default_target_path: homepage
+                login_path:                     login
+                check_path:                     login
+                default_target_path:            homepage
                 always_use_default_target_path: true
             logout:
-                path: /logout
-                target: /
-
+                path:     /logout
+                target:   /
+            remember_me:
+                secret:                '%kernel.secret%'
+                path:                  /
+                remember_me_parameter: '_remember_me'
+                secure:                true
 
             # activate different ways to authenticate
 
@@ -51,5 +55,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # Block authenticated users from accessing login or registration
+        # pages via URL.
+        - { path: ^/login, allow_if: "!is_fully_authenticated()"}
+        - { path: ^/register,  allow_if: "!is_fully_authenticated()" }
+
+        # Prevent unauthenticated users from accessing certain pages
+        - { path: ^/user, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
