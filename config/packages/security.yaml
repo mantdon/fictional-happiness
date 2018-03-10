@@ -3,9 +3,19 @@ security:
     encoders:
             App\Entity\User:
                 algorithm: bcrypt
+                cost: 12
+            Symfony\Component\Security\Core\User\User:
+                algorithm: bcrypt
+                cost: 12
 
     providers:
-        in_memory: { memory: ~ }
+        #in_memory: { memory: ~ }
+        in_memory:
+            memory:
+                users:
+                    useris:
+                        password: $2y$13$1oCJ5kzpwJ4i2gLCCSUH.uKvTeGQmotdt4NgehsDwCzN2P/P1Q11O
+                        roles: 'ROLE_USER'
         provider:
             entity:
                 class: App\Entity\User
@@ -16,10 +26,19 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: ~
             pattern:    ^/
-            http_basic: ~
             provider: provider
+
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: homepage
+                always_use_default_target_path: true
+            logout:
+                path: /logout
+                target: /
+
 
             # activate different ways to authenticate
 
