@@ -247,6 +247,12 @@ class User implements UserInterface, \Serializable
     {
     }
 
+    # Returning email without @handle
+    public function getEmailName()
+    {
+        return preg_filter('/@.*/', '', $this->email);
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
