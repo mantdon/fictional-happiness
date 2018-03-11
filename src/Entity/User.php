@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="User")
- * @ORM\Entity()
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email", message="Toks email jau buvo užregistruotas")
  */
 class User implements UserInterface, \Serializable
@@ -249,6 +249,12 @@ class User implements UserInterface, \Serializable
     {
     }
 
+    # Returning email without @handle
+    public function getEmailName()
+    {
+        return preg_filter('/@.*/', '', $this->email);
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -264,7 +270,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
             ) = unserialize($serialized);
     }

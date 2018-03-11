@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Loginas{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path('login') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+        <label for="passsword">Password:</label>
+        <input type="password" id="passsword" name="_password" />
+
+        <input type="checkbox" id="remember_me" name="_remember_me" checked />
+        <label for="remember_me">Remember me</label>
+
+        <button type="submit">login</button>
+    </form>
+{% endblock %}

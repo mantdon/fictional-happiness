@@ -14,4 +14,12 @@ class HomeController extends Controller
     {
         return $this->render('base.html.twig');
     }
+
+    /**
+     * @Route("/user", name="user_profile")
+     */
+    public function userSomething()
+    {
+        return new Response('<html><body><h3>USER AREA</h3></body></html>');
+    }
 }
