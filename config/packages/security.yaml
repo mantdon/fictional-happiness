@@ -18,6 +18,7 @@ security:
             pattern:    ^/
             provider:   provider
             anonymous:  ~
+            access_denied_handler: App\Security\AccessDeniedHandler
 
             form_login:
                 login_path:                     login
