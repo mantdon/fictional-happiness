@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+        {% endblock %}
     </head>
-    <div id="app"></div>
+    <div id="app" class="container"></div>
     <body>
         {% block body %}
             {# Seen by unauthenticated users #}
