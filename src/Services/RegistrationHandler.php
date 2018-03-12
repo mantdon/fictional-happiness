@@ -10,15 +10,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationHandler
 {
+    private $userManager;
 
-    private $passwordEncoder;
-    private $em;
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder,
-                                EntityManagerInterface $em)
+    public function __construct(UserManager $userManager)
     {
-        $this->passwordEncoder = $passwordEncoder;
-        $this->em = $em;
+        $this->userManager = $userManager;
     }
 
     public function handleForm(FormInterface $form, Request $request)
@@ -30,18 +26,11 @@ class RegistrationHandler
             return false;
 
         $user = $form->getData();
-        $this->createUser($user);
+        $user->setRole('ROLE_USER');
+        $this->userManager->createUser($user);
 
         return true;
     }
 
-    private function createUser(User $user)
-    {
-        $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
 
-        $user->setPassword($password);
-
-        $this->em->persist($user);
-        $this->em->flush();
-    }
 }

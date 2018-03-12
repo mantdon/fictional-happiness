@@ -40,35 +40,40 @@ class User implements UserInterface, \Serializable
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Assert\NotBlank(message="Įveskite vardą")
      * @Assert\Type(type="alpha", message="Varde gali būti tik raidės")
      */
     private $first_name;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Assert\NotBlank(message="Įveskite pavardę")
      * @Assert\Type(type="alpha", message="Pavardėje gali būti tik raidės")
      */
     private $last_name;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      * @Assert\NotBlank(message="Įveskite telefono numerį")
      * @Assert\Regex(pattern="/^\+?[0-9]+$/", message="Blogas numerio formatas")
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=254)
+     * @ORM\Column(type="string", length=254, nullable=true)
      */
     private $address;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $role;
 
     public function getUsername()
     {
@@ -240,9 +245,15 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->role);
     }
 
     public function eraseCredentials()
