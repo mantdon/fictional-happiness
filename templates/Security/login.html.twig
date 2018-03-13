@@ -1,22 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Loginas{% endblock %}
+{% block title %}Prisijungimas{% endblock %}
 
 {% block body %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
+    <h2 class="page-header">Prisijungimas</h2>
     <form action="{{ path('login') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-        <label for="passsword">Password:</label>
-        <input type="password" id="passsword" name="_password" />
-
-        <input type="checkbox" id="remember_me" name="_remember_me" checked />
-        <label for="remember_me">Remember me</label>
-
-        <button type="submit">login</button>
+        <label for="username">Elektroninis paštas:</label>
+        <input class= "form-control" type="text" id="username" name="_username" value="{{ last_username }}">
+        <label for="passsword">Slaptažodis:</label>
+        <input class= "form-control" type="password" id="passsword" name="_password">
+        <input type="checkbox" id="remember_me" name="_remember_me" checked>
+        <label for="remember_me">Atsiminti mane</label>
+        <br>
+        <button class= 'btn btn-success' type="submit">Prisijungti</button>
     </form>
 {% endblock %}
