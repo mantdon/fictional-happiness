@@ -8,16 +8,13 @@
     {% endif %}
     <h2 class="page-header">Prisijungimas</h2>
     <form action="{{ path('login') }}" method="post">
-        <label for="username">Elektronins paštas:</label>
-        <input class= "form-control" type="text" id="username" name="_username" value="{{ last_username }}" style= 'margin-bottom:15px'/>
-
+        <label for="username">Elektroninis paštas:</label>
+        <input class= "form-control" type="text" id="username" name="_username" value="{{ last_username }}">
         <label for="passsword">Slaptažodis:</label>
-        <input class= "form-control" type="password" id="passsword" name="_password" />
-
-        <input type="checkbox" id="remember_me" name="_remember_me" checked style= 'margin-bottom:15px' />
+        <input class= "form-control" type="password" id="passsword" name="_password">
+        <input type="checkbox" id="remember_me" name="_remember_me" checked>
         <label for="remember_me">Atsiminti mane</label>
-        
-        <br/> 
-        <button class= 'btn btn-success' type="submit" style= 'margin-bottom:15px'>Prisijungti</button>
+        <br>
+        <button class= 'btn btn-success' type="submit">Prisijungti</button>
     </form>
 {% endblock %}
