@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateAdminCommand extends Command
 {
+    private $commandName = 'app:admin:create';
     private $defaultUsername = 'admin';
     private $defaultPassword = 'password';
     private $userManager;
@@ -25,10 +26,13 @@ class CreateAdminCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('app:admin:create')
+            ->setName($this->commandName)
             ->setDescription('Creates a user with ADMIN privileges.')
             ->addArgument('username', InputArgument::OPTIONAL)
             ->addArgument('password', InputArgument::OPTIONAL)
+            ->setHelp('Creates a user with ADMIN privileges. If no arguments are provided, default values will be used.
+            default username: ' . $this->defaultUsername . ' 
+            default password: ' . $this->defaultPassword)
         ;
     }
 
