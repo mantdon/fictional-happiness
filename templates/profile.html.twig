@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profilis{% endblock %}
+
+{% block body %}
+<table>
+    <tr>
+        <td>Email</td>
+        <td>{{ app.user.email }}</td>
+    </tr>
+    <tr>
+        <td>Vardas</td>
+        <td>{{ app.user.firstName }}</td>
+    </tr>
+    <tr>
+        <td>Pavardė</td>
+        <td>{{ app.user.lastName }}</td>
+    </tr>
+</table>
+{% endblock %}
