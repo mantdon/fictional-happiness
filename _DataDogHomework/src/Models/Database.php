@@ -10,13 +10,24 @@ class Database
     public function __construct()
     {
         $this->conn = new Connection();
+        $this->createTable();
     }
 
+    public function createTable()
+    {
+        $query = "CREATE TABLE IF NOT EXISTS users (
+                  username VARCHAR(255) NOT NULL,
+                  password VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (username)
+                 )";
+        $this->makeRequest($query);
+    }
+    
     public function addUser($username, $password)
     {
         $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
-        makeRequest($query);
+        $this->makeRequest($query);
     }
 
     public function makeRequest($query)

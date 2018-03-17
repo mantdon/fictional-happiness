@@ -8,8 +8,7 @@
 
     if(isset($_POST['submit_button']))
     {
-        $database = new Database();
-        $registration = new RegistrationHandler($database);
+        $registration = new RegistrationHandler(Database());
         if($registration->confirmRegistration())
         {
             header('location: index.php');
