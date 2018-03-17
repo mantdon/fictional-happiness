@@ -10,22 +10,26 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
       {% block stylesheets %}
           <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">
+          <!-- <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">-->
           <!-- Custom styles -->
-          <link rel="stylesheet" href="{{ asset('build/css/styles.css') }}">
-      {% endblock %}
+          <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+{% endblock %}
   </head>
   <body>
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Autoservisas</a>
+          <!--<a class="navbar-brand" href="/">Autoservisas</a>-->
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+              <li class="nav-item">
+                  <a class="navbar-left" href="/"><img src="assets/img/logo.png" alt="" /></a>
+              </li>
+            <li class="nav-item">
               <a class="nav-link" href="/">Namai<span class="sr-only">(current)</span></a>
             </li>
               {# Seen by unauthenticated users #}
