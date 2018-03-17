@@ -17,37 +17,31 @@ class Auth
 
     public function connect($username, $password)
     {
-        $this->authenticate($username, $password);
-
-        $sessionUser = new User();
-        $_SESSION['user'] = serialize($sessionUser->setUsername($username)->setPlainPassword($password));
+        return $this->authenticate($username, $password);
     }
 
     public function authenticate($username, $password)
     {
-        /**
-         * @var $user User
-         */
-        $user = $this->database->findByUsername($username);
+        $user = $this->database->verifyUser($username, $password);
 
-        if(!isset($user) || !$user->verifyPassword($password))
+        if(!isset($user))
         {
             unset($_SESSION['user']);
             throw new \Exception('Invalid login details');
+        } else {
+            $_SESSION['user'] = $user;
+            return true;
         }
+        return false;
     }
 
     public function isAuthorized()
     {
-        /**
-         * @var $user User
-         */
         $user = $_SESSION['user'] ?? null;
         if(!isset($user))
             return false;
 
-        $user = unserialize($user);
-        $this->authenticate($user->getUsername(), $user->getPassword());
+        $this->authenticate($user['username'], $user['password']);
         return true;
     }
 }
