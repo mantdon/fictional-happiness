@@ -1,23 +1,20 @@
 <?php
-
-    include "src/Services/Auth.php";
+    include "src/Services/Authenticator.php";
     include "src/Models/Database.php";
 
-    use src\Services\Auth;
-    use src\Models\Database;
+    use src\Services\Authenticator;
 
     session_start();
 
-    $auth = new Auth(new Database());
+    $auth = new Authenticator();
 
     if ($auth->isAuthorized()) {
-        echo '<h1>Hello, ' . $_SESSION['user']['username'] .'!</h1>';
-        echo '<a href="logout.php"><button>Logout</button></a>';
+        echo '<h1>Hello, ' . $_SESSION['user']['username'] .'!</h1>
+              <a href="profile.php">Profile</a><br><br>
+              <a href="logout.php">Logout</a>';
         return;
-    } else {
-        echo '
-            <a href="login.php"><button>Login</button></a>
-            <a href="register.php"><button>Register</button></a>
-        ';
-    }
+    }else
+        echo '<a href="login.php">Log in</a>
+              <a href="register.php">Register</a><br><br>';
+
 

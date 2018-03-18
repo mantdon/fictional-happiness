@@ -2,15 +2,13 @@
 
 namespace src\Services;
 
-
 use src\Models\Database;
 
 class RegistrationHandler
 {
-    private $db;
     public function __construct(Database $database)
     {
-        $this->db = $database;
+        Database::connect();
     }
     public function confirmRegistration()
     {
@@ -18,7 +16,7 @@ class RegistrationHandler
         {
             echo "All fields are required.";
         }
-        elseif($this->db->checkIfUserExists($_POST['username']))
+        elseif(Database::userExists($_POST['username']))
         {
             echo "User with this username already exists.";
         }
@@ -28,7 +26,8 @@ class RegistrationHandler
         }
         else
         {
-            $this->db->addUser($_POST['username'], $this->hashPassword($_POST['password']));
+            Database::addUser($_POST['username'], $this->hashPassword($_POST['password']));
+            Database::linkProfileToUser($_POST['username']);
             return true;
         }
         return false;
