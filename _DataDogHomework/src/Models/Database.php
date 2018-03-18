@@ -1,66 +1,83 @@
 <?php
 namespace src\Models;
-
-include("src/Models/Connection.php");
+include 'src/Assets/StringGenerator.php';
+include 'src/Models/MySQLConnection.php';
+use src\Assets\StringGenerator;
 
 class Database
 {
-    private $conn;
+    private static $mySqlConnection;
 
-    public function __construct()
+    public static function connect($server = "localhost", $username = "root", $password = "", $database = "login")
     {
-        $this->conn = new Connection();
-        $this->createTable();
+        Database::$mySqlConnection = new MySQLConnection($server, $username, $password, $database);
+        # Shouldn't be here, leaving for convenience
+        # since database might need frequent modifications.
+        Database::setUpTables();
     }
 
-    public function createTable()
+    private static function setUpTables(){
+        Database::createUsersTable();
+        Database::createProfilesTable();
+    }
+
+    public static function query($query){
+        return Database::$mySqlConnection->queryDB($query);
+    }
+
+    private static function createUsersTable()
     {
         $query = "CREATE TABLE IF NOT EXISTS users (
                   username VARCHAR(255) NOT NULL,
                   password VARCHAR(255) NOT NULL,
                   PRIMARY KEY (username)
                  )";
-        $this->makeRequest($query);
+        Database::query($query);
+    }
+
+    private static function createProfilesTable(){
+        $query = "CREATE TABLE IF NOT EXISTS profiles(
+                  id VARCHAR (255),
+                  user_id VARCHAR (255),
+                  first_name VARCHAR (255),
+                  last_name VARCHAR (255),
+                  email VARCHAR (255),
+                  member_since DATE,
+                  PRIMARY KEY (id),
+                  CONSTRAINT has FOREIGN KEY (user_id) REFERENCES users (username) ON UPDATE CASCADE
+                  )";
+        Database::query($query);
     }
     
-    public function addUser($username, $password)
+    public static function addUser($username, $password)
     {
-        $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+        $query = "INSERT INTO users (username, password)
+                  VALUES ('$username', '$password')";
 
-        $this->makeRequest($query);
+        Database::query($query);
     }
 
-    public function makeRequest($query)
-    {
-        return mysqli_query($this->conn->getConnection(), $query);
+    public static function linkProfileToUser($username){
+        $id = StringGenerator::generateRandomString();
+        $today = date("Y/m/d");
+        $query = "INSERT INTO profiles (id,
+                                        user_id,
+                                        first_name,
+                                        last_name,
+                                        email,
+                                        member_since)
+                  VALUES ('$id', '$username',NULL ,NULL ,NULL, '$today')";
+        Database::query($query);
+
     }
 
-    public function checkIfUserExists($username)
+    public static function userExists($username)
     {
-        $query = "SELECT username FROM users WHERE username='$username'";
+        $query = "SELECT username FROM users 
+                  WHERE username= BINARY '$username'";
 
-        $result = $this->makeRequest($query);
+        $result = Database::query($query);
 
         return mysqli_num_rows($result) == 1 ? true : false;
     }
-
-    public function verifyUser($username, $password)
-    {
-        $query = "SELECT username, password FROM users WHERE username='$username'";
-
-        $result = $this->makeRequest($query);
-
-        if(mysqli_num_rows($result) == 1) {
-            $row = mysqli_fetch_assoc($result);
-            return $this->verifyPassword($row['password'], $password) == true ? $row : null;
-        }
-        return null;
-
-    }
-
-    public function verifyPassword($db_password, $password)
-    {
-        return password_verify($password, $db_password) || $db_password === $password;
-    }
-
 }
