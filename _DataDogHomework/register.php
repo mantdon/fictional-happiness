@@ -1,6 +1,5 @@
 <?php
     include "src/Models/Database.php";
-    include "src/Services/Auth.php";
     include "src/Services/RegistrationHandler.php";
 
     use src\Models\Database;
@@ -27,5 +26,6 @@
                 <label for="register-password1">Confirm your password:</label>
                 <input type="password" id="register-password1" name="password1" placeholder="password"><br>
                 <br>
-                <input type="submit" name="submit_button" value="Submit">
-         </form> ';
+                <input type="submit" name="submit_button" value="Register">
+         </form> 
+         <a href="login.php">Log in</a>';
