@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile edit</title>
+</head>
+<body>
+    <h1>Profile edit</h1>
+    <form method="post" action="profile_edit.php">
+        <label for="username-edit">Username:</label>
+        <input type="text" id="username-edit" name="edited-username" value="<?php echo $_POST['edited-username'] ?? NULL; ?>">
+        <label for="username-edit"><?php echo $_SESSION['username-edit-error'] ?? NULL; ?></label><br>
+        <br>
+        <label for="firstname-edit">First name:</label>
+        <input type="text" id="firstname-edit" name="edited-firstname" value="<?php echo $_POST['edited-firstname'] ?? NULL; ?>">
+        <label for="firstname-edit"><?php echo $_SESSION['firstname-edit-error'] ?? NULL; ?></label><br>
+        <br>
+        <label for="lastname-edit">Last name:</label>
+        <input type="text" id="lastname-edit" name="edited-lastname" value="<?php echo $_POST['edited-lastname'] ?? NULL; ?>">
+        <label for="lastname-edit"><?php echo $_SESSION['lastname-edit-error'] ?? NULL; ?></label><br>
+        <br>
+        <label for="email-edit">Email:</label>
+        <input type="text" id="email-edit" name="edited-email" value="<?php echo $_POST['edited-email'] ?? NULL; ?>">
+        <label for="email-edit"><?php echo $_SESSION['email-edit-error'] ?? NULL; ?></label><br>
+        <br>
+        <b>To make no changes to a field, leave it unedited.</b><br>
+        <br>
+        <input type="submit" value="Confirm"><br><br>
+    </form>
+    <a href="profile.php">Back to profile</a>
+</body>
+</html>

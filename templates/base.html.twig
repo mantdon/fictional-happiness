@@ -10,22 +10,24 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
       {% block stylesheets %}
           <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">
+          <!-- <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">-->
           <!-- Custom styles -->
-          <link rel="stylesheet" href="{{ asset('build/css/styles.css') }}">
-      {% endblock %}
+          <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+{% endblock %}
   </head>
   <body>
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Autoservisas</a>
+          <div class="nav-item">
+              <a class="navbar-left" href="/"><img src="build/images/logo.532e8b6f.png" alt="" /></a>
+          </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/">Namai<span class="sr-only">(current)</span></a>
             </li>
               {# Seen by unauthenticated users #}
@@ -41,17 +43,10 @@
                     <a class="nav-link" href="/logout">Atsijungti</a>
                 </li>
           </ul>
-            <a class="nav-link btn btn-danger float-right" href="#">Ištrinti paskyrą</a>
             {% endif %}
         </div>
       </nav>
     </header>
-
-    <!-- Begin page content -->
-    <!-- <main role="main" class="container">
-      <h1 class="mt-5">Autoservisas</h1>
-      <p class="lead">Sveiki atvykę į auttoservisą</p>
-    </main>-->
 
     <footer>
       <div class="container">
