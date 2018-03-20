@@ -10,5 +10,6 @@ import {render} from 'react-dom';
 
 
 const element = <h1>Hello, world</h1>;
+require("../img/logo.png");
 render(element, document.getElementById('app'));
 
