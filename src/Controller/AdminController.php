@@ -17,4 +17,12 @@ class AdminController extends Controller
     {
         return $this->render('Admin/base.html.twig');
     }
+
+    /**
+     * @Route("/users", name="admin.user_list")
+     */
+    public function showUserList()
+    {
+        return $this->render('Admin/UserList/list.html.twig');
+    }
 }
