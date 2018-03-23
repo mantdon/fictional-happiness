@@ -7,8 +7,7 @@ import {render} from 'react-dom';
     }
 }*/
 
-
-
+require('bootstrap');
 const element = <h1>Hello, world</h1>;
 require("../img/logo.png");
 render(element, document.getElementById('app'));
