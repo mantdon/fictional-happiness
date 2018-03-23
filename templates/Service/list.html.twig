@@ -1,12 +1,12 @@
 {% if services.count is defined%}
     <table class="table">
         {% for service in services %}
-            <tr>
+            <tr class="table-fixed">
                 {# For testing purposes only, should not be displayed otherwise #}
                 <td>{{ service.id }}</td>
                 <td>{{ service.name }}</td>
                 {# Wrapping should be enabled for descriptions #}
-                <td>{{ service.description }}</td>
+                <td class="column-word-wrap">{{ service.description }}</td>
                 <td>${{ service.price }}</td>
             </tr>
         {% endfor %}
