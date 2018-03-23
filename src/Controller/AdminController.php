@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * @Route("/admin")
  */
-class HomeController extends Controller
+class AdminController extends Controller
 {
     /**
      * @Route("/", name="admin.homepage")
