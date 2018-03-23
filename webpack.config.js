@@ -13,13 +13,14 @@ Encore
 
     // uncomment to define the assets of the project
     .addEntry('js/app', './assets/js/App.js')
-    .addStyleEntry('css/style', './assets/css/style.scss')
+    .addStyleEntry('css/main', './assets/css/main.scss')
+    .addStyleEntry('css/bootstrap', './assets/css/bootstrap.scss')
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
-    // .autoProvidejQuery()
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

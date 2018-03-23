@@ -1,45 +1,20 @@
 <?php
+    include "src/Services/Authenticator.php";
+    include "src/Models/Database.php";
 
-include "src/Models/User.php";
-include "src/Models/Database.php";
-include "src/Services/Auth.php";
+    use src\Services\Authenticator;
 
-use src\Models\User;
-use src\Models\Database;
-use src\Services\Auth;
+    session_start();
 
-session_start();
+    $auth = new Authenticator();
 
-$database = new Database();
+    if ($auth->isAuthorized()) {
+        echo '<h1>Hello, ' . $_SESSION['user']['username'] .'!</h1>
+              <a href="profile.php">Profile</a><br><br>
+              <a href="logout.php">Logout</a>';
+        return;
+    }else
+        echo '<a href="login.php">Log in</a>
+              <a href="register.php">Register</a><br><br>';
 
-$testUser = new User();
-$database->addUser($testUser->setUsername('test')->setPassword('pass'));
 
-$testUser = new User();
-$database->addUser($testUser->setUsername('useris')->setPassword('secret'));
-
-$auth = new Auth($database);
-
-$username = $_POST['username'] ?? null;
-$password = $_POST['password'] ?? null;
-
-try {
-    if (isset($username) && isset($password))
-        $auth->connect($username, $password);
-}
-catch (Exception $exception)
-{
-    echo $exception->getMessage();
-}
-
-if ($auth->isAuthorized()) {
-    echo 'logged in <br>';
-    echo '<a href="logout.php">logout</a>';
-    return;
-}
-
-echo '<form method="post" action="index.php">
-        username: <input type="text" name="username">
-        password: <input type="password" name="password">
-        <input type="submit" value="Submit">
-        </form> ';

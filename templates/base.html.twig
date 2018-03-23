@@ -1,61 +1,60 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
-      {% block stylesheets %}
-          <!-- Bootstrap CSS -->
-          <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">
-          <!-- Custom styles -->
-          <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
-      {% endblock %}
-  </head>
-  <body>
+        {# Bootstrap CSS #}
+        <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">
+        {# Custom styles #}
+        <link rel="stylesheet" href="{{ asset('build/css/main.css') }}">
+        {# At the moment, bootstrap javascript #}
+        <script src="{{ asset("build/js/app.js") }}"></script>
+
+        <title>{% block title %}Welcome!{% endblock %}</title>
+    </head>
+    <body>
     <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Autoservisas</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Namai<span class="sr-only">(current)</span></a>
-            </li>
-              {# Seen by unauthenticated users #}
-              {% if not app.user %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('user_registration') }}">Registruotis</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('login') }}">Prisijungti</a>
-                </li>
-              {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Atsijungti</a>
-                </li>
-          </ul>
-            <a class="nav-link btn btn-danger float-right" href="#">Ištrinti paskyrą</a>
-            {% endif %}
-        </div>
-      </nav>
+        {% block header %}
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div class="nav-item">
+                                                            {# Should not look like this. #}
+                    <a class="navbar-left" href="/"><img src="build/images/logo.532e8b6f.png" alt="" /></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"/>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Namai<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/services">Paslaugos</a>
+                        </li>
+                        {# Seen by unauthenticated users #}
+                        {% if not app.user %}
+                            <li class="nav-item">
+                              <a class="nav-link" href="{{ path('user_registration') }}">Registruotis</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{{ path('login') }}">Prisijungti</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Atsijungti</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        {% endblock %}
     </header>
 
-    <!-- Begin page content -->
-    <!-- <main role="main" class="container">
-      <h1 class="mt-5">Autoservisas</h1>
-      <p class="lead">Sveiki atvykę į auttoservisą</p>
-    </main>-->
-
-    <footer>
-      <div class="container">
-          {% block body %}
+    <div class="container">
+        {% block content %}
             {# Seen by unauthenticated users #}
             {% if not app.user %}
                 <h1>Hello, world</h1>
@@ -64,10 +63,12 @@
                 <h1>Hello, {{ app.user.emailname }}</h1>
             {% endif %}
         {% endblock %}
-      </div>
+    </div>
+
+    <footer>
+        {% block footer %}
+        {% endblock %}
     </footer>
-    {% block javascripts %}
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    {% endblock %}
-  </body>
+
+    </body>
 </html>
