@@ -33,3 +33,9 @@ where :
  - *regex_for_url* - regular expression matching the URL
  - *required_role_for_access* - role user must belong to in order to be granted access\
                                 (currently only ROLE_USER is handled.)
+
+Creating user with Admin privileges
+=
+
+
+`php bin/console app:admin:create [username] [password]`
