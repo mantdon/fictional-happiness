@@ -1,0 +1,22 @@
+{% if services.count is defined%}
+    <table class="table">
+        {% for service in services %}
+            <tr>
+                {# For testing purposes only, should not be displayed otherwise #}
+                <td>{{ service.id }}</td>
+                <td>{{ service.name }}</td>
+                {# Wrapping should be enabled for descriptions #}
+                <td>{{ service.description }}</td>
+                <td>${{ service.price }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# pageOffset - number of page buttons to display on either side of
+       currently active one.
+    #}
+    {% include 'Service/pagination.html.twig' with {
+        pageOffset: 2,
+        previousPageLabel: "Previous",
+        nextPageLabel: "Next"
+    } %}
+{% endif %}
