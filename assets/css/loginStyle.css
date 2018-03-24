@@ -1,0 +1,79 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #fbfde6;
+    background-size: cover;
+    font-family: sans-serif;
+}
+.login-box{
+    width: 320px;
+    height: 420px;
+    background: #B71427;
+    color: #fff;
+    box-sizing: border-box;
+    display: block;
+    margin: 10% auto 0 auto;
+    padding: 70px 30px;
+}
+.login-icon{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: -45% auto 0 auto;
+}
+h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 32px;
+}
+.login-box label{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+.login-box input[type="password"]{
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+.login-box input[type="text"] {
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+.login-box input[type="checkbox"]{
+    margin-bottom: 20px;
+    height: 16px;
+    width: 16px;
+    margin-left: 10px;
+}
+.login-box input[type="submit"]{
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #1c8adb;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.login-box input[type="submit"]:hover{
+    cursor: pointer;
+    background: #39dc79;
+    color: #000;
+}

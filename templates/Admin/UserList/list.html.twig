@@ -1,0 +1,30 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block content %}
+    <table class="table">
+        <tr class="table-fixed">
+            <th>id</th>
+            <th>El-paštas</th>
+            <th>Vardas</th>
+            <th>Telefonas</th>
+        </tr>
+
+        {% for user in users %}
+            <tr class="table-fixed">
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
+                <td>{{ user.phone}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# pageOffset - number of page buttons to display on either side of
+       currently active one.
+    #}
+    {% include 'Util/pagination.html.twig' with {
+    pageOffset: 2,
+    previousPageLabel: "Previous",
+    nextPageLabel: "Next"
+    } %}
+    <h5 class="text-right">{{ userCount }} Registruoti vartojojai</h5>
+{% endblock %}
