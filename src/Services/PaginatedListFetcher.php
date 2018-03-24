@@ -23,11 +23,11 @@ class PaginatedListFetcher
     public function getPaginatedList($className, $page = 1, $limit = 5)
     {
         $repository = $this->em->getRepository($className);
-        $services = $repository->getAll($page, $limit);
+        $results = $repository->getAll($page, $limit);
 
-        $pageCount = ceil($services->count() / $limit);
+        $pageCount = ceil($results->count() / $limit);
 
-        return ['services' => $services,
+        return ['items' => $results,
             'pageCount' => $pageCount,
             'currentPage' => $page];
     }
