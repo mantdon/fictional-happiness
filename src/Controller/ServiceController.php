@@ -20,7 +20,12 @@ class ServiceController extends Controller
     	$page = $request->query->getInt($this->pageParameterName, 1);
 
         $list = $listFetcher->getPaginatedList('App:Service', $page);
-    	return $this->render(
+
+	    // Load first page on invalid page entry
+    	if($page > $list['pageCount'] || $page < 1)
+    		return $this->redirectToRoute('services', array($this->pageParameterName => 1));
+
+        return $this->render(
     		'Service/index.html.twig',
 		    array('services' => $list['items'],
 			      'pageCount' => $list['pageCount'],

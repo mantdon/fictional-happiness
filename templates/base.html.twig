@@ -10,9 +10,6 @@
         <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">
         {# Custom styles #}
         <link rel="stylesheet" href="{{ asset('build/css/main.css') }}">
-        {# At the moment, bootstrap javascript #}
-        <script src="{{ asset("build/js/app.js") }}"></script>
-
         <title>{% block title %}Welcome!{% endblock %}</title>
     </head>
     <body>
@@ -21,7 +18,7 @@
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                 <div class="nav-item">
                                                             {# Should not look like this. #}
-                    <a class="navbar-left" href="/"><img src="build/images/logo.532e8b6f.png" alt="" /></a>
+                    <a class="navbar-left" href="{{ path('homepage') }}"><img src="build/images/logo.532e8b6f.png" alt="Uh oh!" /></a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"/>
@@ -29,10 +26,10 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Namai<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ path('homepage') }}">Namai<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/services">Paslaugos</a>
+                            <a class="nav-link" href="{{ path('services') }}">Paslaugos</a>
                         </li>
                         {# Seen by unauthenticated users #}
                         {% if not app.user %}
@@ -42,17 +39,29 @@
                             <li class="nav-item">
                               <a class="nav-link" href="{{ path('login') }}">Prisijungti</a>
                             </li>
-                        {% else %}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin">Admin panelė</a>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">Atsijungti</a>
-                            </li>
                         {% endif %}
                     </ul>
+                    {% if app.user %}
+                    <ul class="navbar-nav ml-auto">
+                       <li class="nav-item">
+                           <div class="dropdown">
+                               <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenuDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
+                                   {{ app.user.email }}
+                               </button>
+                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
+                                   {% if is_granted('ROLE_USER') %}
+                                       <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
+                                       <a class="dropdown-item" href="#">Register for service</a>
+                                   {% elseif is_granted('ROLE_ADMIN') %}
+                                       <a class="dropdown-item" href="{{ path('admin.homepage') }}">Admin panelė</a>
+                                   {% endif %}
+                                   <div class="dropdown-divider"></div>
+                                   <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                               </div>
+                           </div>
+                       </li>
+                    </ul>
+                    {% endif %}
                 </div>
             </nav>
         {% endblock %}
@@ -74,5 +83,10 @@
         {% block footer %}
         {% endblock %}
     </footer>
+
+    {# At the moment, bootstrap javascript #}
+    <script src="{{ asset("build/js/app.js") }}"></script>
+    {% block additional_scripts %}
+    {% endblock %}
     </body>
 </html>

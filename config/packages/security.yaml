@@ -24,7 +24,7 @@ security:
                 login_path:                     login
                 check_path:                     login
                 default_target_path:            homepage
-                always_use_default_target_path: true
+                always_use_default_target_path: false
             logout:
                 path:     /logout
                 target:   /
@@ -33,9 +33,6 @@ security:
                 path:                  /
                 remember_me_parameter: '_remember_me'
                 secure:                true
-
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
 
     access_control:
         # Block authenticated users from accessing login or registration

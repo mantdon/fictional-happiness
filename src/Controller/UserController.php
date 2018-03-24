@@ -6,20 +6,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * @Route("/user")
- */
 class UserController extends Controller
 {
-
-    /**
-     * @Route("/", name="user_profile")
-     */
+	/**
+	 * @Route("/user", name="user_home")
+	 */
     public function showProfile()
     {
-
-        return $this->render(
-        'profile.html.twig'
-    );
+	    return $this->redirectToRoute('user_vehicles');
     }
 }
