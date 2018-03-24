@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +15,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
-    /**
+    public function __construct(){
+    	$this->vehicles = new ArrayCollection();
+    }
+	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -74,6 +78,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=64)
      */
     private $role;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
+	 */
+    private $vehicles;
 
     public function getUsername()
     {
@@ -264,6 +273,10 @@ class User implements UserInterface, \Serializable
     public function getEmailName()
     {
         return preg_filter('/@.*/', '', $this->email);
+    }
+
+    public function getVehicles(){
+    	return $this->vehicles;
     }
 
     /** @see \Serializable::serialize() */
