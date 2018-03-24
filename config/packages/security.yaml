@@ -32,7 +32,6 @@ security:
                 secret:                '%kernel.secret%'
                 path:                  /
                 remember_me_parameter: '_remember_me'
-                secure:                true
 
     access_control:
         # Block authenticated users from accessing login or registration
