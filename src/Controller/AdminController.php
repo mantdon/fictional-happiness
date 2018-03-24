@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Services\PaginatedListFetcher;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -10,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class AdminController extends Controller
 {
+    private $pageParameterName = "page";
+
     /**
      * @Route("/", name="admin.homepage")
      */
@@ -21,8 +25,14 @@ class AdminController extends Controller
     /**
      * @Route("/users", name="admin.user_list")
      */
-    public function showUserList()
+    public function showUserList(Request $request, PaginatedListFetcher $listFetcher)
     {
-        return $this->render('Admin/UserList/list.html.twig');
+        $page = $request->query->getInt($this->pageParameterName, 1);
+
+        $list = $listFetcher->getPaginatedList('App:User', $page);
+        return $this->render('Admin/UserList/list.html.twig',
+            array('list' => $list,
+                'pageParameterName' => $this->pageParameterName,
+                'route' => "admin.user_list"));
     }
 }
