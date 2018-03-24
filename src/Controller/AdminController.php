@@ -31,8 +31,10 @@ class AdminController extends Controller
 
         $list = $listFetcher->getPaginatedList('App:User', $page);
         return $this->render('Admin/UserList/list.html.twig',
-            array('list' => $list,
+            array('users' => $list['items'],
+                'pageCount' => $list['pageCount'],
+                'currentPage' => $page,
                 'pageParameterName' => $this->pageParameterName,
-                'route' => "admin.user_list"));
+                'route' => 'admin/users'));
     }
 }
