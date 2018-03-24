@@ -13,14 +13,9 @@ Encore
 
     // uncomment to define the assets of the project
     .addEntry('js/app', './assets/js/App.js')
-<<<<<<< HEAD
-    .addStyleEntry('css/style', './assets/css/style.scss')
-    .addStyleEntry('css/loginStyle', './assets/css/loginStyle.css')
-=======
     .addStyleEntry('css/main', './assets/css/main.scss')
     .addStyleEntry('css/bootstrap', './assets/css/bootstrap.scss')
 
->>>>>>> master
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 
