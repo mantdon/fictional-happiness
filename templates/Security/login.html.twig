@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block head %}
-    <title>Prisijungimas</title>
-{% endblock %}
+{% block title %}Prisijungimas{% endblock %}
 
-<<<<<<< HEAD
-{% block body %}
+{% block content %}
     <div class="login-box">
         <img src="build/images/login-icon.9afbb08c.png" class="login-icon">
         <h1 class="page-header">Prisijungimas</h1>
@@ -23,21 +20,4 @@
             <input type="submit" name="submit" value="Prisijungti">
         </form>
     </div>
-=======
-{% block content %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    <h2 class="page-header">Prisijungimas</h2>
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Elektroninis paštas:</label>
-        <input class= "form-control" type="text" id="username" name="_username" value="{{ last_username }}">
-        <label for="passsword">Slaptažodis:</label>
-        <input class= "form-control" type="password" id="passsword" name="_password">
-        <input type="checkbox" id="remember_me" name="_remember_me" checked>
-        <label for="remember_me">Atsiminti mane</label>
-        <br>
-        <button class= 'btn btn-success' type="submit">Prisijungti</button>
-    </form>
->>>>>>> master
 {% endblock %}
