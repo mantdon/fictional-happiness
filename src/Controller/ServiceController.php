@@ -25,6 +25,10 @@ class ServiceController extends Controller
 
     	$pageCount = ceil($services->count() / $limit);
 
+	    // Load first page on invalid page entry
+    	if($page > $pageCount || $page < 1)
+    		return $this->redirectToRoute('services', array($this->pageParameterName => 1));
+
     	return $this->render(
     		'Service/index.html.twig',
 		    array('services' => $services,
