@@ -1,14 +1,11 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-/*class App extends React.Component {
-    render () {
-        return <p> Hello React!</p>;
-    }
-}*/
-
+var $ = require('jquery');
 require('bootstrap');
-const element = <h1>Hello, world</h1>;
 require("../img/logo.png");
-render(element, document.getElementById('app'));
+
+Window.prototype.showModal = function testFunction(id){
+    $('#'+id).modal({backdrop: 'static', keyboard: false});
+};
 
