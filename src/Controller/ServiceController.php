@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\PaginatedListFetcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,20 +16,14 @@ class ServiceController extends Controller
 	/**
 	 * @Route("/services", name="services")
 	 */
-    public function listAction(Request $request){
+    public function listAction(Request $request, PaginatedListFetcher $listFetcher){
     	$page = $request->query->getInt($this->pageParameterName, 1);
-	    // Hardcoded limit for now
-    	$limit = 5;
 
-    	$repository = $this->getDoctrine()->getRepository('App:Service');
-    	$services = $repository->getAll($page, $limit);
-
-    	$pageCount = ceil($services->count() / $limit);
-
+        $list = $listFetcher->getPaginatedList('App:Service', $page);
     	return $this->render(
     		'Service/index.html.twig',
-		    array('services' => $services,
-			      'pageCount' => $pageCount,
+		    array('services' => $list['items'],
+			      'pageCount' => $list['pageCount'],
 		          'currentPage' => $page,
 			      'pageParameterName' => $this->pageParameterName,
 		          'route' => "services")
