@@ -29,7 +29,8 @@ class PaginatedListFetcher
 
         return ['items' => $results,
             'pageCount' => $pageCount,
-            'currentPage' => $page];
+            'currentPage' => $page,
+            'totalCount' => $results->count()];
     }
 
 }
