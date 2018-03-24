@@ -33,8 +33,9 @@ class AdminController extends Controller
         return $this->render('Admin/UserList/list.html.twig',
             array('users' => $list['items'],
                 'pageCount' => $list['pageCount'],
+                'userCount' => $list['totalCount'],
                 'currentPage' => $page,
                 'pageParameterName' => $this->pageParameterName,
-                'route' => 'admin/users'));
+                'route' => 'admin.user_list'));
     }
 }
