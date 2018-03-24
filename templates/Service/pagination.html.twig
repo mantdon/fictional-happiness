@@ -1,7 +1,7 @@
 {% if pageCount > 1 %}
     {# Determine ranges of page buttons to display #}
-    {% if pageOffset is not defined or pageOffset < 1 %}
-        {% set pageOffset = 2 %}
+    {% if pageOffset is not defined or pageOffset < 1 or 2*pageOffset > pageCount %}
+        {% set pageOffset = 1 %}
     {% endif %}
 
     {% set startPage = currentPage - pageOffset%}
@@ -14,7 +14,11 @@
 
     {% if endPage > pageCount %}
         {% set endPage = pageCount %}
-        {% set startPage = pageCount - 2*pageOffset %}
+        {% set startPage = pageCount - 2*pageOffset + 1%}
+
+        {% if startPage < 1 %}
+            {% set startPage = 1 %}
+        {% endif %}
     {% endif %}
 
     <ul class="pagination">
@@ -40,7 +44,7 @@
                 <li class="page-item">
                     <a href="{{ path(route, {(pageParameterName): 2}) }}" class="page-link">2</a>
                 </li>
-            {% elseif currentPage != 2 and startPage != 2%}
+            {% elseif currentPage != 2 and startPage != 2 %}
                 <li class="page-item disabled">
                     <span class="page-link">&hellip;</span>
                 </li>
