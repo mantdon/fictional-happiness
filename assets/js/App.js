@@ -10,5 +10,6 @@ import {render} from 'react-dom';
 require('bootstrap');
 const element = <h1>Hello, world</h1>;
 require("../img/logo.png");
+require("../img/login/login-icon.png");
 render(element, document.getElementById('app'));
 
