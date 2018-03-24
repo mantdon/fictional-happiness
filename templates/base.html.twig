@@ -18,7 +18,7 @@
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                 <div class="nav-item">
                                                             {# Should not look like this. #}
-                    <a class="navbar-left" href="/"><img src="build/images/logo.532e8b6f.png" alt="Uh oh!" /></a>
+                    <a class="navbar-left" href="{{ path('homepage') }}"><img src="build/images/logo.532e8b6f.png" alt="Uh oh!" /></a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"/>
@@ -26,10 +26,10 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Namai<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ path('homepage') }}">Namai<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/services">Paslaugos</a>
+                            <a class="nav-link" href="{{ path('services') }}">Paslaugos</a>
                         </li>
                         {# Seen by unauthenticated users #}
                         {% if not app.user %}
@@ -51,20 +51,15 @@
                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
                                    {% if is_granted('ROLE_USER') %}
                                        <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
-                                       <a class="dropdown-item" href="{{ path('service_registration') }}">Register for service</a>
+                                       <a class="dropdown-item" href="#">Register for service</a>
                                    {% elseif is_granted('ROLE_ADMIN') %}
-                                       <a class="dropdown-item" href="/admin">Admin panelė</a>
+                                       <a class="dropdown-item" href="{{ path('admin.homepage') }}">Admin panelė</a>
                                    {% endif %}
                                    <div class="dropdown-divider"></div>
                                    <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
                                </div>
                            </div>
                        </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">Atsijungti</a>
-                            </li>
-                        {% endif %}
                     </ul>
                     {% endif %}
                 </div>
