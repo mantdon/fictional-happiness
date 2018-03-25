@@ -12,6 +12,12 @@ class OrderController extends Controller
      */
     public function home()
     {
-        return $this->render('Order/base.html.twig');
+        //For testing purposes.
+        $array = array(
+            ['plateNumber' => 'asfa'],
+            ['plateNumber' => 'ahedfb'],
+        );
+        return $this->render('Order/base.html.twig',
+            array('vehicles' => $array));
     }
 }
