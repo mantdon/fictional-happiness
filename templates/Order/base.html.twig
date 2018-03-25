@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+   <div id="VehicleSelection"></div>
+{% endblock %}
+
+{% block additional_scripts %}
+    <script type="text/javascript">
+        var vehicles = '{{ vehicles | json_encode() | raw }}';
+
+    </script>
+    <script src="{{ asset("build/js/VehicleSelect.js") }}"></script>
+{% endblock %}
