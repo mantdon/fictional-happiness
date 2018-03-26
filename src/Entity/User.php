@@ -45,21 +45,18 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * @Assert\NotBlank(message="Įveskite vardą")
      * @Assert\Type(type="alpha", message="Varde gali būti tik raidės")
      */
     private $first_name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * @Assert\NotBlank(message="Įveskite pavardę")
      * @Assert\Type(type="alpha", message="Pavardėje gali būti tik raidės")
      */
     private $last_name;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Assert\NotBlank(message="Įveskite telefono numerį")
      * @Assert\Regex(pattern="/^\+?[0-9]+$/", message="Blogas numerio formatas")
      */
     private $phone;
