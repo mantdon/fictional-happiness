@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\PaginatedListFetcher;
+use App\Services\ServiceFetcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,9 +41,9 @@ class ServiceController extends Controller
      * Testing version
      * @Route("/services/search/{pattern}")
      */
-    public function searchServices($pattern = "")
+    public function searchServices(ServiceFetcher $serviceFetcher, $pattern = "")
     {
-        $services = $this->getDoctrine()->getRepository('App:Service')->findAll();
+        $services = $serviceFetcher->findByPattern($pattern);
         return new JsonResponse($services);
     }
 }

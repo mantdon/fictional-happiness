@@ -25,4 +25,18 @@ class ServiceRepository extends ServiceEntityRepository
     	$paginator = Pagination::paginate($qb, $currentPage, $limit);
     	return $paginator;
     }
+
+    public function findByPattern($pattern, $limit = 10)
+    {
+        if(strlen($pattern) == 0)
+            return $this->findBy([], null, $limit);
+
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.name LIKE :name')
+            ->setParameter('name', '%'. $pattern .'%')
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }
