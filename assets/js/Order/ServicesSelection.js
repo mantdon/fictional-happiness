@@ -51,14 +51,14 @@ export default class ServicesSelection extends React.Component {
     render(){
         return <div>
                     <h1>Pasirinkite paslaugas</h1>
-                    <div>
-                        <input
-                            type="text"
-                            value={this.state.searchValue}
-                            onChange={this.handleSearchBox}
-                        />
-                      <div className={'optionsContainer'}>{this.state.services}</div>
-                    </div>
+                        <div className={'optionsContainer'}>
+                            <input
+                                type="text"
+                                value={this.state.searchValue}
+                                onChange={this.handleSearchBox}
+                            />
+                            {this.state.services}
+                        </div>
                 </div>;
     }
 }
