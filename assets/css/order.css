@@ -6,6 +6,16 @@
     background: #e6ffff;
 }
 
+.serviceName{
+    display: inline-block;
+    width: 70%;
+}
+
+.servicePrice{
+    display: inline-block;
+    width: 30%;
+}
+
 .vehicleOptionsContainer{
     display: block;
     margin: auto;
