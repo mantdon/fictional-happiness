@@ -8,7 +8,8 @@ export default class ServicesSelection extends React.Component {
         super(props);
         this.state = {
             services: [],
-            selectedServices: []};
+            selectedServices: [],
+            searchValue: ''};
         this.selectService = this.selectService.bind(this);
         this.handleSearchBox = this.handleSearchBox.bind(this);
     }
