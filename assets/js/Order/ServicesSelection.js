@@ -10,12 +10,12 @@ export default class ServicesSelection extends React.Component {
             services: [],
             selectedServices: []};
         this.selectService = this.selectService.bind(this);
-        this.fetchServiceList();
+        this.handleSearchBox = this.handleSearchBox.bind(this);
     }
 
-    fetchServiceList()
+    fetchServiceList(pattern)
     {
-        fetch("/services/search")
+        fetch("/services/search/" + pattern)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -43,9 +43,11 @@ export default class ServicesSelection extends React.Component {
                                                                 key={i}/>);
     }
 
-    handleSearchBox()
+    handleSearchBox(event)
     {
-        this.setState({searchValue: event.target.value});
+        this.setState({searchValue: event.target.value}, () => {
+            this.fetchServiceList(this.state.searchValue);
+        });
     }
 
     render(){
