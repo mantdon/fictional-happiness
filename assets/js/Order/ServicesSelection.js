@@ -10,14 +10,21 @@ export default class ServicesSelection extends React.Component {
             services: [],
             selectedServices: [],
             selectedServicesList: [],
-            searchValue: ''};
+            searchValue: ''
+        };
         this.selectService = this.selectService.bind(this);
         this.handleSearchBox = this.handleSearchBox.bind(this);
     }
 
+    componentDidMount()
+    {
+        this.fetchServiceList(this.state.searchValue);
+    }
+
     fetchServiceList(pattern)
     {
-        fetch("/services/search/" + pattern)
+        const slash = pattern.length > 0? '/': '';
+        fetch("/services/search" + slash + pattern)
             .then(res => res.json())
             .then(
                 (result) => {
