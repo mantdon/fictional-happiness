@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import VehicleSelection from './VehicleSelection';
+import ServiceSelection from './ServiceSelection';
 
 class OrderPage extends React.Component {
 
@@ -21,7 +22,9 @@ class OrderPage extends React.Component {
     {
         switch (this.state.step) {
             case 1:
-                return <VehicleSelection nextStep={this.nextStep}/>
+                return <VehicleSelection nextStep={this.nextStep}/>;
+            case 2:
+                return <ServiceSelection nextStep={this.nextStep()}/>;
         }
     }
 
