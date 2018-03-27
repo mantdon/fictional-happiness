@@ -46,7 +46,7 @@ export default class ServicesSelection extends React.Component {
     render(){
         return <div>
                     <h1>Pasirinkite paslaugas</h1>
-            <div className={'vehicleOptionsContainer'}>{this.state.services}</div>
+            <div className={'optionsContainer'}>{this.state.services}</div>
                 </div>;
     }
 }
