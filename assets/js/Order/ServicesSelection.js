@@ -9,6 +9,7 @@ export default class ServicesSelection extends React.Component {
         this.state = {
             services: [],
             selectedServices: [],
+            selectedServicesList: [],
             searchValue: ''};
         this.selectService = this.selectService.bind(this);
         this.handleSearchBox = this.handleSearchBox.bind(this);
@@ -21,7 +22,7 @@ export default class ServicesSelection extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        services: this.formServiceList(result)
+                        services: this.formServiceList(result, this.selectService)
                     });
                 },
                 (error) => {
@@ -32,15 +33,21 @@ export default class ServicesSelection extends React.Component {
             )
     }
 
-    selectService()
+    selectService(service)
     {
-
+        const newList = this.state.selectedServices.slice();
+        newList.push(service);
+        this.setState({
+            selectedServices: newList,
+            selectedServicesList: this.formServiceList(newList, null)}
+        );
     }
 
-    formServiceList(services)
+    formServiceList(services, onClick)
     {
+        console.log(services);
         if(services.length > 0)
-            return services.map((service, i) => <ServiceOption onClick={this.selectService} service={service}
+            return services.map((service, i) => <ServiceOption onClick={onClick} service={service}
                                                                 key={i}/>);
     }
 
@@ -62,6 +69,9 @@ export default class ServicesSelection extends React.Component {
                                 onChange={this.handleSearchBox}
                             />
                             {this.state.services}
+                        </div>
+                        <div className={'optionsContainer'}>
+                            {this.state.selectedServicesList}
                         </div>
                 </div>;
     }
