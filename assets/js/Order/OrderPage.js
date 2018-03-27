@@ -17,11 +17,16 @@ class OrderPage extends React.Component {
         })
     }
 
-    render() {
+    getCurrentDialog()
+    {
         switch (this.state.step) {
             case 1:
                 return <VehicleSelection nextStep={this.nextStep}/>
         }
+    }
+
+    render() {
+        return <div className={'orderDialog'}>{this.getCurrentDialog()}</div>;
     }
 }
 
