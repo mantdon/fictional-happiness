@@ -43,10 +43,22 @@ export default class ServicesSelection extends React.Component {
                                                                 key={i}/>);
     }
 
+    handleSearchBox()
+    {
+        this.setState({searchValue: event.target.value});
+    }
+
     render(){
         return <div>
                     <h1>Pasirinkite paslaugas</h1>
-            <div className={'optionsContainer'}>{this.state.services}</div>
+                    <div>
+                        <input
+                            type="text"
+                            value={this.state.searchValue}
+                            onChange={this.handleSearchBox}
+                        />
+                      <div className={'optionsContainer'}>{this.state.services}</div>
+                    </div>
                 </div>;
     }
 }
