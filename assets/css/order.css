@@ -1,0 +1,16 @@
+.vehicleOption{
+    border-top: solid 1px gray;
+}
+
+.vehicleOption:hover{
+    background: #e6ffff;
+}
+
+.vehicleOptionsContainer{
+    display: block;
+    margin: auto;
+    width: 400px;
+    margin-top: 50px;
+    background: white;
+    text-align: center;
+}
