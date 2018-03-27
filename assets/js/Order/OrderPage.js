@@ -13,7 +13,7 @@ class OrderPage extends React.Component {
     nextStep()
     {
         this.setState({
-            step : this.state.step - 1
+            step : this.state.step + 1
         })
     }
 
