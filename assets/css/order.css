@@ -14,3 +14,10 @@
     background: white;
     text-align: center;
 }
+
+.orderDialog{
+    border: solid 1px gray;
+    margin-top: 50px;
+    background: red;
+    padding: 40px 0 40px 0;
+}
