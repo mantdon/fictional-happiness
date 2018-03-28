@@ -7,18 +7,16 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form action="">
-                        <div class="form-group">
-                            <h1 class="page-header">Registracija</h1>
-                            {{ form_start(form) }}
-                            {{ form_row(form.email, {'attr': {'class': 'textField'}, 'label': 'El-paštas' } ) }}
-                            {{ form_row(form.plainPassword.first, {'attr': {'class': 'textField'}, 'label': 'Slaptažodis'} ) }}
-                            {{ form_row(form.plainPassword.second, {'attr': {'class': 'textField'}, 'label': 'Pakartoti slaptažodį'} ) }}
-                            {{ form_row(form.submit, {'attr': {'class': 'button'}, 'label': 'Registruotis'} ) }}
-                            {{ form_row(form._token) }}
-                            {{ form_end(form, {'render_rest': false}) }}
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        <h1 class="page-header">Registracija</h1>
+                        {{ form_start(form) }}
+                        {{ form_row(form.email, {'attr': {'class': 'textField'}, 'label': 'El-paštas' } ) }}
+                        {{ form_row(form.plainPassword.first, {'attr': {'class': 'textField'}, 'label': 'Slaptažodis'} ) }}
+                        {{ form_row(form.plainPassword.second, {'attr': {'class': 'textField'}, 'label': 'Pakartoti slaptažodį'} ) }}
+                        {{ form_row(form.submit, {'attr': {'class': 'button'}, 'label': 'Registruotis'} ) }}
+                        {{ form_row(form._token) }}
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
                 </div>
             </div>
         </div>
