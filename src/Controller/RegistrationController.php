@@ -31,6 +31,10 @@ class RegistrationController extends Controller
 	        $this->get('security.token_storage')->setToken($token);
 	        $this->get('session')->set('_security_main', serialize($token));
 
+	        $this->addFlash(
+		        'notice',
+		        'Registration successful, welcome ' . $user->getEmailName() . '!');
+
 	        return $this->redirectToRoute( 'homepage' );
         }
 
