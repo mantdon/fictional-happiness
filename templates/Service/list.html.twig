@@ -1,5 +1,14 @@
-{% if services.count is defined%}
+{% if services.count > 0%}
     <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Pavadinimas</th>
+            <th>Aprašymas</th>
+            <th>Kaina</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for service in services %}
             <tr class="table-fixed">
                 {# For testing purposes only, should not be displayed otherwise #}
@@ -10,6 +19,7 @@
                 <td>${{ service.price }}</td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
     {# pageOffset - number of page buttons to display on either side of
        currently active one.
@@ -19,4 +29,6 @@
         previousPageLabel: "Previous",
         nextPageLabel: "Next"
     } %}
+{% else %}
+    <h1>There are currently no services provided.</h1>
 {% endif %}
