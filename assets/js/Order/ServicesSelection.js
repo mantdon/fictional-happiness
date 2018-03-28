@@ -52,7 +52,6 @@ export default class ServicesSelection extends React.Component {
 
     formServiceList(services, onClick)
     {
-        console.log(services);
         if(services.length > 0)
             return services.map((service, i) => <ServiceOption onClick={onClick} service={service}
                                                                 key={i}/>);
@@ -66,20 +65,24 @@ export default class ServicesSelection extends React.Component {
     }
 
     render(){
-        return <div>
+        return <div className={'serviceSelectionDialog'}>
                     <h1>Pasirinkite paslaugas</h1>
-                        <div className={'optionsContainer'}>
+                    <div className={'serviceSelectionContainer'}>
+                        <div className={'serviceOptionsContainer'}>
                             <input
                                 className={'searchBox'}
                                 type='text'
                                 value={this.state.searchValue}
                                 onChange={this.handleSearchBox}
                             />
-                            {this.state.services}
+                            <div className={'scrollable-vertical searchableServices'}>
+                                {this.state.services}
+                            </div>
                         </div>
-                        <div className={'optionsContainer'}>
+                        <div className={'serviceOptionsContainer scrollable-vertical align-right'}>
                             {this.state.selectedServicesList}
                         </div>
+                    </div>
                 </div>;
     }
 }

@@ -19,19 +19,60 @@
 .optionsContainer{
     display: block;
     margin: auto;
-    width: 400px;
+    width: 40%;
     margin-top: 50px;
     background: white;
     text-align: center;
+}
+
+.serviceOptionsContainer{
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    width: 45%;
+    background: white;
+}
+
+.serviceOptionsContainer > input{
+    height: 15%;
+}
+
+.searchableServices{
+  height: 84%;
+}
+
+.align-right{
+    float: right;
+}
+
+.scrollable-vertical{
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.full-height{
+    height: auto;
 }
 
 .orderDialog{
     border: solid 1px gray;
     margin-top: 50px;
     background: red;
+    height: 60vh;
     padding: 40px 0 40px 0;
 }
 
 .searchBox{
     width: 100%;
+}
+
+.serviceSelectionContainer{
+    width:70%;
+    display: block;
+    height: 100%;
+    margin: auto;
+}
+
+.serviceSelectionDialog{
+    height: 70%;
 }
