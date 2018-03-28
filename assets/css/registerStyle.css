@@ -1,6 +1,6 @@
 .panel{
     width: 320px;
-    height: 440px;
+    minheight: 440px;
     background: #19181A;
     color: #CEBC81;
     box-sizing: border-box;
