@@ -7,37 +7,37 @@
 <ul class="nav nav-tabs justify-content-center very-tabs">
     <li class="nav-item">
         {% if vehicles_active is defined%}
-            <span class="nav-link active">{{ vehicles_label }}</span>
+            <span class="nav-link active tab-active">{{ vehicles_label }}</span>
         {% else %}
-            <a class="nav-link" href="{{ path('user_vehicles') }}">{{ vehicles_label }}</a>
+            <a class="nav-link tab-link" href="{{ path('user_vehicles') }}">{{ vehicles_label }}</a>
         {% endif %}
     </li>
     <li class="nav-item">
         {% if orders_active is defined %}
-            <span class="nav-link active">{{ orders_label }}</span>
+            <span class="nav-link active tab-active">{{ orders_label }}</span>
         {% else %}
-            <a class="nav-link" href="{{ path('user_orders') }}">{{ orders_label }}</a>
+            <a class="nav-link tab-link" href="{{ path('user_orders') }}">{{ orders_label }}</a>
         {% endif %}
     </li>
     <li class="nav-item">
         {% if messages_active is defined %}
-            <span class="nav-link active">{{ messages_label }}</span>
+            <span class="nav-link active tab-active">{{ messages_label }}</span>
         {% else %}
-            <a class="nav-link" href="{{ path('user_messages') }}">{{ messages_label }}</a>
+            <a class="nav-link tab-link" href="{{ path('user_messages') }}">{{ messages_label }}</a>
         {% endif %}
     </li>
     <li class="nav-item">
         {% if settings_active is defined %}
-            <span class="nav-link active">{{ settings_label }}</span>
+            <span class="nav-link active tab-active">{{ settings_label }}</span>
         {% else %}
-            <a class="nav-link" href="{{ path('user_settings') }}">{{ settings_label }}</a>
+            <a class="nav-link tab-link" href="{{ path('user_settings') }}">{{ settings_label }}</a>
         {% endif %}
     </li>
     <li class="nav-item">
         {% if changepassword_active is defined %}
-            <span class="nav-link active">{{ changepassword_label }}</span>
+            <span class="nav-link active tab-active">{{ changepassword_label }}</span>
         {% else %}
-            <a class="nav-link" href="{{ path('user_changepassword') }}">{{ changepassword_label }}</a>
+            <a class="nav-link tab-link" href="{{ path('user_changepassword') }}">{{ changepassword_label }}</a>
         {% endif %}
     </li>
 </ul>
