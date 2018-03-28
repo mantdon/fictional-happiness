@@ -1,0 +1,49 @@
+{% include 'Profile/Vehicles/profile_vehicles.html.twig' %}
+
+{% block title %}Huh?{% endblock %}
+
+<div class="modal fade" id="deleteVehicle" tabindex="-1" role="dialog" aria-labelledby="deleteVehicleLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteVehicleLabel">Ištrinti automobilį?</h5>
+                <a  href="{{ path('user_vehicles') }}" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <table class="table table-fixed">
+                    <tbody>
+                    <tr>
+                        <th>Modelis</th>
+                        <td>{{ vehicle.model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Markė</th>
+                        <td>{{ vehicle.make }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pagaminimo metai</th>
+                        <td>{{ vehicle.yearOfProduction }}</td>
+                    </tr>
+                    <tr>
+                        <th>Numeriai</th>
+                        <td>{{ vehicle.plateNumber }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                {{ include('Profile/Vehicles/_delete_form.html.twig') }}
+                <a class="btn btn-warning" style="width:50%" href="{{ path('user_vehicles') }}">Atšaukti</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block additonal_scripts %}
+    <script>
+        showModal('deleteVehicle');
+    </script>
+{% endblock %}
+
