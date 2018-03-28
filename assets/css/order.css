@@ -76,3 +76,15 @@
 .serviceSelectionDialog{
     height: 70%;
 }
+
+.orderDialogButtonsContainer{
+}
+
+.orderDialogButton{
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background: purple;
+    padding: 5px 5px 5px 5px;
+}
+
+

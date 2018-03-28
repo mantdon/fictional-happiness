@@ -41,7 +41,17 @@ class OrderPage extends React.Component {
     }
 
     render() {
-        return <div className={'orderDialog'}>{this.state.dialog}</div>;
+        return <div className={'orderDialog'}>
+            <div className={'orderDialogButton'}>
+                Atgal
+            </div>
+            <div className={'orderDialogButton align-right'}>
+                Sekantis
+            </div>
+            {this.state.dialog}
+            <div className={'orderDialogButtonsContainer'}>
+            </div>
+        </div>;
     }
 }
 
