@@ -26,15 +26,14 @@ class ServiceRepository extends ServiceEntityRepository
     	return $paginator;
     }
 
-    public function findByPattern($pattern, $limit = 10)
+    public function findByPattern($pattern)
     {
         if(strlen($pattern) == 0)
-            return $this->findBy([], null, $limit);
+            return $this->findBy([]);
 
         $qb = $this->createQueryBuilder('a')
             ->where('a.name LIKE :name')
             ->setParameter('name', '%'. $pattern .'%')
-            ->setMaxResults($limit)
             ->getQuery();
 
         return $qb->getResult();
