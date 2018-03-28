@@ -7,12 +7,14 @@
 {% endblock %}
 
 {% block panel_content %}
+    <h5 class="text-left m-3">{{ userCount }} Registruoti vartojojai</h5>
     <table class="table">
         <tr class="table-fixed">
             <th>id</th>
             <th>El-paštas</th>
             <th>Vardas</th>
             <th>Telefonas</th>
+            <th>Paskyros šalinimas</th>
         </tr>
 
         {% for user in users %}
@@ -20,7 +22,12 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
-                <td>{{ user.phone}}</td>
+                <td>{{ user.phone }}</td>
+                <td>
+                    {% if user.role == 'ROLE_USER' %}
+                        <a href="{{ path('delete.user', {id: user.id}) }}"><button type="button" class="btn btn-danger">Ištrinti</button></a>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
     </table>
@@ -32,5 +39,4 @@
     previousPageLabel: "Previous",
     nextPageLabel: "Next"
     } %}
-    <h5 class="text-right">{{ userCount }} Registruoti vartojojai</h5>
 {% endblock %}
