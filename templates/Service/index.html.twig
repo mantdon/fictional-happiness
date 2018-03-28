@@ -2,6 +2,8 @@
 
 {% block title %}Paslaugos{% endblock %}
 
+{% set services_active = 'true' %}
+
 {% block content %}
     {# Services table #}
     {% include 'Service/list.html.twig' %}
