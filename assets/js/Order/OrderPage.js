@@ -7,9 +7,15 @@ class OrderPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {step: 1,
-        dialog: null};
+        this.state = {
+            step: 1,
+            totalSteps: 3,
+            dialog: null,
+            isBackwardsActive: false,
+            isForwardsActive: false
+        };
         this.nextStep = this.nextStep.bind(this);
+        this.previousStep = this.previousStep.bind(this);
     }
 
     componentWillMount()
@@ -24,10 +30,22 @@ class OrderPage extends React.Component {
 
     nextStep()
     {
-        this.setState({
-            step : this.state.step + 1
-        }, () => {this.changeDialog(this.state.step);});
+        this.proceedStep(1);
+    }
 
+    previousStep()
+    {
+        this.proceedStep(-1);
+    }
+
+    proceedStep(direction)
+    {
+        this.setState({
+            step : this.state.step + direction
+        }, () => {
+            this.changeDialog(this.state.step);
+            this.updateButtonsStates();
+        });
     }
 
     getCurrentDialog(step)
@@ -40,17 +58,58 @@ class OrderPage extends React.Component {
         }
     }
 
+    formForwardsButton()
+    {
+        return <div className={'orderDialogButton ' + this.disableButton(this.state.isBackwardsActive)} onClick={this.previousStep}>
+            Atgal
+        </div>;
+    }
+
+    formBackwardsButton()
+    {
+        return <div className={'orderDialogButton align-right ' + this.disableButton(this.state.isForwardsActive)} onClick={this.nextStep}>
+            Sekantis
+        </div>;
+    }
+
+    updateButtonsStates()
+    {
+        if(this.state.step === 1)
+        {
+            this.setState({
+                isBackwardsActive: false,
+                isForwardsActive: false
+            });
+        }
+        else{
+            this.setState({
+                isBackwardsActive: true,
+                isForwardsActive: true
+            });
+        }
+
+        if(this.state.step === this.state.totalSteps) {
+            this.setState({
+                isForwardsActive: false
+            });
+        }
+    }
+
+    disableButton(active)
+    {
+        if(!active)
+            return 'orderButtonDisabled';
+        return '';
+    }
+
     render() {
         return <div className={'orderDialog'}>
-            <div className={'orderDialogButton'}>
-                Atgal
-            </div>
-            <div className={'orderDialogButton align-right'}>
-                Sekantis
-            </div>
-            {this.state.dialog}
             <div className={'orderDialogButtonsContainer'}>
+                {this.formForwardsButton()}
+                {this.formBackwardsButton()}
             </div>
+
+            {this.state.dialog}
         </div>;
     }
 }
