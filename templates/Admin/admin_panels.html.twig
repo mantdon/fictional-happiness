@@ -7,14 +7,14 @@
         {% if home_active is defined %}
             <span class="nav-link active">Home</span>
         {% else %}
-            <a class="nav-link" href="{{ path('admin.homepage') }}">{{ home_label }}</a>
+            <a class="nav-link" href="{{ path('admin_home') }}">{{ home_label }}</a>
         {% endif %}
     </li>
     <li class="nav-item">
         {% if users_active is defined %}
             <span class="nav-link active">Vartotojai</span>
         {% else %}
-            <a class="nav-link" href="{{ path('admin.user_list') }}">{{ users_label }}</a>
+            <a class="nav-link" href="{{ path('admin_users') }}">{{ users_label }}</a>
         {% endif %}
     </li>
     <li class="nav-item">
