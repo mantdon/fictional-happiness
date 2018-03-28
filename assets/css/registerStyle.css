@@ -1,0 +1,40 @@
+.panel{
+    width: 320px;
+    height: 440px;
+    background: #19181A;
+    color: #CEBC81;
+    box-sizing: border-box;
+    display: block;
+    margin: 60px auto 0 auto;
+    padding: 40px 30px;
+    border-radius: 20px;
+    border: 2px solid #479761;
+    position: relative;
+}
+.textField{
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #479761;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #FFF;
+    font-size: 16px;
+}
+.button{
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #479761;
+    color: #FFF;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.button:hover{
+    cursor: pointer;
+    background: #CEBC81;
+    color: #2C3531;
+}
