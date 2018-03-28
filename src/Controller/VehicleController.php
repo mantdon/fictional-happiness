@@ -25,11 +25,11 @@ class VehicleController extends Controller
 			$vehicle->setUser($this->getUser());
 			$entityManager->persist( $vehicle );
 			$entityManager->flush();
-
+			$this->addFlash('notice', 'Vehicle added[PH]');
 			return $this->redirectToRoute( 'user_home' );
 		}
 
-		return $this->render('Profile/profile_vehicles_add.html.twig', array(
+		return $this->render('Profile/Vehicles/profile_vehicles_add.html.twig', array(
 			'user' => $this->getUser(),
 			'vehicles' => $this->getUser()->getVehicles(),
 			'form' => $form->createView()
@@ -41,7 +41,7 @@ class VehicleController extends Controller
 	 */
 	public function vehiclesEdit(Request $request, Vehicle $vehicle = null)
 	{
-		if($vehicle !== NULL) {
+		if($vehicle !== NULL && $vehicle->getUser() === $this->getUser()) {
 			$form = $this->createForm( VehicleType::class, $vehicle );
 
 			$form->handleRequest( $request );
@@ -50,11 +50,12 @@ class VehicleController extends Controller
 				$entityManager = $this->getDoctrine()->getManager();
 				$entityManager->persist( $vehicle );
 				$entityManager->flush();
+				$this->addFlash('notice', 'Vehicle updated[PH]');
 
 				return $this->redirectToRoute( 'user_vehicles' );
 			}
 
-			return $this->render( 'Profile/profile_vehicles_edit.html.twig',
+			return $this->render( 'Profile/Vehicles/profile_vehicles_edit.html.twig',
 				array(
 		           'user' => $this->getUser(),
 		           'vehicles' => $this->getUser()->getVehicles(),
@@ -66,14 +67,32 @@ class VehicleController extends Controller
 	}
 
 	/**
-	 * @Route("/user/vehicles/remove/{id}", defaults={"id"=null}, name="remove_vehicle")
+	 * @Route("user/vehicles/delete/{id}", name="show_vehicle", methods="GET")
 	 */
-	public function vehiclesRemove(Request $request, Vehicle $vehicle = NULL){
-		// Seems to not allow deletion of other user's vehicles... for now
+	public function show(Request $request, Vehicle $vehicle): Response
+	{
 		if($vehicle !== NULL && $vehicle->getUser() === $this->getUser()) {
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->remove( $vehicle );
-			$entityManager->flush();
+			return $this->render( 'Profile/Vehicles/profile_vehicles_delete_confirm.html.twig',
+			                      array('vehicle' => $vehicle,
+					                    'user' => $this->getUser(),
+					                    'vehicles' => $this->getUser()->getVehicles())
+			);
+		}
+
+		return $this->redirectToRoute('user_vehicles');
+	}
+
+	/**
+	 * @Route("user/vehicles/delete/{id}", name="delete_vehicle", methods="DELETE")
+	 */
+	public function delete(Request $request, Vehicle $vehicle): Response
+	{
+		if ($this->isCsrfTokenValid('delete'.$vehicle->getId(), $request->request->get('_token')) &&
+			$vehicle->getUser() === $this->getUser()) {
+			$em = $this->getDoctrine()->getManager();
+			$em->remove($vehicle);
+			$em->flush();
+			$this->addFlash('notice', 'Vehicle deleted[PH]');
 		}
 
 		return $this->redirectToRoute('user_vehicles');
