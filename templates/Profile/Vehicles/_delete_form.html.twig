@@ -1,5 +1,5 @@
-<form method="post" style="width:50%" action="{{ path('vehicle_delete_test', {'id': vehicle.id}) }}">
+<form method="post" action="{{ path('delete_vehicle', {'id': vehicle.id}) }}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vehicle.id) }}">
-    <button class="btn btn-danger" style="width: 100%">Ištrinti</button>
+    <button class="btn btn-danger">Ištrinti</button>
 </form>
