@@ -2,6 +2,10 @@
     table-layout: fixed;
 }
 
+.table-fixed > th{
+    border: none;
+}
+
 .column-word-wrap{
     word-wrap: break-word;
 }

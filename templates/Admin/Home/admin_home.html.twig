@@ -1,0 +1,14 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        home_active: 'true'
+    }%}
+{% endblock %}
+
+{% block panel_content %}
+    <h1>
+        An incredibly detailed description of the tools available
+        to the admin.
+    </h1>
+{% endblock %}

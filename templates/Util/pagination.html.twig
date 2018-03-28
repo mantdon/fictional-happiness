@@ -21,7 +21,15 @@
         {% endif %}
     {% endif %}
 
-    <ul class="pagination">
+    {% if previousPageLabel is not defined %}
+        {% set previousPageLabel = "Previous" %}
+    {% endif %}
+
+    {% if nextPageLabel is not defined %}
+        {% set nextPageLabel = "Next" %}
+    {% endif %}
+
+    <ul class="pagination justify-content-center pagination-bar">
         {# Previous page button - disabled at first page #}
         {% if  currentPage > 1 %}
             <li class="page-item">

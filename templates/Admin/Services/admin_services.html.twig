@@ -1,0 +1,52 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        services_active: 'true'
+    }%}
+{% endblock %}
+
+{% block panel_content %}
+    {% if services.count > 0%}
+        <table class="table">
+            <tr class="table-fixed">
+                <th>ID</th>
+                <th>Pavadinimas</th>
+                <th>Aprašymas</th>
+                <th>Kaina</th>
+                <th>Veiksmai</th>
+            </tr>
+            {% for service in services %}
+                <tr class="table-fixed">
+                    {# For testing purposes only, should not be displayed otherwise #}
+                    <td>{{ service.id }}</td>
+                    <td>{{ service.name }}</td>
+                    {# Wrapping should be enabled for descriptions #}
+                    <td class="column-word-wrap">{{ service.description }}</td>
+                    <td>${{ service.price }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn custom-button dropdown-toggle" type="button" id="serviceActionDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
+                                Actions
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="serviceActionDropdown">
+                                <a class="dropdown-item" href="{{ path('service_edit', {('id'):service.id }) }}">Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('service_show', {('id'):service.id }) }}">Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {# pageOffset - number of page buttons to display on either side of
+           currently active one.
+        #}
+        {% include 'Util/pagination.html.twig' with {
+            pageOffset: 2,
+        } %}
+    {% else %}
+        <h1>No services found. Use the button below to add a new service.</h1>
+    {% endif %}
+    <a class="btn custom-button" href="{{ path('service_new') }}">Add new service</a>
+{% endblock %}

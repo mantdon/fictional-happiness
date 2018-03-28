@@ -33,4 +33,12 @@ class PaginatedListFetcher
             'totalCount' => $results->count()];
     }
 
+    public function getTotalPageCount($className, $page = 1, $limit = 5){
+	    $repository = $this->em->getRepository($className);
+	    $results = $repository->getAll($page, $limit);
+
+	    $pageCount = ceil($results->count() / $limit);
+
+	    return $pageCount;
+    }
 }

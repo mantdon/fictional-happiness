@@ -1,0 +1,37 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        users_active: 'true'
+    } %}
+{% endblock %}
+
+{% block panel_content %}
+    <h1>The following user will be deleted, are you sure?</h1>
+
+    <table class="table table-fixed">
+        <tbody>
+        <tr>
+            <th>ID</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>El-Paštas</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Vardas</th>
+            <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
+        </tr>
+        <tr>
+            <th>Telefono nr.</th>
+            <td>{{ user.phone }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {{ include('Admin/Users/_delete_form.html.twig') }}
+    <a class="btn btn-warning button-full-width" href="{{ path('admin_users') }}">Atšaukti</a>
+{% endblock %}

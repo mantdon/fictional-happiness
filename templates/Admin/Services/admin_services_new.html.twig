@@ -1,0 +1,23 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block title %}New Service{% endblock %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        services_active: 'true'
+    } %}
+{% endblock %}
+
+{% block panel_content %}
+    <h1>Create new Service</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name, {'attr': {'class' : 'form-control'}, 'label': 'Pavadinimas'}) }}
+    {{ form_row(form.description, {'attr': {'class' : 'form-control'}, 'label': 'Aprašymas'}) }}
+    {{ form_row(form.price, {'attr': {'class' : 'form-control'}, 'label': 'Kaina'}) }}
+    <hr>
+    {{ form_row(form.submit, {'attr': {'class' : 'btn custom-button button-full-width'}, 'label': 'Pridėti'}) }}
+    <a class="btn custom-button button-full-width" href="{{ path('admin_services') }}">Atšaukti</a>
+    {{ form_end(form) }}
+
+{% endblock %}

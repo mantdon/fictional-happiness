@@ -29,7 +29,7 @@
                             <a class="nav-link" href="{{ path('homepage') }}">Namai<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('services') }}">Paslaugos</a>
+                            <a class="nav-link" href="{{ path('service_index') }}">Paslaugos</a>
                         </li>
                         {# Seen by unauthenticated users #}
                         {% if not app.user %}
@@ -53,7 +53,7 @@
                                        <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
                                        <a class="dropdown-item" href="#">Register for service</a>
                                    {% elseif is_granted('ROLE_ADMIN') %}
-                                       <a class="dropdown-item" href="{{ path('admin.homepage') }}">Admin panelė</a>
+                                       <a class="dropdown-item" href="{{ path('admin_home') }}">Admin panel</a>
                                    {% endif %}
                                    <div class="dropdown-divider"></div>
                                    <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
@@ -67,22 +67,21 @@
         {% endblock %}
     </header>
 
-    <div class="container-fluid">
+    <div class="container-fluid h-75">
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
         {% block content %}
             {# Seen by unauthenticated users #}
             {% if not app.user %}
                 <h1>Hello, world</h1>
             {# Seen by authenticated users #}
             {% else %}
-                {% for message in app.flashes('notice') %}
-                    <div class="alert alert-success alert-dismissible fade show">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endfor %}
-
                 <h1>Hello, {{ app.user.emailname }}</h1>
             {% endif %}
         {% endblock %}

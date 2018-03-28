@@ -1,11 +1,17 @@
 {% extends 'Admin/base.html.twig' %}
 
-{% block content %}
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        users_active: 'true'
+    }%}
+{% endblock %}
+
+{% block panel_content %}
     <h5 class="text-left m-3">{{ userCount }} Registruoti vartojojai</h5>
     <table class="table">
         <tr class="table-fixed">
-            <th>id</th>
-            <th>El-paštas</th>
+            <th>ID</th>
+            <th>El-Paštas</th>
             <th>Vardas</th>
             <th>Telefonas</th>
             <th>Paskyros šalinimas</th>
@@ -18,8 +24,8 @@
                 <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
                 <td>{{ user.phone }}</td>
                 <td>
-                    {% if user.role == 'ROLE_USER' %}
-                        <a href="{{ path('delete.user', {id: user.id}) }}"><button type="button" class="btn btn-danger">Ištrinti</button></a>
+                    {% if 'ROLE_USER' in user.roles %}
+                        <a href="{{ path('user_show', {id: user.id}) }}"><button type="button" class="btn btn-danger">Ištrinti</button></a>
                     {% endif %}
                 </td>
             </tr>
