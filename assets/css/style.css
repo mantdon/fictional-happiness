@@ -8,6 +8,19 @@ header .logo {
     color: white;
 }
 
+.first-item {
+    width: 100%;
+    background-color: #AA3333;
+    color:white;
+    border-radius: 10px 10px 0 0;
+}
+.list-group-item {
+    color: black;
+}
+#profile {
+    margin-bottom: 15px;
+}
+
 /* Needed for h-## classes to work */
 html, body{
     height: 100%;
