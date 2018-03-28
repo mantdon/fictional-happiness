@@ -13,7 +13,7 @@
                 <div id="profile">
                     {# User object must passed with render call #}
                     <ul class="list-group">
-                        <li class="list-group-item text-center" style="width: 100%; background-color: #AA3333; color:white; border-radius: 10px 10px 0 0">{{ user.emailname }}</li>
+                        <li class="list-group-item text-center first-item">{{ user.emailname }}</li>
                         <li class="list-group-item text-justify"><strong>Vardas: </strong> {{ user.firstname }} {{ user.lastname }}</li>
                         <li class="list-group-item text-left"><strong>Email: </strong>{{ user.email }}</li>
                         <li class="list-group-item text-left"><strong>Miestas: </strong>{{  user.city }}</li>
@@ -24,9 +24,9 @@
                 </div>
 
                 <ul class="list-group">
-                    <li class="list-group-item text-center" style="width: 100%; background-color: #AA3333; color:white; border-radius: 10px 10px 0 0">Veikla</li>
-                    <li class="list-group-item text-left"><strong>Enamieji uzsakymai: </strong>NIY</li>
-                    <li class="list-group-item text-left"><strong>Total užsakymai: </strong>NIY</li>
+                    <li class="list-group-item text-center first-item">Veikla</li>
+                    <li class="list-group-item text-left"><strong>Einamieji užsakymai: </strong>NIY</li>
+                    <li class="list-group-item text-left"><strong>Iš viso užsakymų: </strong>NIY</li>
                     <li class="list-group-item text-left"><span class="pull-left"><strong>Paskutinis prisijungimas: </strong></span>NIY</li>
                 </ul>
             </div>
