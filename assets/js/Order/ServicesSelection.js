@@ -15,6 +15,7 @@ export default class ServicesSelection extends React.Component {
         };
         this.selectService = this.selectService.bind(this);
         this.handleSearchBox = this.handleSearchBox.bind(this);
+        this.removeSelectedService = this.removeSelectedService.bind(this);
     }
 
     componentDidMount()
@@ -46,9 +47,24 @@ export default class ServicesSelection extends React.Component {
     {
         const newList = this.state.selectedServices.slice();
         newList.push(service);
+
+        this.setSelectedServices(newList);
+    }
+
+    removeSelectedService(service)
+    {
+        const newList = this.state.selectedServices.filter((srv) => {
+            return srv.id !== service.id;
+        });
+
+        this.setSelectedServices(newList);
+    }
+
+    setSelectedServices(newList)
+    {
         this.setState({
-            selectedServices: newList,
-            selectedServicesList: this.formServiceList(newList, null)}, () => {
+                selectedServices: newList,
+                selectedServicesList: this.formServiceList(newList, this.removeSelectedService)}, () => {
                 this.updateServiceList();
             }
         );
