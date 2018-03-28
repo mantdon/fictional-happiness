@@ -3,11 +3,23 @@
 {% block title %}Registracija{% endblock %}
 
 {% block content %}
-    <h2 class="page-header">Registracija</h2>
-    {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword) }}
-    {{ form_row(form.submit) }}
-    {{ form_row(form._token) }}
-    {{ form_end(form, {'render_rest': false}) }}
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form action="">
+                        <div class="form-group">
+                            <h1 class="page-header">Registracija</h1>
+                            {{ form_start(form) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.plainPassword) }}
+                            {{ form_row(form.submit) }}
+                            {{ form_row(form._token) }}
+                            {{ form_end(form, {'render_rest': false}) }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
