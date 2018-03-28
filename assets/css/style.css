@@ -35,3 +35,8 @@ html, body{
 .very-tabs > li > a{
     color: #6f42c1;
 }
+
+.button-full-width{
+    width: 100%;
+    margin-bottom: 10px;
+}
