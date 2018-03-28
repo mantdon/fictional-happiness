@@ -10,8 +10,12 @@
                     <div class="form-group">
                         <h1 class="page-header">Registracija</h1>
                         {{ form_start(form) }}
-                        {{ form_row(form.email, {'attr': {'class': 'textField'}, 'label': 'El-paštas' } ) }}
-                        {{ form_row(form.plainPassword.first, {'attr': {'class': 'textField'}, 'label': 'Slaptažodis'} ) }}
+                        {{ form_errors(form.email) }}
+                        {{ form_label(form.email, null, {'label': 'El-paštas'}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                        {{ form_label(form.plainPassword.first, null, {'label': 'Slaptažodis'}) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'textField'}} ) }}
                         {{ form_row(form.plainPassword.second, {'attr': {'class': 'textField'}, 'label': 'Pakartoti slaptažodį'} ) }}
                         {{ form_row(form.submit, {'attr': {'class': 'button'}, 'label': 'Registruotis'} ) }}
                         {{ form_row(form._token) }}
