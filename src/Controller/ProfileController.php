@@ -15,7 +15,7 @@ class ProfileController extends Controller
 	 * @Route("/user/orders", name="user_orders")
 	 */
 	public function ordersTabActions(){
-		return $this->render('Profile/profile_orders.html.twig', array(
+		return $this->render('Profile/Orders/profile_orders.html.twig', array(
 			'user' => $this->getUser(),
 			//'orders' => $this->getUser()->getOrders()
 		));
@@ -25,7 +25,7 @@ class ProfileController extends Controller
 	 * @Route("/user/vehicles", name="user_vehicles")
 	 */
 	public function vehiclesTabAction(){
-		return $this->render('Profile/profile_vehicles.html.twig', array(
+		return $this->render('Profile/Vehicles/profile_vehicles.html.twig', array(
 			'user' => $this->getUser(),
 			'vehicles' => $this->getUser()->getVehicles()
 		));
@@ -35,7 +35,7 @@ class ProfileController extends Controller
 	 * @Route("/user/messages", name="user_messages")
 	 */
 	public function messagesTabAction(){
-		return $this->render('Profile/profile_messages.html.twig', array(
+		return $this->render('Profile/Messages/profile_messages.html.twig', array(
 			'user' => $this->getUser()
 		));
 	}
@@ -44,7 +44,7 @@ class ProfileController extends Controller
 	 * @Route("/user/settings", name="user_settings")
 	 */
 	public function settingsTabAction(){
-		return $this->render('Profile/profile_settings.html.twig', array(
+		return $this->render('Profile/Settings/profile_settings.html.twig', array(
 			'user' => $this->getUser()
 		));
 	}
@@ -52,7 +52,7 @@ class ProfileController extends Controller
 	 * @Route("/user/changepassword", name="user_changepassword")
 	 */
 	public function changepasswordTabAction(){
-		return $this->render('Profile/profile_changepassword.html.twig', array(
+		return $this->render('Profile/ChangePassword/profile_changepassword.html.twig', array(
 			'user' => $this->getUser()
 		));
 	}
