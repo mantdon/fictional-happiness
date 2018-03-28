@@ -43,13 +43,11 @@ class UserController extends Controller
 	}
 
 	private function savePreviousPaginationPage(Request $request){
-		dump($this->get('session')->get('previous_page'));
 		if(!$this->get('session')->has('previous_page')) {
 			$previousPageURL = $request->headers->get( 'referer' );
 			$previousPage = PreviousPageExtractor::getPreviousPage( $previousPageURL, 'users' );
 
 			$this->get( 'session' )->set( 'previous_page', $previousPage );
 		}
-		dump($this->get('session')->get('previous_page'));
 	}
 }
