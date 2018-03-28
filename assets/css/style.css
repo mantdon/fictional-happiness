@@ -2,25 +2,22 @@ header .logo {
     float:left;
     margin:30px 0 0;
 }
-
 .dropdown-item:hover{
     background: #d8413d;
     color: white;
 }
-
+.list-group-item {
+    background: #cebc81;
+}
 .first-item {
     width: 100%;
-    background-color: #AA3333;
+    background-color: #479761;
     color:white;
     border-radius: 10px 10px 0 0;
-}
-.list-group-item {
-    color: black;
 }
 #profile {
     margin-bottom: 15px;
 }
-
 /* Needed for h-## classes to work */
 html, body{
     height: 100%;
@@ -48,8 +45,26 @@ html, body{
 .very-tabs > li > a{
     color: #6f42c1;
 }
-
 .button-full-width{
     width: 100%;
     margin-bottom: 10px;
+}
+.greeting {
+    margin-top: 15px;
+}
+
+/* tab items*/
+.nav-item .tab-link {
+    background: #479761;
+    color: white;
+    border: 1px black solid;
+}
+.nav-item .tab-link:hover {
+    color: black;
+}
+.nav-tabs {
+    border: none;
+}
+.nav-item .tab-active {
+    background: #cebc81;
 }
