@@ -25,7 +25,7 @@
                         <td>{{ vehicle.plateNumber }}</td>
                         <td>
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="vehicleActionDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
+                                <button class="btn custom-button dropdown-toggle" type="button" id="vehicleActionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="vehicleActionDropdown">
@@ -46,6 +46,6 @@
                 </strong>
             </span><br>
         {% endif %}
-        <a class="btn btn-primary" href="{{ path('add_vehicle') }}">Add new vehicle</a>
+        <a class="btn custom-button" href="{{ path('add_vehicle') }}">Add new vehicle</a>
     </div>
 {% endblock %}

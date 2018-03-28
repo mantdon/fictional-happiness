@@ -1,0 +1,23 @@
+.tab-bar .nav-item .nav-link{
+    background: #479761;
+    color: white;
+    border: 1px black solid;
+}
+
+.tab-bar .nav-item .nav-link:hover{
+    color:black;
+    background-color: white;
+}
+
+.tab-bar{
+    border: none;
+}
+
+.tab-bar .nav-item .active{
+    background: white;
+    color: black;
+}
+
+.very-tabs > li > a{
+    color: #cebc81;
+}

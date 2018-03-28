@@ -15,53 +15,17 @@
     <body>
     <header>
         {% block header %}
-            <nav class="navbar navbar-expand-md">
+            {# Toggler icon is invisble without navbar-dark #}
+            <nav class="navbar navbar-expand-md navbar-dark">
                 <div class="nav-item">
                                                             {# Should not look like this. #}
                     <a class="navbar-left" href="{{ path('homepage') }}"><img src="{{ asset('build/images/logo.532e8b6f.png') }}" alt="Uh oh!" /></a>
                 </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls=".navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"/>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('homepage') }}">Namai<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('service_index') }}">Paslaugos</a>
-                        </li>
-                        {# Seen by unauthenticated users #}
-                        {% if not app.user %}
-                            <li class="nav-item">
-                              <a class="nav-link" href="{{ path('user_registration') }}">Registruotis</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="{{ path('login') }}">Prisijungti</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    {% if app.user %}
-                    <ul class="navbar-nav ml-auto">
-                       <li class="nav-item">
-                           <div class="dropdown">
-                               <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenuDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
-                                   {{ app.user.email }}
-                               </button>
-                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
-                                   {% if is_granted('ROLE_USER') %}
-                                       <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
-                                       <a class="dropdown-item" href="#">Register for service</a>
-                                   {% elseif is_granted('ROLE_ADMIN') %}
-                                       <a class="dropdown-item" href="{{ path('admin_home') }}">Admin panel</a>
-                                   {% endif %}
-                                   <div class="dropdown-divider"></div>
-                                   <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
-                               </div>
-                           </div>
-                       </li>
-                    </ul>
-                    {% endif %}
+                        {% include 'navbar_items.html.twig' %}
                 </div>
             </nav>
         {% endblock %}
@@ -77,13 +41,6 @@
             </div>
         {% endfor %}
         {% block content %}
-            {# Seen by unauthenticated users #}
-            {% if not app.user %}
-                <h1>Hello, world</h1>
-            {# Seen by authenticated users #}
-            {% else %}
-                <h1 class="greeting">Hello, {{ app.user.emailname }}</h1>
-            {% endif %}
         {% endblock %}
     </div>
 

@@ -1,0 +1,13 @@
+.pagination-bar{
+    align-items: center;
+}
+
+.pagination-bar .active .page-link{
+    background-color: #cebc81;
+    border-radius: 2px;
+    border: 4px solid #cebc81;
+}
+
+.pagination-bar .page-link{
+    color: #cebc81;
+}
