@@ -112,7 +112,7 @@ class ServiceController extends Controller
     private function savePreviousPaginationPage(Request $request){
 	    if(!$this->get('session')->has('previous_page')) {
 		    $previousPageURL = $request->headers->get( 'referer' );
-		    $previousPage = PreviousPageExtractor::getPreviousPage( $previousPageURL, $this->pageParameterName );
+		    $previousPage = PreviousPageExtractor::getPreviousPage( $previousPageURL, 'services' );
 
 		    $this->get( 'session' )->set( 'previous_page', $previousPage );
 	    }
