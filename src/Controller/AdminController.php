@@ -38,4 +38,18 @@ class AdminController extends Controller
                 'pageParameterName' => $this->pageParameterName,
                 'route' => 'admin.user_list'));
     }
+
+    /**
+     * @Route("/users/delete/{id}", name="delete.user")
+     */
+    public function deleteUser($id)
+    {
+        $entityManager = $this->getDoctrine()->getEntityManager();
+        $user = $entityManager->getRepository('App:User')->find($id);
+        $entityManager->remove($user);
+        $entityManager->flush();
+        return $this->render('Admin/delete_user.html.twig', [
+        'id' => $id
+        ]);
+    }
 }
