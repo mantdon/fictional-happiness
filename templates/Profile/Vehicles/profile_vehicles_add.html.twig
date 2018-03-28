@@ -1,10 +1,10 @@
-{% include 'Profile/profile_vehicles.html.twig' %}
+{% include 'Profile/Vehicles/profile_vehicles.html.twig' %}
 
-<div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="addVehicleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pridėti naują automobilį</h5>
+                <h5 class="modal-title" id="addVehicleLabel">Pridėti naują automobilį</h5>
                 <a  href="{{ path('user_vehicles') }}" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -16,13 +16,13 @@
             {% else %}
                 <div class="modal-body">
                     {{ form_start(form) }}
-                    {{ form_row(form.make) }}
-                    {{ form_row(form.model) }}
-                    {{ form_row(form.year_of_production) }}
-                    {{ form_row(form.plate_number) }}
+                    {{ form_row(form.make, {'attr': {'class': 'form-control'}, 'label': 'Markė'}) }}
+                    {{ form_row(form.model, {'attr': {'class': 'form-control'}, 'label': 'Modelis'}) }}
+                    {{ form_row(form.year_of_production, {'attr': {'class': 'form-control'}, 'label': 'Pagaminimo metai'}) }}
+                    {{ form_row(form.plate_number, {'attr': {'class': 'form-control'}, 'label': 'Numeriai'}) }}
                 </div>
                 <div class="modal-footer">
-                    {{ form_row(form.submit) }}
+                    {{ form_row(form.submit, {'attr': {'class': 'btn custom-button'}, 'label': 'Pridėti automobilį'}) }}
                     {{ form_end(form) }}
                 </div>
             {% endif %}
