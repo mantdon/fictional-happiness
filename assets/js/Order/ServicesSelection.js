@@ -26,8 +26,12 @@ export default class ServicesSelection extends React.Component {
 
     fetchServiceList(pattern)
     {
-        const slash = pattern.length > 0? '/': '';
-        fetch("/services/search" + slash + pattern)
+        fetch("/services/search", {
+            method: "POST",
+            body: JSON.stringify({
+                pattern: pattern
+            })
+        })
             .then(res => res.json())
             .then(
                 (result) => {
