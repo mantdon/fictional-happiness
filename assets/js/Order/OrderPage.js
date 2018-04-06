@@ -13,10 +13,19 @@ class OrderPage extends React.Component {
             totalSteps: 3,
             dialog: null,
             isBackwardsActive: false,
-            isForwardsActive: false
+            isForwardsActive: false,
+            selectedVehicle: null
         };
         this.nextStep = this.nextStep.bind(this);
         this.previousStep = this.previousStep.bind(this);
+        this.selectVehicle = this.selectVehicle.bind(this);
+    }
+
+    selectVehicle(vehicle)
+    {
+        this.setState({
+            selectedVehicle: vehicle
+        });
     }
 
     componentWillMount()
@@ -53,11 +62,11 @@ class OrderPage extends React.Component {
     {
         switch (step) {
             case 1:
-                return <VehicleSelection nextStep={this.nextStep}/>;
+                return <VehicleSelection selectVehicle={this.selectVehicle} nextStep={this.nextStep}/>;
             case 2:
                 return <ServicesSelection nextStep={this.nextStep}/>;
             case 3:
-                return <Confirmation services={this.state.selectedServices}/>
+                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices}/>
         }
     }
 

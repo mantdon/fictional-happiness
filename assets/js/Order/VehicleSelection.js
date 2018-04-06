@@ -33,7 +33,7 @@ export default class OrderPage extends React.Component {
     {
         if(this.state.isLoaded)
             if(items.length > 0)
-                return items.map((vehicle, i) => <VehicleOption nextStep={this.props.nextStep} vehicle={vehicle} key={i} />);
+                return items.map((vehicle, i) => <VehicleOption selectVehicle={this.props.selectVehicle} nextStep={this.props.nextStep} vehicle={vehicle} key={i} />);
     }
 
     render() {
