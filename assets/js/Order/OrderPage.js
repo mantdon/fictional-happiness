@@ -14,17 +14,27 @@ class OrderPage extends React.Component {
             dialog: null,
             isBackwardsActive: false,
             isForwardsActive: false,
-            selectedVehicle: null
+            selectedVehicle: null,
+            selectedServices: []
         };
+
         this.nextStep = this.nextStep.bind(this);
         this.previousStep = this.previousStep.bind(this);
         this.selectVehicle = this.selectVehicle.bind(this);
+        this.setSelectedServices = this.setSelectedServices.bind(this);
     }
 
     selectVehicle(vehicle)
     {
         this.setState({
             selectedVehicle: vehicle
+        });
+    }
+
+    setSelectedServices(services)
+    {
+        this.setState({
+            selectedServices: services
         });
     }
 
@@ -64,7 +74,7 @@ class OrderPage extends React.Component {
             case 1:
                 return <VehicleSelection selectVehicle={this.selectVehicle} nextStep={this.nextStep}/>;
             case 2:
-                return <ServicesSelection nextStep={this.nextStep}/>;
+                return <ServicesSelection setSelectedServices={this.setSelectedServices} selectedServices={this.state.selectedServices}/>;
             case 3:
                 return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices}/>
         }

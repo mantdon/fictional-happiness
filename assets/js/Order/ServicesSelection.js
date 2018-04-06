@@ -9,7 +9,7 @@ export default class ServicesSelection extends React.Component {
         this.state = {
             services: [],
             servicesList: [],
-            selectedServices: [],
+            selectedServices: this.props.selectedServices,
             selectedServicesList: [],
             searchValue: ''
         };
@@ -21,6 +21,7 @@ export default class ServicesSelection extends React.Component {
     componentDidMount()
     {
         this.fetchServiceList(this.state.searchValue);
+        this.updateSelectedServiceList();
     }
 
     fetchServiceList(pattern)
@@ -64,10 +65,19 @@ export default class ServicesSelection extends React.Component {
     {
         this.setState({
                 selectedServices: newList,
-                selectedServicesList: this.formServiceList(newList, this.removeSelectedService)}, () => {
+                }, () => {
+                this.updateSelectedServiceList();
                 this.updateServiceList();
             }
         );
+        this.props.setSelectedServices(newList);
+    }
+
+    updateSelectedServiceList()
+    {
+        this.setState({
+            selectedServicesList: this.formServiceList(this.state.selectedServices, this.removeSelectedService)
+        });
     }
 
     updateServiceList()
