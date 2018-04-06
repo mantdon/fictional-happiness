@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import VehicleSelection from './VehicleSelection';
 import ServicesSelection from './ServicesSelection';
+import Confirmation from "./Confirmation";
 
 class OrderPage extends React.Component {
 
@@ -55,6 +56,8 @@ class OrderPage extends React.Component {
                 return <VehicleSelection nextStep={this.nextStep}/>;
             case 2:
                 return <ServicesSelection nextStep={this.nextStep}/>;
+            case 3:
+                return <Confirmation services={this.state.selectedServices}/>
         }
     }
 
