@@ -76,7 +76,7 @@ class OrderPage extends React.Component {
             case 2:
                 return <ServicesSelection setSelectedServices={this.setSelectedServices} selectedServices={this.state.selectedServices}/>;
             case 3:
-                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices}/>
+                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices} nextStep={this.nextStep}/>
         }
     }
 
@@ -98,23 +98,30 @@ class OrderPage extends React.Component {
     {
         if(this.state.step === 1)
         {
-            this.setState({
-                isBackwardsActive: false,
-                isForwardsActive: false
-            });
+            this.disableBothButtons();
         }
-        else{
+        else if(this.state.step > 1 && this.state.step < this.state.totalSteps){
             this.setState({
                 isBackwardsActive: true,
                 isForwardsActive: true
             });
         }
-
-        if(this.state.step === this.state.totalSteps) {
+        else if(this.state.step === this.state.totalSteps) {
             this.setState({
                 isForwardsActive: false
             });
         }
+        else{
+            this.disableBothButtons();
+        }
+    }
+
+    disableBothButtons()
+    {
+        this.setState({
+            isBackwardsActive: false,
+            isForwardsActive: false
+        });
     }
 
     disableButton(active)

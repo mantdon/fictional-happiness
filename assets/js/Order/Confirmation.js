@@ -46,9 +46,7 @@ export default class Confirmation extends React.Component {
                 errors: result['errors']
             });
         else {
-            this.setState({
-                orderCompleted: true
-            });
+            this.props.nextStep();
         }
     }
 
