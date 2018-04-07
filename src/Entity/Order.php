@@ -31,6 +31,10 @@ class Order
      */
     private $services;
 
+    /**
+     * @ORM\Column(type="decimal")
+     */
+    private $cost;
 
     public function __construct() {
         $this->services = new ArrayCollection();
@@ -76,4 +80,24 @@ class Order
         $this->services = $services;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @param mixed $cost
+     * @return Order
+     */
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+        return $this;
+    }
+
+
 }

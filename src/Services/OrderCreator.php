@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Entity\Order;
+use App\Entity\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -20,9 +21,12 @@ class OrderCreator
     {
         $order = new Order();
 
+       // $services = $this->getReferenceCollection('App:Service', $this->getIds($services));
+        $services = $this->em->getRepository('App:Service')->findBy(['id' => $this->getIds($services)]);
         $order
             ->setVehicle($this->getReference('App:Vehicle', $vehicle['id']))
-            ->setServices($this->getReferenceCollection('App:Service', $this->getIds($services)));
+            ->setServices($services)
+            ->setCost($this->calculateCost($services));
 
         $this->em->persist($order);
         $this->em->flush();
@@ -38,7 +42,23 @@ class OrderCreator
         return $this->em->getReference($entityName,$id);
     }
 
+    private function calculateCost($array)
+    {
+        $cost = 0;
+
+        /**
+         * @var $item Service
+         */
+        foreach ($array as $item)
+        {
+            $cost += $item->getPrice();
+        }
+
+        return $cost;
+    }
+
     /**
+     * May be used in the future
      * @param $entityName String
      * @param $ids array
      * @return ArrayCollection used for setting multiple relationships.
