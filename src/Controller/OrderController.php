@@ -11,6 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class OrderController extends Controller
 {
     /**
+     * @Route("/order", name="order")
+     */
+    public function home()
+    {
+        return $this->render('Order/base.html.twig');
+    }
+
+    /**
      * @Route("order/submit")
      */
     public function submit(Request $request, OrderCreator $orderCreator)
