@@ -11,7 +11,9 @@ export default class OrderPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/api")
+        fetch("/user/vehicles/get", {
+            credentials: "same-origin"
+        })
             .then(res => res.json())
             .then(
                 (result) => {
