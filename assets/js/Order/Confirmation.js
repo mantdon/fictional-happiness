@@ -6,9 +6,17 @@ export default class Confirmation extends React.Component {
         super(props);
         this.state = {
             orderCompleted: false,
-            errors: []
+            errors: [],
+            cost: 0
         };
         this.submitOrder = this.submitOrder.bind(this);
+    }
+
+    componentDidMount()
+    {
+        this.setState({
+            cost: this.calculateCost(this.props.services)
+        });
     }
 
     submitOrder()
@@ -40,6 +48,15 @@ export default class Confirmation extends React.Component {
             )
     }
 
+    calculateCost(services)
+    {
+        let cost = 0;
+        services.forEach((service) => {
+            cost += parseFloat(service['price']);
+        });
+        return cost;
+    }
+
     processResponse(result) {
         if (result['errors'])
             this.setState({
@@ -51,6 +68,9 @@ export default class Confirmation extends React.Component {
     }
 
     render(){
-        return <div onClick={this.submitOrder}>Mokėti</div>;
+        return <div>
+            <div>kaina ${this.state.cost}</div>
+            <div onClick={this.submitOrder}>Mokėti</div>
+        </div>;
     }
 }
