@@ -1,9 +1,14 @@
 // Add all .css files to include in build/css/main.css
-@import 'tables.css';
+@import 'admin.css';
+@import 'alert.css';
+@import 'body.css';
+@import 'buttons.css';
+@import 'dropdown.css';
 @import 'loginStyle.css';
 @import 'navBarStyle.css';
+@import 'pagination.css';
+@import 'profile.css';
 @import 'registerStyle.css';
 @import 'style.css';
+@import 'tables.css';
 @import 'tabs.css';
-@import 'pagination.css';
-@import 'buttons.css';
