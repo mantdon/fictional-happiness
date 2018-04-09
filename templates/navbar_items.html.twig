@@ -1,55 +1,57 @@
-<ul class="navbar-nav mr-auto">
+{% set home_label = "NAMAI" %}
+{% set services_label = "PASLAUGOS" %}
+{% set register_label = "REGISTRUOTIS" %}
+{% set login_label = "PRISIJUNGTI" %}
+
+<ul class="navbar-nav col-sm-11">
     {% if home_active is defined and home_active == "true" %}
     <li class="nav-item active">
-        <span class="nav-link">Namai</span>
+        <span class="nav-link">{{ home_label }}</span>
     </li>
     {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('homepage') }}">Namai<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ path('homepage') }}">{{ home_label }}<span class="sr-only">(current)</span></a>
         </li>
     {% endif %}
 
     {% if services_active is defined and services_active == "true" %}
     <li class="nav-item active">
-        <span class="nav-link">Paslaugos</span>
+        <span class="nav-link">{{ services_label }}</span>
     </li>
     {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('service_index') }}">Paslaugos</a>
+            <a class="nav-link" href="{{ path('service_index') }}">{{ services_label }}</a>
         </li>
     {% endif %}
-
-    {# Seen by unauthenticated users #}
+</ul>
+<ul class="navbar-nav col-sm-1 user-nav">
     {% if not app.user %}
         {% if registration_active is defined and registration_active == "true" %}
             <li class="nav-item active">
-                <span class="nav-link">Registruotis</span>
+                <span class="nav-link">{{ register_label }}</span>
             </li>
         {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('user_registration') }}">Registruotis</a>
+                <a class="nav-link" href="{{ path('user_registration') }}">{{ register_label }}</a>
             </li>
         {% endif %}
 
         {% if login_active is defined and login_active == "true" %}
             <li class="nav-item active">
-                <span class="nav-link">Prisijungti</span>
+                <span class="nav-link">{{ login_label }}</span>
             </li>
         {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('login') }}">Prisijungti</a>
+                <a class="nav-link" href="{{ path('login') }}">{{ login_label }}</a>
             </li>
         {% endif %}
-    {% endif %}
-</ul>
-{% if app.user %}
-    <ul class="navbar-nav ml-auto">
+    {% elseif app.user %}
         <li class="nav-item">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenuDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-nav-dropdown dropdown-toggle" type="button" id="userMenuDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ app.user.email }}
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="userMenuDropdown">
                     {% if is_granted('ROLE_USER') %}
                         <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
                         <a class="dropdown-item" href="#">Register for service</a>
@@ -61,5 +63,5 @@
                 </div>
             </div>
         </li>
-    </ul>
-{% endif %}
+    {% endif %}
+</ul>
