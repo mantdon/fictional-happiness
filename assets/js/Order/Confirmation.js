@@ -68,9 +68,9 @@ export default class Confirmation extends React.Component {
     }
 
     render(){
-        return <div>
+        return <div className={'text-center'}>
             <div>kaina ${this.state.cost}</div>
-            <div onClick={this.submitOrder}>Mokėti</div>
+            <div className={'orderDialogButton'} onClick={this.submitOrder}>Mokėti</div>
         </div>;
     }
 }
