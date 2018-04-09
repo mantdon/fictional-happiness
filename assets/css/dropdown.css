@@ -1,0 +1,34 @@
+/*<editor-fold desc="General dropdown menu">*/
+/*
+ * NOTE: Separate style for nav dropdown, currently,
+ * does not exist.
+ */
+.dropdown-menu-custom {
+    width: 300px;
+
+    background-color: #433e3f;
+    border: 2px solid #b07156;
+    outline: 2px solid #433e3f;
+    border-radius: 0;
+
+    padding: 0;
+}
+
+.dropdown-menu-custom .dropdown-item {
+    color: #e8edf3;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.dropdown-menu-custom .dropdown-item:hover,
+.dropdown-menu-custom .dropdown-item:focus,
+.dropdown-menu-custom .dropdown-item.active {
+    background-color: #c69c72;
+    color: #433e3f;
+}
+.dropdown-menu-custom .dropdown-divider {
+    border: 1px solid #b07156;
+
+    margin: 0;
+}
+/*</editor-fold>*/
