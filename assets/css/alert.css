@@ -1,0 +1,10 @@
+/*
+ * Selector in timeout function in App.js must match this class name
+ * in order for auto dismiss to function.
+ */
+.alert-custom{
+    background: #b07156;
+    border: 4px double #433e3f;
+    border-radius: 1px;
+    text-align: center;
+}
