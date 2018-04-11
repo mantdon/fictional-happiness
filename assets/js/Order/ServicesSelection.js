@@ -8,6 +8,7 @@ export default class ServicesSelection extends React.Component {
         super(props);
         this.state = {
             services: [],
+            shownServices: [],
             servicesList: [],
             selectedServices: this.props.selectedServices,
             selectedServicesList: [],
@@ -37,6 +38,7 @@ export default class ServicesSelection extends React.Component {
                 (result) => {
                     this.setState({
                         services: result,
+                        shownServices: result,
                         servicesList: this.formAvailableServiceList(result, this.selectService)
                     });
                 },
@@ -87,14 +89,15 @@ export default class ServicesSelection extends React.Component {
     updateServiceList()
     {
         this.setState({
-            servicesList: this.formAvailableServiceList(this.state.services, this.selectService)
+            servicesList: this.formAvailableServiceList(this.state.shownServices, this.selectService)
         });
     }
 
     formAvailableServiceList(services, onClick)
     {
-        if(services.length > 0)
-            return services.map((service, i) => this.formAvailableService(service, i, onClick));
+        if(typeof services !== 'undefined')
+            if(services.length > 0)
+                return services.map((service, i) => this.formAvailableService(service, i, onClick));
     }
 
     formAvailableService(service, i, onClick)
@@ -126,7 +129,24 @@ export default class ServicesSelection extends React.Component {
     handleSearchBox(event)
     {
         this.setState({searchValue: event.target.value}, () => {
-            this.fetchServiceList(this.state.searchValue);
+           // this.fetchServiceList(this.state.searchValue); // may be user in the future
+            this.filterServices(this.state.searchValue);
+        });
+    }
+
+    filterServices(pattern)
+    {
+        let results = [];
+        this.state.services.forEach((service) => {
+            if(service.name.indexOf(pattern) !== -1) {
+                results.push(service)
+            }
+        });
+
+
+        this.setState({
+            shownServices: results,
+            servicesList: this.formAvailableServiceList(results, this.selectService)
         });
     }
 
