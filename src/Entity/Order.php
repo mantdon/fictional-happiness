@@ -36,6 +36,11 @@ class Order
      */
     private $cost;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $visitDate;
+
     public function __construct() {
         $this->services = new ArrayCollection();
     }
@@ -99,5 +104,21 @@ class Order
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getVisitDate()
+    {
+        return $this->visitDate;
+    }
 
+    /**
+     * @param mixed $visitDate
+     * @return Order
+     */
+    public function setVisitDate($visitDate)
+    {
+        $this->visitDate = $visitDate;
+        return $this;
+    }
 }
