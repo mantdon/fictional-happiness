@@ -90,3 +90,23 @@
 .orderButtonDisabled{
     display: none;
 }
+
+.datePickerContainer{
+    position: relative;
+}
+
+.timeSelectionContainer{
+    visibility: visible;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 25%;
+    left: 50%;
+    margin-left: -60px;
+}
