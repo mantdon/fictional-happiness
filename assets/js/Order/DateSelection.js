@@ -6,6 +6,6 @@ import 'moment/locale/lt';
 export default class DateSelection extends React.Component {
 
     render(){
-        return <Datetime />;
+        return <Datetime input={false}/>;
     }
 }
