@@ -15,6 +15,7 @@ export default class DateSelection extends React.Component {
         };
 
         this.onDateSelection = this.onDateSelection.bind(this);
+        this.onTimeSelectionExit = this.onTimeSelectionExit.bind(this);
     }
 
     onDateSelection(date)
@@ -24,11 +25,18 @@ export default class DateSelection extends React.Component {
         });
     }
 
+    onTimeSelectionExit()
+    {
+        this.setState({
+            showTimeSelection: false
+        });
+    }
+
     render(){
         return (
             <div className={'DatePickerContainer'}>
                 <DayPicker showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}/>
-                {this.state.showTimeSelection === true? <TimeSelection/>: null}
+                {this.state.showTimeSelection === true? <TimeSelection onExit={this.onTimeSelectionExit}/>: null}
             </div>
         );
     }
