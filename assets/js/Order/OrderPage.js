@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import VehicleSelection from './VehicleSelection';
 import ServicesSelection from './ServicesSelection';
 import Confirmation from "./Confirmation";
+import DateSelection from "./DateSelection";
 import Success from "./Success";
 
 class OrderPage extends React.Component {
@@ -11,7 +12,7 @@ class OrderPage extends React.Component {
         super(props);
         this.state = {
             step: 1,
-            totalSteps: 3,
+            totalSteps: 4,
             dialog: null,
             isBackwardsActive: false,
             isForwardsActive: false,
@@ -77,8 +78,10 @@ class OrderPage extends React.Component {
             case 2:
                 return <ServicesSelection setSelectedServices={this.setSelectedServices} selectedServices={this.state.selectedServices}/>;
             case 3:
-                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices} nextStep={this.nextStep}/>
+                return <DateSelection/>;
             case 4:
+                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices} nextStep={this.nextStep}/>
+            case 5:
                 return <Success/>;
         }
     }
