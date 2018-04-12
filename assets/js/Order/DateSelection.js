@@ -1,8 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
-import Datetime from 'react-datetime';
+import DayPicker from 'react-day-picker';
 import TimeSelection from './TimeSelection';
 import 'moment/locale/lt';
+import MomentLocaleUtils from 'react-day-picker/moment';
 
 export default class DateSelection extends React.Component {
 
@@ -26,7 +27,7 @@ export default class DateSelection extends React.Component {
     render(){
         return (
             <div className={'DatePickerContainer'}>
-                <Datetime input={false} timeFormat={false} onChange={this.onDateSelection}/>
+                <DayPicker showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}/>
                 {this.state.showTimeSelection === true? <TimeSelection/>: null}
             </div>
         );

@@ -72,6 +72,7 @@ class OrderPage extends React.Component {
 
     getCurrentDialog(step)
     {
+        return <DateSelection/>;
         switch (step) {
             case 1:
                 return <VehicleSelection selectVehicle={this.selectVehicle} nextStep={this.nextStep}/>;
