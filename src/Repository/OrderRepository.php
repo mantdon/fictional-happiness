@@ -47,4 +47,19 @@ class OrderRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param $date \DateTime
+     */
+    public function fi($date)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('YEAR(a.visitDate) = YEAR(:date) AND
+             MONTH(a.visitDate) = MONTH(:date) AND 
+             DAY(a.visitDate) = DAY(:date)')
+            ->setParameter('date', $date)
+            ->orderBy('a.visitDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

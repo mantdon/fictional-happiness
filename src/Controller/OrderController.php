@@ -4,16 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
+use App\Services\AvailableTimesFetcher;
 use App\Services\OrderCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * @Route("/order")
+ */
 class OrderController extends Controller
 {
     /**
-     * @Route("/order", name="order")
+     * @Route("/", name="order")
      */
     public function home(Request $request)
     {
@@ -39,7 +43,7 @@ class OrderController extends Controller
     }
 
     /**
-     * @Route("order/submit")
+     * @Route("/submit")
      */
     public function submit(Request $request, OrderCreator $orderCreator)
     {
@@ -48,5 +52,17 @@ class OrderController extends Controller
         $orderCreator->createOrder($content['vehicle'], $content['services']);
 
         return new JsonResponse($request->request->get('services'));
+    }
+
+    /**
+     * @Route("/fetch_times")
+     */
+    public function fetchAvailableTimes(Request $request, AvailableTimesFetcher $fetcher)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $times = $fetcher->fetchDay(new \DateTime($content['date']));
+
+        return new JsonResponse($times);
     }
 }
