@@ -12,7 +12,7 @@ class OrderPage extends React.Component {
         super(props);
         this.state = {
             step: 1,
-            totalSteps: 4,
+            totalSteps: 3,
             dialog: null,
             isBackwardsActive: false,
             isForwardsActive: false,
@@ -122,7 +122,7 @@ class OrderPage extends React.Component {
                 isForwardsActive: true
             });
         }
-        else if(this.state.step === this.state.totalSteps) {
+        else if(this.state.step >= this.state.totalSteps) {
             this.setState({
                 isForwardsActive: false
             });
