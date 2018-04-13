@@ -1,12 +1,60 @@
 import React from 'react';
 import {render} from 'react-dom';
+import TimeOption from './TimeOption';
 
 export default class TimeSelection extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            timesList: []
+        };
+    }
+
+    componentWillMount()
+    {
+        this.fetchTimes(this.props.date);
+    }
+
+    fetchTimes(date)
+    {
+        fetch("/order/fetch_times", {
+            method: "POST",
+            body: JSON.stringify({
+                date: date
+            })
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        timesList: this.formTimesList(result)
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            )
+    }
+
+    formTimesList(times)
+    {
+        return times.map((time, i) => this.formTimeElement(time, i));
+    }
+
+    formTimeElement(time, i)
+    {
+        return <TimeOption time={time}
+                              key={i}/>;
+    }
 
     render(){
         return (
             <div className={'timeSelectionContainer'}>
                 <span onClick={this.props.onExit} className={'close'} aria-hidden="true">&times;</span>
+                {this.state.timesList}
             </div>
         );
     }
