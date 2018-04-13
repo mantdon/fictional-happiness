@@ -17,13 +17,15 @@ class OrderPage extends React.Component {
             isBackwardsActive: false,
             isForwardsActive: false,
             selectedVehicle: null,
-            selectedServices: []
+            selectedServices: [],
+            date: null
         };
 
         this.nextStep = this.nextStep.bind(this);
         this.previousStep = this.previousStep.bind(this);
         this.selectVehicle = this.selectVehicle.bind(this);
         this.setSelectedServices = this.setSelectedServices.bind(this);
+        this.setDate = this.setDate.bind(this);
     }
 
     selectVehicle(vehicle)
@@ -72,19 +74,26 @@ class OrderPage extends React.Component {
 
     getCurrentDialog(step)
     {
-        return <DateSelection/>;
         switch (step) {
             case 1:
                 return <VehicleSelection selectVehicle={this.selectVehicle} nextStep={this.nextStep}/>;
             case 2:
                 return <ServicesSelection setSelectedServices={this.setSelectedServices} selectedServices={this.state.selectedServices}/>;
             case 3:
-                return <DateSelection/>;
+                return <DateSelection onDateSelection={this.setDate}/>;
             case 4:
                 return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices} nextStep={this.nextStep}/>
             case 5:
                 return <Success/>;
         }
+    }
+
+    setDate(date)
+    {
+        this.setState({
+            date: date
+        });
+        this.nextStep();
     }
 
     formForwardsButton()

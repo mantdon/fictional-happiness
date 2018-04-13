@@ -38,7 +38,7 @@ export default class DateSelection extends React.Component {
         return (
             <div className={'datePickerContainer'}>
                 {this.state.showTimeSelection === true
-                    ? <TimeSelection date={this.state.dateSelected} onExit={this.onTimeSelectionExit}/>
+                    ? <TimeSelection onTimeSelection={this.props.onDateSelection} date={this.state.dateSelected} onExit={this.onTimeSelectionExit}/>
                     : <DayPicker className={'timeSelectionElementSize'} showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}/>}
             </div>
         );

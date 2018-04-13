@@ -10,6 +10,7 @@ export default class TimeSelection extends React.Component {
         this.state = {
             timesList: []
         };
+        this.handleTimeSelection = this.handleTimeSelection.bind(this);
     }
 
     componentWillMount()
@@ -47,11 +48,15 @@ export default class TimeSelection extends React.Component {
 
     formTimeElement(time, i)
     {
-        return <TimeOption time={time}
+        return <TimeOption time={time} onClick={this.handleTimeSelection}
                               key={i}/>;
     }
 
-    //
+    handleTimeSelection(time)
+    {
+        this.props.onTimeSelection(moment(moment(this.props.date).format('YYYY-MM-DD') + ' ' + time));
+    }
+
     render(){
         return (
             <div className={'timeSelectionContainer'}>
