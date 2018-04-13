@@ -82,7 +82,7 @@ class OrderPage extends React.Component {
             case 3:
                 return <DateSelection onDateSelection={this.setDate}/>;
             case 4:
-                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices} nextStep={this.nextStep}/>
+                return <Confirmation vehicle={this.state.selectedVehicle} services={this.state.selectedServices} nextStep={this.nextStep} date={this.state.date}/>
             case 5:
                 return <Success/>;
         }

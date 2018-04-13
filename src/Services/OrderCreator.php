@@ -17,16 +17,18 @@ class OrderCreator
         $this->em = $em;
     }
 
-    public function createOrder($vehicle, $services)
+    public function createOrder($vehicle, $services, $date)
     {
         $order = new Order();
 
+        $visitDate = new \DateTime($date);
        // $services = $this->getReferenceCollection('App:Service', $this->getIds($services));
         $services = $this->em->getRepository('App:Service')->findBy(['id' => $this->getIds($services)]);
         $order
             ->setVehicle($this->getReference('App:Vehicle', $vehicle['id']))
             ->setServices($services)
-            ->setCost($this->calculateCost($services));
+            ->setCost($this->calculateCost($services))
+            ->setVisitDate($visitDate);
 
         $this->em->persist($order);
         $this->em->flush();

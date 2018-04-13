@@ -23,7 +23,8 @@ export default class Confirmation extends React.Component {
     {
         let services = this.props.services;
         let vehicle = this.props.vehicle;
-
+        let date = this.props.date.format('YYYY-MM-DD HH:mm');
+        
         fetch("/order/submit", {
             method: "POST",
             headers: {
@@ -32,7 +33,8 @@ export default class Confirmation extends React.Component {
             },
             body: JSON.stringify({
                 services: services,
-                vehicle: vehicle
+                vehicle: vehicle,
+                date: date
             })
         })
             .then(res => res.json())

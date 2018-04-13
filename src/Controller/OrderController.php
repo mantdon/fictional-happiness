@@ -49,7 +49,7 @@ class OrderController extends Controller
     {
         $content = json_decode($request->getContent(), true);
 
-        $orderCreator->createOrder($content['vehicle'], $content['services']);
+        $orderCreator->createOrder($content['vehicle'], $content['services'], $content['date']);
 
         return new JsonResponse($request->request->get('services'));
     }
