@@ -51,7 +51,7 @@ class OrderRepository extends ServiceEntityRepository
     /**
      * @param $date \DateTime
      */
-    public function fi($date)
+    public function findAllOnDate($date)
     {
         return $this->createQueryBuilder('a')
             ->where('YEAR(a.visitDate) = YEAR(:date) AND

@@ -28,7 +28,7 @@ class AvailableTimesFetcher
      */
     public function fetchDay($date)
     {
-        $orders = $this->em->getRepository('App:Order')->fi($date);
+        $orders = $this->em->getRepository('App:Order')->findAllOnDate($date);
 
         return $this->formAvailableVisitTimes($orders);
     }
