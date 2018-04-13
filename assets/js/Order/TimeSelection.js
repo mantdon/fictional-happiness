@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import TimeOption from './TimeOption';
+import moment from 'moment';
 
 export default class TimeSelection extends React.Component {
 
@@ -50,9 +51,11 @@ export default class TimeSelection extends React.Component {
                               key={i}/>;
     }
 
+    //
     render(){
         return (
             <div className={'timeSelectionContainer'}>
+                <span>{moment(this.props.date).format('YYYY-MM-DD')}</span>
                 <span onClick={this.props.onExit} className={'close'} aria-hidden="true">&times;</span>
                 {this.state.timesList}
             </div>
