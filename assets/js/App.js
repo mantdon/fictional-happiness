@@ -10,7 +10,7 @@ Window.prototype.showModal = function testFunction(id){
 };
 
 window.setTimeout(function () {
-    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+    $(".alert-custom").fadeTo(500, 0).slideUp(500, function () {
         $(this).remove();
     });
 }, 5000);

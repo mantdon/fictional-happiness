@@ -1,129 +1,217 @@
+/*<editor-fold desc="Navbar">*/
 .navbar {
-    background-color: #479761;/*navBar background*/
+    background-color: #433e3f;
+
+    /* Outer accent border */
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+
+    margin-bottom: 10px;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    --accent-border-thickness: 2px;
+    --accent-border-color: #b07156;
 }
-.navbar .navbar-brand {
-    color: #19181a;
+
+/* Pseudo-element for inner accent border */
+.navbar:before{
+    background: none;
+
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+
+    content: "";
+    display: block;
+    position: absolute;
+
+    /* Offset (inwards) from top and bottom by specified thickness */
+    top: var(--accent-border-thickness);
+    bottom: var(--accent-border-thickness);
+    left: 0;
+    right: 0;
+
+    pointer-events: none;
 }
-.navbar .navbar-brand:hover,
-.navbar .navbar-brand:focus {
-    color: #ffffff;
+
+/* Pseudo-element for accent fill */
+.navbar:after{
+    background: none;
+
+    border-top: var(--accent-border-thickness) solid var(--accent-border-color);
+    border-bottom: var(--accent-border-thickness) solid var(--accent-border-color);
+
+    content: "";
+    display: block;
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    pointer-events: none;
 }
-.navbar .navbar-text {
-    color: #19181a;
-}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Nav links">*/
 .navbar .navbar-nav .nav-link {
-    color: #19181a;
+    color: #e8edf3;
     border-radius: .25rem;
+
     margin: 0 0.25em;
 }
+
 .navbar .navbar-nav .nav-link:not(.disabled):hover,
 .navbar .navbar-nav .nav-link:not(.disabled):focus {
-    color: #ffffff;
+    color: #c69c72;
 }
-.navbar .navbar-nav .dropdown-menu {
-    background-color: #cebc81;
-    border-color: #479761;
-}
-.navbar .navbar-nav .dropdown-menu .dropdown-item {
-    color: #19181a;
-}
-.navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
-.navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
-.navbar .navbar-nav .dropdown-menu .dropdown-item.active {
-    color: #FFF;
-    background-color: #479761;
-}
-.navbar .navbar-nav .dropdown-menu .dropdown-divider {
-    border-top-color: #479761;
-}
+
+/* Active link */
 .navbar .navbar-nav .nav-item.active .nav-link,
 .navbar .navbar-nav .nav-item.active .nav-link:hover,
 .navbar .navbar-nav .nav-item.active .nav-link:focus,
 .navbar .navbar-nav .nav-item.show .nav-link,
 .navbar .navbar-nav .nav-item.show .nav-link:hover,
 .navbar .navbar-nav .nav-item.show .nav-link:focus {
-    color: #cebc81;/*text color on active */
+    color: #b07156;
+
     font-weight: bold;
 }
-.navbar .navbar-toggle {
-    border-color: #479761;
-}
-.navbar .navbar-toggle:hover,
-.navbar .navbar-toggle:focus {
-    background-color: #479761;
-}
-.navbar .navbar-toggle .navbar-toggler-icon {
-    color: #19181a;
-}
-.navbar .navbar-collapse,
-.navbar .navbar-form {
-    border-color: #19181a;
-}
-.navbar .navbar-link {
-    color: #19181a;
-}
-.navbar .navbar-link:hover {
-    color: #ffffff;
+/*</editor-fold>*/
+
+/*<editor-fold desc="Nav link alignment">*/
+/* NOTE: No additional alignment is needed for
+ * for the logo and collapse toggle button.
+ */
+.navbar .navbar-nav{
+    justify-content: center;
 }
 
+.navbar .user-nav{
+    justify-content: right;
+
+    padding-right: 0;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="User dropdown menu button">*/
+.btn-nav-dropdown{
+    background-color: #b07156;
+    border: 4px double #433e3f;
+    color: #e8edf3;
+    border-radius: 0;
+    outline: none;
+}
+
+.btn-nav-dropdown:focus, .btn-nav-dropdown:active{
+    background-color: #c69c72;
+    color: #433e3f;
+    outline:none !important;
+    box-shadow: none !important;
+}
+
+.btn-nav-dropdown:hover{
+    background-color: #c69c72;
+    color: #433e3f;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Navbar toggler">*/
+/* NOTE: Relies on an additional bootstrap navbar class
+ * (ex: navbar-dark) to display the icon inside the button
+ */
+.navbar .navbar-toggler {
+    border-color: #b56969;
+    background: #312c32;
+    outline: none;
+}
+
+.navbar .navbar-toggler:hover {
+    border-color: #c69c72;
+    color: #312c32;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Collapse/Expand options by screen width">*/
 @media (max-width: 575px) {
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu{
+        width: 90vw;
+    }
+
     .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
-        color: #19181a;
+        color: #e8edf3;
     }
     .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
     .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus,
     .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
-        color: #FFF;
-        background-color: #479761;
+        background-color: #c69c72;
+        color: #433e3f;
     }
 }
 
 @media (max-width: 767px) {
+    .navbar-expand-md .navbar-nav .show .dropdown-menu{
+        width: 90vw;
+    }
+
     .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
-        color: #19181a;
+        color: #e8edf3;
     }
     .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
     .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus,
     .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
-        color: #FFF;
-        background-color: #479761;
+        background-color: #c69c72;
+        color: #433e3f;
     }
 }
 
 @media (max-width: 991px) {
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu{
+        width: 90vw;
+    }
     .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
-        color: #19181a;
+        color: #e8edf3;
     }
     .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
     .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus,
     .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
-        color: #FFF;
-        background-color: #479761;
+        background-color: #c69c72;
+        color: #433e3f;
     }
 }
 
 @media (max-width: 1199px) {
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu{
+        width: 90vw;
+    }
+
     .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
-        color: #19181a;
+        color: #e8edf3;
     }
     .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
     .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus,
     .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
-        color: #FFF;
-        background-color: #479761;
+        background-color: #c69c72;
+        color: #433e3f;
     }
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="General Collapse/Expand options">*/
+.navbar-expand .navbar-nav .show .dropdown-menu{
+    width: 90vw;
 }
 
 .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: #19181a;
+    color: #e8edf3;
 }
 .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
 .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus,
 .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
-    color: #FFF;
-    background-color: #479761;
+    background-color: #c69c72;
+    color: #433e3f;
 }
-
-.navbar{
-    margin-bottom: 10px;
-}
+/*</editor-fold>*/

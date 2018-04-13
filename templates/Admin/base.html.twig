@@ -3,21 +3,21 @@
 {% block content %}
     <h1 class="text-center">Admin panel</h1>
     <hr>
-    <div class="row">
-        <div class="col-sm-12">
-            {% block panels %}
-                {% include 'Admin/admin_panels.html.twig' with {
-                    home_active: 'true'
-                }%}
-            {% endblock %}
+    <div class="admin">
+        <div class="row">
+            <div class="col-sm-12 top-content">
+                {% block panels %}
+                    {% include 'Admin/admin_panels.html.twig' with {
+                        home_active: 'true'
+                    }%}
+                {% endblock %}
+            </div>
         </div>
-    </div>
-    <div class="row h-100" style="background-color: ghostwhite">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8" style="background-color: white; padding-top: 10px">
-            {% block panel_content %}
-            {% endblock %}
+        <div class="row h-100">
+            <div class="col-sm-12 bottom-content">
+                {% block panel_content %}
+                {% endblock %}
+            </div>
         </div>
-        <div class="col-sm-2"></div>
     </div>
 {% endblock %}

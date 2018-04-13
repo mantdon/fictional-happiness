@@ -1,0 +1,14 @@
+.admin .top-content{
+    /*
+     * Expanding border below tabs along
+     * full screen width.
+     */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.admin .bottom-content{
+    background: linear-gradient(#b0a18e, #c0b7b1);
+
+    padding-top: 10px;
+}

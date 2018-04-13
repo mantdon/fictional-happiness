@@ -4,49 +4,49 @@
 
 {% block content %}
     <hr>
+    <div class="profile">
         <div class="row">
-            <div class="col-sm-12"><h1>Profilis</h1></div>
+            <div class="col-sm-12 text-center"><h1>Profilis</h1></div>
         </div>
         <div class="row h-100">
-            <div class="col-sm-3">
-                <div id="profile">
+            <div class="col-sm-3 profile-panels-area">
+                <div>
                     {# User object must passed with render call #}
                     <ul class="list-group">
-                        <li class="list-group-item text-center first-item">{{ user.emailname }}</li>
-                        <li class="list-group-item text-justify"><strong>Vardas: </strong> {{ user.firstname }} {{ user.lastname }}</li>
-                        <li class="list-group-item text-left"><strong>Email: </strong>{{ user.email }}</li>
-                        <li class="list-group-item text-left"><strong>Miestas: </strong>{{  user.city }}</li>
-                        <li class="list-group-item text-left"><strong>Adresas: </strong>{{ user.address }}</li>
-                        <li class="list-group-item text-left"><strong>Telefono nr: </strong>{{ user.phone }}</li>
-                        <li class="list-group-item text-left"><strong>Užsiregistruota: </strong>NIY</li>
+                        <li class="list-group-item first-item">{{ user.emailname }}</li>
+                        <li class="list-group-item"><strong>Vardas: </strong> {{ user.firstname }} {{ user.lastname }}</li>
+                        <li class="list-group-item"><strong>Email: </strong>{{ user.email }}</li>
+                        <li class="list-group-item"><strong>Miestas: </strong>{{  user.city }}</li>
+                        <li class="list-group-item"><strong>Adresas: </strong>{{ user.address }}</li>
+                        <li class="list-group-item"><strong>Telefono nr: </strong>{{ user.phone }}</li>
+                        <li class="list-group-item last-item"><strong>Užsiregistruota: </strong>NIY</li>
                     </ul>
                 </div>
 
                 <ul class="list-group">
-                    <li class="list-group-item text-center first-item">Veikla</li>
-                    <li class="list-group-item text-left"><strong>Einamieji užsakymai: </strong>NIY</li>
-                    <li class="list-group-item text-left"><strong>Iš viso užsakymų: </strong>NIY</li>
-                    <li class="list-group-item text-left"><span class="pull-left"><strong>Paskutinis prisijungimas: </strong></span>NIY</li>
+                    <li class="list-group-item first-item">Veikla</li>
+                    <li class="list-group-item"><strong>Einamieji užsakymai: </strong>NIY</li>
+                    <li class="list-group-item"><strong>Iš viso užsakymų: </strong>NIY</li>
+                    <li class="list-group-item last-item"><span class="pull-left"><strong>Paskutinis prisijungimas: </strong></span>NIY</li>
                 </ul>
             </div>
 
             <div class="col-sm-9">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 profile-tabs-area">
                         {% block tab_bar %}
                             <strong>THIS IS ONLY A TEMPLATE</strong>
                         {% endblock %}
                     </div>
                 </div>
-                <div class="row h-100" style="background-color: whitesmoke">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10" style="background-color: white">
+                <div class="row h-100">
+                    <div class="col-sm-12 profile-tabs-content-area">
                     {% block tab_content %}
                         <strong>OVERRIDE THE BLOCKS</strong>
                     {% endblock %}
                     </div>
-                    <div class="col-sm-1"></div>
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}

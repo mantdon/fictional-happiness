@@ -2,24 +2,3 @@ header .logo {
     float:left;
     margin:30px 0 0;
 }
-.dropdown-item:hover{
-    background: #d8413d;
-    color: white;
-}
-.list-group-item {
-    background: #cebc81;
-}
-.first-item {
-    width: 100%;
-    background-color: #479761;
-    color:white;
-    border-radius: 10px 10px 0 0;
-}
-#profile {
-    margin-bottom: 15px;
-}
-
-/* Needed for h-## classes to work */
-html, body{
-    height: 100%;
-}
