@@ -7,7 +7,21 @@
 {% endblock %}
 
 {% block tab_content %}
-    <strong>
-        NOT IMPLEMENTED YET
-    </strong>
+    {{ form_start(form) }}
+    {{ form_errors(form.first_name) }}
+    {{ form_label(form.first_name, null, {'label': 'Vardas'}) }}
+    {{ form_widget(form.first_name, {'attr': {'class': 'textField'}} ) }}
+    {{ form_errors(form.last_name) }}
+    {{ form_label(form.last_name, null, {'label': 'Pavardė'}) }}
+    {{ form_widget(form.last_name, {'attr': {'class': 'textField'}} ) }}
+    {{ form_errors(form.phone) }}
+    {{ form_label(form.phone, null, {'label': 'Telefonas'}) }}
+    {{ form_widget(form.phone, {'attr': {'class': 'textField'}} ) }}
+    {{ form_label(form.city, null, {'label': 'Miestas'}) }}
+    {{ form_widget(form.city, {'attr': {'class': 'textField'}} ) }}
+    {{ form_label(form.address, null, {'label': 'Adresas'}) }}
+    {{ form_widget(form.address, {'attr': {'class': 'textField'}} ) }}
+    {{ form_row(form.submit, {'attr': {'class': 'button'}, 'label': 'Patvirtinti pakeitimus'} ) }}
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}
