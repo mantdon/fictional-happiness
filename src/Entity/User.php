@@ -38,7 +38,7 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\NotBlank(message="Įveskite slaptažodį")
+     * @Assert\NotBlank(message="Įveskite slaptažodį", groups={"Registration"})
      * @Assert\Length(min="5", minMessage="Slaptažodį turi sudaryti bent 5 simboliai")
      */
     private $plainPassword;

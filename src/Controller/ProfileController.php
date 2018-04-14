@@ -2,12 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\ChangePassword;
+use App\Entity\EditUser;
+use App\Entity\User;
 use App\Entity\Vehicle;
+use App\Form\ChangePasswordType;
+use App\Form\EditUserType;
+use App\Form\RegistrationType;
 use App\Form\VehicleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends Controller
 {
@@ -43,17 +50,42 @@ class ProfileController extends Controller
 	/**
 	 * @Route("/user/settings", name="user_settings")
 	 */
-	public function settingsTabAction(){
+	public function settingsTabAction(Request $request){
+	    $user = $this->getUser();
+        $form = $this->createForm(EditUserType::class, $user);
+        $form->handleRequest($request);
+        if( $form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('notice', 'User updated[PH]');
+        }
+
 		return $this->render('Profile/Settings/profile_settings.html.twig', array(
-			'user' => $this->getUser()
+			'user' => $user,
+            'form' => $form->createView()
 		));
 	}
 	/**
 	 * @Route("/user/changepassword", name="user_changepassword")
 	 */
-	public function changepasswordTabAction(){
+	public function changepasswordTabAction(Request $request, UserPasswordEncoderInterface $passwordEncoder){
+	    $user = $this->getUser();
+	    $changePasswordModel = new ChangePassword();
+        $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $passwordEncoder->encodePassword($this->getUser(), $changePasswordModel->getNewPassword());
+            $user->setPassword($password);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('notice', 'Password changed[PH]');
+        }
+
 		return $this->render('Profile/ChangePassword/profile_changepassword.html.twig', array(
-			'user' => $this->getUser()
+			'user' => $this->getUser(),
+            'form' => $form->createView()
 		));
 	}
 }
