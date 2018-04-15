@@ -11,13 +11,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email", message="Toks email jau buvo užregistruotas")
+ * @UniqueEntity("email", message="Pasirinktas elektroninis paštas jau užregistruotas")
  */
 class User implements UserInterface, \Serializable
 {
     public function __construct(){
     	$this->vehicles = new ArrayCollection();
+    	$this->messages = new ArrayCollection();
     }
+
 	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -80,6 +82,11 @@ class User implements UserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
 	 */
     private $vehicles;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
+	 */
+    private $messages;
 
     public function getUsername()
     {
@@ -274,6 +281,10 @@ class User implements UserInterface, \Serializable
 
     public function getVehicles(){
     	return $this->vehicles;
+    }
+
+    public function getMessages(){
+    	return $this->messages;
     }
 
     /** @see \Serializable::serialize() */
