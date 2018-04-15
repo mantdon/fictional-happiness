@@ -47,20 +47,51 @@ class AvailableTimesFetcher
         {
             $formattedTime = $this->floatToTime($i);
 
-            if($orderIndex < count($orders)) {
-                $currentOrderTime = $orders[$orderIndex]->getVisitDate()->format('H:i');
-
-                if (strcmp($currentOrderTime, $formattedTime) === 0)
-                    $orderIndex++;
-                else
-                    $availableTimes[] = $formattedTime;
-            }
-
-            else
+            if($this->shouldTimeBeAdded($orders, $orderIndex, $formattedTime))
                 $availableTimes[] = $formattedTime;
+            else
+                $orderIndex++;
         }
 
         return $availableTimes;
+    }
+
+
+    private function shouldTimeBeAdded($orders, $orderIndex, $formattedTime)
+    {
+        if($orderIndex < count($orders))
+        {
+            $currentOrderTime = $orders[$orderIndex]->getVisitDate()->format('H:i');
+            if($this->isTimeOccupied($formattedTime, $currentOrderTime))
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Smarter "algorithm" should be used here
+     * @param $orderTime |DateTime
+     * @param $checkTime \DateTime
+     * @return bool
+     */
+    private function isTimeOccupied($orderTime, $checkTime)
+    {
+        if (strcmp($orderTime, $checkTime) === 0)
+                return true;
+
+        return false;
+    }
+
+    /**
+     * Note: 2 params instead of order object is used to avoid
+     * @param $orders array of orders
+     * @param $orderIndex index of order that we wish to get time of.
+     * @return mixed
+     */
+    private function formatOrderTime($orders, $orderIndex)
+    {
+          return $orders[$orderIndex]->getVisitDate()->format('H:i');
     }
 
     /**
