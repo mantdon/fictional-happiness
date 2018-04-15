@@ -6,7 +6,7 @@ require('bootstrap');
 require("../img/logo.png");
 
 Window.prototype.showModal = function testFunction(id){
-    $('#'+id).modal({backdrop: 'static', keyboard: false});
+    $('#'+id).modal({backdrop: 'static', keyboard: false}).modal('toggle');
 };
 
 window.setTimeout(function () {
