@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Services;
 
 use App\Entity\Message;
 use App\Entity\MessageMetaData;

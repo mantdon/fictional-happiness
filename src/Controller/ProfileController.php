@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
-use App\Helpers\MessageManager;
+use App\Services\MessageManager;
 use App\Services\PaginatedListFetcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

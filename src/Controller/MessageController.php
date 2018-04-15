@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Entity\MessageMetaData;
-use App\Helpers\MessageManager;
+use App\Services\MessageManager;
 use App\Helpers\PreviousPageExtractor;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
