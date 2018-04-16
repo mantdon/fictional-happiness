@@ -32,6 +32,8 @@ class OrderCreator
 
         $this->em->persist($order);
         $this->em->flush();
+
+        return $order;
     }
 
     /**

@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use App\Services\AvailableTimesFetcher;
+use App\Services\MessageManager;
 use App\Services\OrderCreator;
 use App\Services\UnavailableDaysFinder;
-use DoctrineExtensions\Query\Mysql\Date;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,11 +46,21 @@ class OrderController extends Controller
     /**
      * @Route("/submit")
      */
-    public function submit(Request $request, OrderCreator $orderCreator)
+    public function submit(Request $request,
+                           OrderCreator $orderCreator,
+                           MessageManager $messageManager)
     {
         $content = json_decode($request->getContent(), true);
 
-        $orderCreator->createOrder($content['vehicle'], $content['services'], $content['date']);
+        $order = $orderCreator->createOrder($content['vehicle'], $content['services'], $content['date']);
+
+        $messageTitle = 'Užsakymas pateiktas';
+        $messageContent = $this->renderView('Email/order_placed.html.twig', array('order' => $order));
+        $recipient = $this->getUser();
+
+        $message = $messageManager->fetchOrCreateMessage($messageTitle, $messageContent);
+        $messageManager->sendMessageToEmail($message, $recipient);
+        $messageManager->sendMessageToProfile($message, $recipient);
 
         return new JsonResponse($request->request->get('services'));
     }
