@@ -6,6 +6,8 @@ use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use App\Services\AvailableTimesFetcher;
 use App\Services\OrderCreator;
+use App\Services\UnavailableDaysFinder;
+use DoctrineExtensions\Query\Mysql\Date;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,19 +23,18 @@ class OrderController extends Controller
      */
     public function home(Request $request)
     {
-        if($this->getUser()->getVehicles()->count() === 0) {
+        if ($this->getUser()->getVehicles()->count() === 0) {
             $vehicle = new Vehicle();
-            $form = $this->createForm( VehicleType::class, $vehicle);
+            $form = $this->createForm(VehicleType::class, $vehicle);
 
             $form->handleRequest($request);
 
-            if($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $vehicle->setUser($this->getUser());
                 $entityManager->persist($vehicle);
                 $entityManager->flush();
-            }
-            else
+            } else
                 return $this->render('Order/order_vehicle_add', array(
                     'form' => $form->createView()
                 ));
@@ -64,5 +65,17 @@ class OrderController extends Controller
         $times = $fetcher->fetchDay(new \DateTime($content['date']));
 
         return new JsonResponse($times);
+    }
+
+    /**
+     * @Route("/fetch_unavailable_days")
+     */
+    public function fetchUnavailableDays(Request $request, UnavailableDaysFinder $daysFinder)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $unavailableDays = $daysFinder->findDaysInMonth(new \DateTime($content['date']));
+
+        return new JsonResponse($unavailableDays);
     }
 }

@@ -62,4 +62,15 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOnMonth($date)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('YEAR(a.visitDate) = YEAR(:date) AND
+             MONTH(a.visitDate) = MONTH(:date)')
+            ->orderBy('a.visitDate', 'ASC')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult();
+    }
 }

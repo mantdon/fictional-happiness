@@ -4,6 +4,7 @@ import DayPicker from 'react-day-picker';
 import TimeSelection from './TimeSelection';
 import 'moment/locale/lt';
 import MomentLocaleUtils from 'react-day-picker/moment';
+import moment from 'moment';
 
 export default class DateSelection extends React.Component {
 
@@ -12,11 +13,48 @@ export default class DateSelection extends React.Component {
 
         this.state = {
             showTimeSelection: false,
-            dateSelected: null
+            dateSelected: null,
+            unavailableDays: []
         };
 
         this.onDateSelection = this.onDateSelection.bind(this);
         this.onTimeSelectionExit = this.onTimeSelectionExit.bind(this);
+    }
+
+    componentDidMount()
+    {
+        this.updateAvailableDays('2018-04-03');
+    }
+
+    updateAvailableDays(date)
+    {
+        fetch("/order/fetch_unavailable_days", {
+            method: "POST",
+            body: JSON.stringify({
+                date: date
+            })
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        //unavailableDays: result
+                        unavailableDays: this.datesToObjects(result)
+                    }, () => {
+                        console.log(this.state.unavailableDays);
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            )
+    }
+
+    datesToObjects(dates)
+    {
+        return dates.map((date) => new Date(date))
     }
 
     onDateSelection(date)
@@ -35,11 +73,22 @@ export default class DateSelection extends React.Component {
     }
 
     render(){
+        const modifiers = {
+            unavailable: this.state.unavailableDays
+        };
+
+        const modifiersStyles = {
+            unavailable: {
+                color: 'gray'
+            }
+        };
+
         return (
             <div className={'datePickerContainer'}>
                 {this.state.showTimeSelection === true
                     ? <TimeSelection onTimeSelection={this.props.onDateSelection} date={this.state.dateSelected} onExit={this.onTimeSelectionExit}/>
-                    : <DayPicker className={'timeSelectionElementSize'} showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}/>}
+                    : <DayPicker className={'timeSelectionElementSize'} showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}
+                    modifiers={modifiers} modifiersStyles={modifiersStyles}/>}
             </div>
         );
     }
