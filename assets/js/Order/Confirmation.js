@@ -27,6 +27,7 @@ export default class Confirmation extends React.Component {
         
         fetch("/order/submit", {
             method: "POST",
+            credentials: "same-origin",
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
