@@ -29,6 +29,7 @@ export default class DateSelection extends React.Component {
     updateAvailableDays()
     {
         fetch("/order/fetch_unavailable_days", {
+            credentials: "same-origin",
             method: "POST"
         })
             .then(res => res.json())

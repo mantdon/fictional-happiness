@@ -21,6 +21,7 @@ export default class TimeSelection extends React.Component {
     fetchTimes(date)
     {
         fetch("/order/fetch_times", {
+            credentials: "same-origin",
             method: "POST",
             body: JSON.stringify({
                 date: date
