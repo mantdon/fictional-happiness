@@ -15,16 +15,16 @@ export default class TimeSelection extends React.Component {
 
     componentWillMount()
     {
-        this.fetchTimes();
+        this.fetchTimes(this.props.date);
     }
 
-    fetchTimes()
+    fetchTimes(date)
     {
         fetch("/order/fetch_times", {
             method: "POST",
-           /* body: JSON.stringify({
+            body: JSON.stringify({
                 date: date
-            })*/
+            })
         })
             .then(res => res.json())
             .then(

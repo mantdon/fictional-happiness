@@ -23,22 +23,18 @@ export default class DateSelection extends React.Component {
 
     componentDidMount()
     {
-        this.updateAvailableDays('2018-04-03');
+        this.updateAvailableDays();
     }
 
-    updateAvailableDays(date)
+    updateAvailableDays()
     {
         fetch("/order/fetch_unavailable_days", {
-            method: "POST",
-            body: JSON.stringify({
-                date: date
-            })
+            method: "POST"
         })
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
-                        //unavailableDays: result
                         unavailableDays: this.datesToObjects(result)
                     }, () => {
                         console.log(this.state.unavailableDays);
