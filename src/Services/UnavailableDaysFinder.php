@@ -10,11 +10,28 @@ class UnavailableDaysFinder
     private $em;
     private $availableTimesFetcher;
 
+    private $registrationBoundsInMonths = 3; //all dates after this interval will be unavailable.
+
     public function __construct(EntityManagerInterface $em,
                                 AvailableTimesFetcher $availableTimesFetcher)
     {
         $this->em = $em;
         $this->availableTimesFetcher = $availableTimesFetcher;
+    }
+
+    public function findDays()
+    {
+        $unavailableDays = [];
+
+        $now = new \DateTime();
+
+        for($month = 0; $month < $this->registrationBoundsInMonths; $month++)
+        {
+            $unavailableDays = array_merge($unavailableDays, $this->findDaysInMonth($now));
+            $now->add(new \DateInterval('P1M'));
+        }
+
+        return $unavailableDays;
     }
 
     /**

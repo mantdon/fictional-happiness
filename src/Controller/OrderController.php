@@ -72,9 +72,7 @@ class OrderController extends Controller
      */
     public function fetchUnavailableDays(Request $request, UnavailableDaysFinder $daysFinder)
     {
-        $content = json_decode($request->getContent(), true);
-
-        $unavailableDays = $daysFinder->findDaysInMonth(new \DateTime($content['date']));
+        $unavailableDays = $daysFinder->findDays();
 
         return new JsonResponse($unavailableDays);
     }
