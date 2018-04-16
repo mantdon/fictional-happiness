@@ -54,7 +54,7 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="userMenuDropdown">
                     {% if is_granted('ROLE_USER') %}
                         <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
-                        <a class="dropdown-item" href="#">Register for service</a>
+                        <a class="dropdown-item" href="{{ path('order') }}">Register for service</a>
                     {% elseif is_granted('ROLE_ADMIN') %}
                         <a class="dropdown-item" href="{{ path('admin_home') }}">Admin panel</a>
                     {% endif %}
