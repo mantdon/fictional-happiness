@@ -84,17 +84,6 @@ class AvailableTimesFetcher
     }
 
     /**
-     * Note: 2 params instead of order object is used to avoid
-     * @param $orders array of orders
-     * @param $orderIndex index of order that we wish to get time of.
-     * @return mixed
-     */
-    private function formatOrderTime($orders, $orderIndex)
-    {
-          return $orders[$orderIndex]->getVisitDate()->format('H:i');
-    }
-
-    /**
      * Is used for skipping orders that were registered for a time out of working hours range.
      * @param $orders
      * @return int
