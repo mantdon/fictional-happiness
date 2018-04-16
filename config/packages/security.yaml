@@ -41,5 +41,6 @@ security:
 
         # Prevent unauthenticated users from accessing certain pages
         - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/order, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
