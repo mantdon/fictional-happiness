@@ -1,0 +1,33 @@
+/*<editor-fold desc="Main container">*/
+.tab-bar{
+    border-bottom: 1px solid #433e3f;
+    justify-content: center;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Tabs">*/
+.tab-bar .nav-item .nav-link{
+    background: #433e3f;
+    border: 1px black solid;
+    border-bottom: none;
+    border-radius: 2px;
+    color: #e8edf3;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 1px;
+    margin-left: 1px;
+
+    transition: background-color 0.5s ease;
+}
+
+.tab-bar .nav-item .active{
+    background: #b0a18e;
+    color: #433e3f;
+}
+
+.tab-bar .nav-item .nav-link:not(.active):hover{
+    color: #433e3f;
+    background-color: #b0a18e;
+}
+/*</editor-fold>*/

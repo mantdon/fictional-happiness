@@ -1,79 +1,147 @@
-body{
-    margin: 0;
-    padding: 0;
-    background: #fbfde6;
-    background-size: cover;
-    font-family: sans-serif;
-}
+/*<editor-fold desc="Main box">*/
 .login-box{
-    width: 320px;
-    height: 420px;
-    background: #B71427;
-    color: #fff;
+    width: 300px;
+    height: auto;
+
+    background: #433e3f;
+    color: #e8edf3;
+    border: 2px solid #8e6e53;
+    outline: 2px solid #b07156;
+
     box-sizing: border-box;
     display: block;
-    margin: 10% auto 0 auto;
-    padding: 70px 30px;
+
+    margin: 60px auto 0 auto;
+    padding: 40px 30px;
 }
-.login-icon{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: block;
-    margin: -45% auto 0 auto;
-}
-h1{
-    margin: 0;
-    padding: 0 0 20px;
+/*</editor-fold>*/
+
+/*<editor-fold desc="Login header">*/
+.login-box h1{
+    color: #e8edf3;
+
+    font-size: 34px;
     text-align: center;
-    font-size: 32px;
+
+    margin: 0;
+    padding: 0 0 40px;
 }
+/*</editor-fold>*/
+
+/*<editor-fold desc="Labels">*/
 .login-box label{
+    font-weight: bold;
+    vertical-align: top;
+
     margin: 0;
     padding: 0;
-    font-weight: bold;
 }
-.login-box input[type="password"]{
-    width: 100%;
-    margin-bottom: 20px;
-    border: none;
-    border-bottom: 1px solid #fff;
-    background: transparent;
-    outline: none;
-    height: 40px;
-    color: #fff;
-    font-size: 16px;
-}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Email field">*/
 .login-box input[type="text"] {
     width: 100%;
-    margin-bottom: 20px;
-    border: none;
-    border-bottom: 1px solid #fff;
-    background: transparent;
-    outline: none;
     height: 40px;
-    color: #fff;
+
+    background: transparent;
+    border: 2px solid #b07156;
+    border-left-color: #c69c72;
+    border-top-color: #c69c72;
+    border-radius: 1px;
+    color: #e8edf3;
+
     font-size: 16px;
-}
-.login-box input[type="checkbox"]{
+
     margin-bottom: 20px;
-    height: 16px;
-    width: 16px;
-    margin-left: 10px;
+
+    box-shadow: none !important;
 }
+/*</editor-fold>*/
+
+/*<editor-fold desc="Password field">*/
+.login-box input[type="password"]{
+    width: 100%;
+    height: 40px;
+
+    background: transparent;
+    border: 2px solid #b07156;
+    border-left-color: #c69c72;
+    border-top-color: #c69c72;
+    border-radius: 1px;
+    color: #e8edf3;
+
+    font-size: 16px;
+
+    margin-bottom: 20px;
+
+    box-shadow: none !important;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Checkbox">*/
+.login-box input[type="checkbox"]{
+    /* Remove the default appearance*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-color: #b07156;
+    border: 4px double #433e3f;
+    border-radius: 1px;
+
+    display: inline-block;
+    position: relative;
+
+    margin: 2px 0 0 4px;
+    padding: 6px;
+}
+
+.login-box input[type="checkbox"]:checked{
+    color: #e8edf3;
+}
+
+.login-box input[type="checkbox"]:checked:after{
+    /* Check mark */
+    content: '\2714';
+    font-size: 10px;
+
+    position: absolute;
+    top: -1px;
+    left: 2px;
+}
+
+.login-box input[type="checkbox"]:hover{
+    color: #433e3f;
+    background: #c69c72;
+}
+
+.login-box input[type="checkbox"]:hover:after{
+    /* Check mark */
+    content: '\2714';
+    font-size: 10px;
+
+    position: absolute;
+    top: -1px;
+    left: 2px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Submit button">*/
 .login-box input[type="submit"]{
     width: 100%;
-    margin-bottom: 20px;
-    border: none;
-    outline: none;
-    height: 40px;
-    background: #1c8adb;
-    color: #fff;
+    height: 100%;
+
+    border: 6px double #433e3f;
+    background: #b07156;
+    color: #FFF;
+
     font-size: 18px;
-    border-radius: 20px;
+    margin-top:20px;
 }
+
 .login-box input[type="submit"]:hover{
+    background-color: #c69c72;
+    color: #433e3f;
+
     cursor: pointer;
-    background: #39dc79;
-    color: #000;
 }
+/*</editor-fold>*/

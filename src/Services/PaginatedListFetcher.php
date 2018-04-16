@@ -20,6 +20,20 @@ class PaginatedListFetcher
         $this->em = $em;
     }
 
+	// Used to paginate messages in user profile. Due for cleanup.
+    public function getPaginatedMessagesList($user, $className, $page = 1, $limit = 5)
+    {
+	    $repository = $this->em->getRepository($className);
+	    $results = $repository->getAll($user, $page, $limit);
+
+	    $pageCount = ceil($results->count() / $limit);
+
+	    return ['items' => $results,
+		    'pageCount' => $pageCount,
+		    'currentPage' => $page,
+		    'totalCount' => $results->count()];
+    }
+
     public function getPaginatedList($className, $page = 1, $limit = 5)
     {
         $repository = $this->em->getRepository($className);
@@ -33,4 +47,12 @@ class PaginatedListFetcher
             'totalCount' => $results->count()];
     }
 
+    public function getTotalPageCount($className, $page = 1, $limit = 5){
+	    $repository = $this->em->getRepository($className);
+	    $results = $repository->getAll($page, $limit);
+
+	    $pageCount = ceil($results->count() / $limit);
+
+	    return $pageCount;
+    }
 }

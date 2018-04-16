@@ -11,13 +11,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email", message="Toks email jau buvo užregistruotas")
+ * @UniqueEntity("email", message="Pasirinktas elektroninis paštas jau užregistruotas")
  */
 class User implements UserInterface, \Serializable
 {
     public function __construct(){
     	$this->vehicles = new ArrayCollection();
+    	$this->messages = new ArrayCollection();
     }
+
 	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -38,28 +40,25 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @Assert\NotBlank(message="Įveskite slaptažodį")
+     * @Assert\NotBlank(message="Įveskite slaptažodį", groups={"Registration"})
      * @Assert\Length(min="5", minMessage="Slaptažodį turi sudaryti bent 5 simboliai")
      */
     private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * @Assert\NotBlank(message="Įveskite vardą")
      * @Assert\Type(type="alpha", message="Varde gali būti tik raidės")
      */
     private $first_name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * @Assert\NotBlank(message="Įveskite pavardę")
      * @Assert\Type(type="alpha", message="Pavardėje gali būti tik raidės")
      */
     private $last_name;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Assert\NotBlank(message="Įveskite telefono numerį")
      * @Assert\Regex(pattern="/^\+?[0-9]+$/", message="Blogas numerio formatas")
      */
     private $phone;
@@ -83,6 +82,11 @@ class User implements UserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
 	 */
     private $vehicles;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
+	 */
+    private $messages;
 
     public function getUsername()
     {
@@ -277,6 +281,10 @@ class User implements UserInterface, \Serializable
 
     public function getVehicles(){
     	return $this->vehicles;
+    }
+
+    public function getMessages(){
+    	return $this->messages;
     }
 
     /** @see \Serializable::serialize() */

@@ -1,0 +1,57 @@
+.pagination-bar{
+    align-items: center;
+}
+
+/*<editor-fold desc="Buttons">*/
+.pagination-bar .page-link{
+    background: #b07156;
+    border: 1px solid #433e3f;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #e8edf3;
+
+    transition: background-color, color 0.5s ease;
+}
+
+.pagination-bar .page-link:hover{
+    background-color: #c69c72;
+    color: #433e3f;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Active buttons">*/
+.pagination-bar .active .page-link{
+    background-color: #c69c72;
+    border-radius: 2px;
+    border: 2px solid #433e3f;
+    color: #433e3f;
+
+    pointer-events: none;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Disabled buttons">*/
+.pagination-bar .disabled .page-link{
+    background-color: #433e3f;
+    border: 1px solid #433e3f;
+    color: #e8edf3;
+}
+
+.pagination-bar .disabled:hover{
+    cursor: not-allowed;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="First(Previous page) button">*/
+.pagination-bar > li:first-child > a,
+.pagination-bar > li:first-child > span{
+    border-radius: 2px !important;;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Last(Next page) button">*/
+.pagination-bar > li:last-child > a,
+.pagination-bar > li:first-child > span{
+    border-radius: 2px !important;;
+}
+/*</editor-fold>*/

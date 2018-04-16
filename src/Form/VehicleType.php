@@ -16,11 +16,11 @@ class VehicleType extends AbstractType{
 	public function buildForm( FormBuilderInterface $builder, array $options )
 	{
 		$builder
-			->add('make', TextType::class, array('label' => 'Markė', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-			->add('model', TextType::class, array('label' => 'Modelis', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-			->add('year_of_production', TextType::class, array('label' => 'Pagaminimo metai', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-			->add('plate_number', TextType::class, array('label' => 'Numeriai', 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-			->add('submit', SubmitType::class, array('label' => 'Pridėti automobilį', 'attr' => array('class' => 'btn btn-primary')));
+			->add('make', TextType::class)
+			->add('model', TextType::class)
+			->add('year_of_production', TextType::class)
+			->add('plate_number', TextType::class)
+			->add('submit', SubmitType::class);
 	}
 
 	public function configureOptions( OptionsResolver $resolver )

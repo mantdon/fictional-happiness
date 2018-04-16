@@ -1,0 +1,55 @@
+/*<editor-fold desc="Profile details panels column">*/
+.profile .profile-panels-area{
+    background: linear-gradient(#b0a18e,#c0b7b1);
+    border-top: 1px solid #433e3f;
+
+    margin-top: 34px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Profile details panels">*/
+.profile .profile-panels-area .list-group{
+    background: #433e3f;
+    border: 2px solid #b07156;
+    border-radius: 1px;
+
+    margin-top: 20px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Profile details panels' items">*/
+.profile .profile-panels-area .list-group-item {
+    background: #433e3f;
+    border-bottom: 2px solid #b07156;
+    color: #e8edf3;
+
+    text-align: center;
+}
+
+.profile .profile-panels-area .list-group .first-item{
+    background: #b07156;
+    border: 4px double #433e3f;
+    border-radius: 0;
+
+    text-align: center;
+}
+
+.profile .profile-panels-area .list-group .last-item{
+    border-bottom: none;
+}
+/*</editor-fold>*/
+
+.profile .profile-tabs-area{
+    /*
+     * Expanding border below tabs along
+     * full screen width.
+     */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.profile .profile-tabs-content-area{
+    background: linear-gradient(#b0a18e,#c0b7b1);
+
+    padding-top: 20px;
+}

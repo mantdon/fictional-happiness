@@ -3,7 +3,10 @@ header .logo {
     margin:30px 0 0;
 }
 
-.dropdown-item:hover{
-    background: #d8413d;
-    color: white;
+.message-read{
+    color: darkgray;
+}
+
+.message-unread{
+    color: dodgerblue;
 }

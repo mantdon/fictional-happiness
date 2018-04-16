@@ -1,0 +1,15 @@
+/*
+ * NOTE: For reference only, should not be assigned to an element
+ * as a class.
+ */
+.color-palette{
+    color: #c0b7b1; /* Main background */
+    color: #b07156; /* Accent */
+    color: #c69c72; /* Accent highlight */
+    color: #433e3f; /* Nav background / Dark font */
+    color: #e8edf3; /* Light font */
+
+    color: #b0a18e; /* Extra shade */
+    color: #8e6e53; /* Extra shade */
+    color: #7a7265; /* Extra shade */
+}

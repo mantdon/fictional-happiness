@@ -1,3 +1,15 @@
 swiftmailer:
-    url: '%env(MAILER_URL)%'
-    spool: { type: 'memory' }
+    # Leave as true unless delivery_address or user.email
+    # is set to your own inbox. Do not want these "messages"
+    # going to potentially existing emails.
+    disable_delivery:   true
+    #delivery_address:   "youremail@example.ex"
+    transport:          "smtp"
+    host:               "smtp-mail.outlook.com"
+    port:               "587"
+    # Outlook account set up for the project purposes.
+    username:           "spaminator9001@outlook.com"
+    password:           "Verysafepassword123"
+    encryption:         "tls"
+    auth_mode:          "login"
+    spool:              { type: 'memory' }

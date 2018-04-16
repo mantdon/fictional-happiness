@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserManager
@@ -28,5 +29,14 @@ class UserManager
 
         $this->em->persist($user);
         $this->em->flush();
+    }
+
+    public static function createAuthenticationTokenFor(User $user){
+    	return $token = new UsernamePasswordToken(
+    		$user,
+		    $user->getPassword(),
+		    'global',
+		    $user->getRoles()
+	    );
     }
 }

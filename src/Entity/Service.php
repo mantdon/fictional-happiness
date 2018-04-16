@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ServiceRepository")
@@ -28,6 +29,7 @@ class Service
 
 	/**
 	 * @ORM\Column(type="decimal", scale=2)
+	 * @Assert\Regex(pattern="/^[0-9]*(\.)*[0-9]*$/", message="Kaina susideda tik iš skaitmenų. Liekana atskiriama '.'")
 	 */
     private $price;
 

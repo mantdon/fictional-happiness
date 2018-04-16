@@ -4,41 +4,48 @@
 
 {% block content %}
     <hr>
-    <div class="container">
+    <div class="profile">
         <div class="row">
-            <div class="col-sm-10"><h1>Profilis</h1></div>
+            <div class="col-sm-12 text-center"><h1>Profilis</h1></div>
         </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <div id="profile">
+        <div class="row h-100">
+            <div class="col-sm-3 profile-panels-area">
+                <div>
                     {# User object must passed with render call #}
                     <ul class="list-group">
-                        <li class="list-group-item text-center" style="width: 100%; background-color: #AA3333; color:white; border-radius: 10px 10px 0 0">{{ user.emailname }}</li>
-                        <li class="list-group-item text-justify"><strong>Vardas: </strong> {{ user.firstname }} {{ user.lastname }}</li>
-                        <li class="list-group-item text-left"><strong>Email: </strong>{{ user.email }}</li>
-                        <li class="list-group-item text-left"><strong>Miestas: </strong>{{  user.city }}</li>
-                        <li class="list-group-item text-left"><strong>Adresas: </strong>{{ user.address }}</li>
-                        <li class="list-group-item text-left"><strong>Telefono nr: </strong>{{ user.phone }}</li>
-                        <li class="list-group-item text-left"><strong>Užsiregistruota: </strong>NIY</li>
+                        <li class="list-group-item first-item">{{ user.emailname }}</li>
+                        <li class="list-group-item"><strong>Vardas: </strong> {{ user.firstname }} {{ user.lastname }}</li>
+                        <li class="list-group-item"><strong>Email: </strong>{{ user.email }}</li>
+                        <li class="list-group-item"><strong>Miestas: </strong>{{  user.city }}</li>
+                        <li class="list-group-item"><strong>Adresas: </strong>{{ user.address }}</li>
+                        <li class="list-group-item"><strong>Telefono nr: </strong>{{ user.phone }}</li>
+                        <li class="list-group-item last-item"><strong>Užsiregistruota: </strong>NIY</li>
                     </ul>
                 </div>
 
                 <ul class="list-group">
-                    <li class="list-group-item text-center" style="width: 100%; background-color: #AA3333; color:white; border-radius: 10px 10px 0 0">Veikla</li>
-                    <li class="list-group-item text-left"><strong>Enamieji uzsakymai: </strong>NIY</li>
-                    <li class="list-group-item text-left"><strong>Total užsakymai: </strong>NIY</li>
-                    <li class="list-group-item text-left"><span class="pull-left"><strong>Paskutinis prisijungimas: </strong></span>NIY</li>
+                    <li class="list-group-item first-item">Veikla</li>
+                    <li class="list-group-item"><strong>Einamieji užsakymai: </strong>NIY</li>
+                    <li class="list-group-item"><strong>Iš viso užsakymų: </strong>NIY</li>
+                    <li class="list-group-item last-item"><span class="pull-left"><strong>Paskutinis prisijungimas: </strong></span>NIY</li>
                 </ul>
             </div>
 
             <div class="col-sm-9">
-                {% block tab_bar %}
-                    <strong>THIS IS ONLY A TEMPLATE</strong>
-                {% endblock %}
-
-                {% block tab_content %}
-                    <strong>OVERRIDE THE BLOCKS</strong>
-                {% endblock %}
+                <div class="row">
+                    <div class="col-sm-12 profile-tabs-area">
+                        {% block tab_bar %}
+                            <strong>THIS IS ONLY A TEMPLATE</strong>
+                        {% endblock %}
+                    </div>
+                </div>
+                <div class="row h-100">
+                    <div class="col-sm-12 profile-tabs-content-area">
+                    {% block tab_content %}
+                        <strong>OVERRIDE THE BLOCKS</strong>
+                    {% endblock %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

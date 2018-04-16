@@ -1,0 +1,14 @@
+/* Needed for h-## classes to work */
+html, body{
+    height: 100%;
+}
+
+body{
+    background: #c0b7b1;
+    background-size: cover;
+
+    font-family: "Open Sans", sans-serif;
+
+    margin: 0;
+    padding: 0;
+}

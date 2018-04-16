@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block header %}
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Pagrindinis<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/users">Vartotojai<span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-{% endblock %}
-
 {% block content %}
-
+    <h1 class="text-center">Admin panel</h1>
+    <hr>
+    <div class="admin">
+        <div class="row">
+            <div class="col-sm-12 top-content">
+                {% block panels %}
+                    {% include 'Admin/admin_panels.html.twig' with {
+                        home_active: 'true'
+                    }%}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="row h-100">
+            <div class="col-sm-12 bottom-content">
+                {% block panel_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
