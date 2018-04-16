@@ -1,37 +1,16 @@
-{% include 'Profile/Vehicles/profile_vehicles.html.twig' %}
+{% extends 'Util/vehicle_add_modal.html.twig' %}
 
-<div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="addVehicleLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addVehicleLabel">Pridėti naują automobilį</h5>
-                <a  href="{{ path('user_vehicles') }}" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            {% if vehicles.count >= 5 %}
-                <div class="modal-body">
-                    <span><strong>Jau užregistruotas maksimalus automobilių skaičius.</strong></span>
-                </div>
-            {% else %}
-                <div class="modal-body">
-                    {{ form_start(form) }}
-                    {{ form_row(form.make, {'attr': {'class': 'form-control'}, 'label': 'Markė'}) }}
-                    {{ form_row(form.model, {'attr': {'class': 'form-control'}, 'label': 'Modelis'}) }}
-                    {{ form_row(form.year_of_production, {'attr': {'class': 'form-control'}, 'label': 'Pagaminimo metai'}) }}
-                    {{ form_row(form.plate_number, {'attr': {'class': 'form-control'}, 'label': 'Numeriai'}) }}
-                </div>
-                <div class="modal-footer">
-                    {{ form_row(form.submit, {'attr': {'class': 'btn custom-button'}, 'label': 'Pridėti automobilį'}) }}
-                    {{ form_end(form) }}
-                </div>
-            {% endif %}
+
+{% block include %}
+    {% include 'Profile/Vehicles/profile_vehicles.html.twig' %}
+{% endblock %}
+
+{% block modal_contents %}
+    {% if vehicles.count >= 5 %}
+        <div class="modal-body">
+            <span><strong>Jau užregistruotas maksimalus automobilių skaičius.</strong></span>
         </div>
-    </div>
-</div>
-
-{% block additonal_scripts %}
-    <script>
-        showModal('addVehicle');
-    </script>
+    {% else %}
+        {% include 'Util/vehicle_add_form.html.twig' %}
+    {% endif %}
 {% endblock %}

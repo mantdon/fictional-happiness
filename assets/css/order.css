@@ -1,0 +1,106 @@
+.Option{
+    border-top: solid 1px gray;
+}
+
+.Option:hover{
+    background: #e6ffff;
+}
+
+.serviceName{
+    display: inline-block;
+    width: 70%;
+}
+
+.servicePrice{
+    display: inline-block;
+    width: 30%;
+}
+
+.optionsContainer{
+    display: block;
+    margin: auto;
+    width: 40%;
+    margin-top: 50px;
+    background: white;
+    text-align: center;
+}
+
+.serviceOptionsContainer{
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    width: 45%;
+    background: white;
+}
+
+.serviceOptionsContainer > input{
+    height: 15%;
+}
+
+.searchableServices{
+    height: 84%;
+}
+
+.align-right{
+    float: right;
+}
+
+.scrollable-vertical{
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.full-height{
+    height: auto;
+}
+
+.orderDialog{
+    border: solid 1px gray;
+    margin-top: 50px;
+    background: white;
+    height: 60vh;
+    padding: 40px 0 40px 0;
+}
+
+.searchBox{
+    width: 100%;
+}
+
+.serviceSelectionContainer{
+    width:70%;
+    display: block;
+    height: 100%;
+    margin: auto;
+}
+
+.serviceSelectionDialog{
+    height: 70%;
+}
+
+.orderDialogButtonsContainer{
+}
+
+.orderDialogButton{
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background: purple;
+    padding: 5px 5px 5px 5px;
+}
+
+.orderButtonDisabled{
+    display: none;
+}
+
+.datePickerContainer{
+    text-align: center;
+    padding-top: 50px;
+}
+
+.timeSelectionContainer{
+    display: inline-block;
+    width: 200px;
+    background-color: white;
+    border: 1px gray solid;
+    text-align: center;
+    padding: 5px 5px 5px 5px;
+}

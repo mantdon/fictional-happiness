@@ -1,0 +1,9 @@
+{% extends 'Util/vehicle_add_modal.html.twig' %}
+
+{% block include %}
+    {% include 'Order/base.html.twig' %}
+{% endblock %}
+
+{% block modal_contents %}
+    {% include 'Util/vehicle_add_form.html.twig' %}
+{% endblock %}

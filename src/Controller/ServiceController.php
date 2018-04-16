@@ -8,8 +8,9 @@ use App\Repository\ServiceRepository;
 use App\Services\PaginatedListFetcher;
 use App\Helpers\PreviousPageExtractor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Services\ServiceFetcher;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ServiceController extends Controller
@@ -116,5 +117,17 @@ class ServiceController extends Controller
 
 		    $this->get( 'session' )->set( 'previous_page', $previousPage );
 	    }
+    }
+
+    /**
+     * Testing version
+     * @Route("/services/search")
+     */
+    public function searchServices(ServiceFetcher $serviceFetcher, Request $request)
+    {
+        $content = json_decode($request->getContent(), true);
+
+        $services = $serviceFetcher->findByPattern($content['pattern']);
+        return new JsonResponse($services);
     }
 }
