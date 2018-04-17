@@ -55,8 +55,11 @@ export default class DateSelection extends React.Component {
         return dates.map((date) => new Date(date))
     }
 
-    onDateSelection(date)
+    onDateSelection(date, modifiers = {})
     {
+        if(modifiers.disabled)
+            return;
+        
         this.setState({
             showTimeSelection: true,
             dateSelected: date
