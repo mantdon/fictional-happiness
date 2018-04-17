@@ -59,7 +59,7 @@ export default class DateSelection extends React.Component {
     {
         if(modifiers.disabled)
             return;
-        
+
         this.setState({
             showTimeSelection: true,
             dateSelected: date
@@ -74,8 +74,8 @@ export default class DateSelection extends React.Component {
     }
 
     render(){
-        const disabled = this.state.unavailableDays;
-        disabled.push({ before: new Date()});
+        let disabled = [{ before: new Date()}, { daysOfWeek: [0]}];
+        disabled = disabled.concat(this.state.unavailableDays);
 
         const content = this.state.showTimeSelection === true
             ? <TimeSelection onTimeSelection={this.props.onDateSelection} date={this.state.dateSelected} onExit={this.onTimeSelectionExit}/>
