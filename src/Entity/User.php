@@ -18,6 +18,7 @@ class User implements UserInterface, \Serializable
     public function __construct(){
     	$this->vehicles = new ArrayCollection();
     	$this->messages = new ArrayCollection();
+    	$this->orders = new ArrayCollection();
     }
 
 	/**
@@ -87,6 +88,11 @@ class User implements UserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
 	 */
     private $messages;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
+	 */
+    private $orders;
 
     public function getUsername()
     {
