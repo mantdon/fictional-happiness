@@ -40,8 +40,6 @@ export default class DateSelection extends React.Component {
                     this.setState({
                         unavailableDays: this.datesToObjects(result),
                         isLoaded: true
-                    }, () => {
-                        console.log(this.state.unavailableDays);
                     })
                 },
                 (error) => {
