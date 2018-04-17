@@ -1,0 +1,20 @@
+<div class="modal fade" id="finalizeOrder" tabindex="-1" role="dialog" aria-labelledby="finalizeOrderLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #433e3f;" id="finalizeOrderLabel">Patvirtinti užsakymą?</h5>
+                <a  onclick="showModal('finalizeOrder')" style="color: #433e3f;" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body" style="color: #433e3f;">
+                <p>Patvirtintas užsakymas nebegali būti grąžintas prie vykdomūjų.</p>
+                <p>Po patvirtinimo vartotojui bus pranešama apie jo užsakymo įvykdymą.</p>
+                <p>Ar tikrai norite patvirtinti šį užsakymą?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn custom-button w-100" href="{{ path('admin_ongoing_order_finalize', {'id': order.id}) }}">PATVIRTINTI</a>
+            </div>
+        </div>
+    </div>
+</div>

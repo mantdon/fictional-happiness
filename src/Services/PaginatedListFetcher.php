@@ -20,6 +20,32 @@ class PaginatedListFetcher
         $this->em = $em;
     }
 
+    public function getPaginatedCompletedOrders($page = 1, $limit = 5)
+    {
+	    $repository = $this->em->getRepository('App:Order');
+	    $results = $repository->getCompleted($page, $limit);
+
+	    $pageCount = ceil($results->count() / $limit);
+
+	    return ['items' => $results,
+		    'pageCount' => $pageCount,
+		    'currentPage' => $page,
+		    'totalCount' => $results->count()];
+    }
+
+    public function getOrdersForUser($page = 1, $limit = 5)
+    {
+	    $repository = $this->em->getRepository('App:Order');
+	    $results = $repository->getForUser($page, $limit);
+
+	    $pageCount = ceil($results->count() / $limit);
+
+	    return ['items' => $results,
+		    'pageCount' => $pageCount,
+		    'currentPage' => $page,
+		    'totalCount' => $results->count()];
+    }
+
 	// Used to paginate messages in user profile. Due for cleanup.
     public function getPaginatedMessagesList($user, $className, $page = 1, $limit = 5)
     {

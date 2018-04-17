@@ -41,6 +41,17 @@ class Order
      */
     private $visitDate;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+	 */
+    private $user;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="OrderProgress")
+	 * @ORM\JoinColumn(name="progress_id", referencedColumnName="id")
+	 */
+    private $progress;
+
     public function __construct() {
         $this->services = new ArrayCollection();
     }
@@ -69,7 +80,7 @@ class Order
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getServices()
     {
@@ -121,4 +132,42 @@ class Order
         $this->visitDate = $visitDate;
         return $this;
     }
+
+	/**
+	 * @return mixed
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
+
+	/**
+	 * @param mixed $user
+	 * @return Order
+	 */
+	public function setUser($user)
+	{
+		$this->user = $user;
+
+		return $this;
+	}
+
+	/**
+	 * @return OrderProgress
+	 */
+	public function getProgress()
+	{
+		return $this->progress;
+	}
+
+	/**
+	 * @param $progress
+	 * @return Order
+	 */
+	public function setProgress($progress)
+	{
+		$this->progress = $progress;
+
+		return $this;
+	}
 }
