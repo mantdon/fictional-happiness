@@ -60,6 +60,7 @@
     background: white;
     height: 60vh;
     padding: 40px 0 40px 0;
+    text-align: center;
 }
 
 .searchBox{
@@ -78,6 +79,7 @@
 }
 
 .orderDialogButtonsContainer{
+    text-align: initial;
 }
 
 .orderDialogButton{
