@@ -80,11 +80,11 @@
 
 .orderDialogButtonsContainer{
     text-align: initial;
+    height: 35px;
 }
 
 .orderDialogButton{
     display: inline-block;
-    margin: 5px 5px 5px 5px;
     background: purple;
     padding: 5px 5px 5px 5px;
 }
