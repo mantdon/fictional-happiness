@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Helpers\Pagination;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,34 +20,39 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+	// Used by PaginatedListFetcher. Due for cleanup.
+	public function getAll($currentPage = 1, $limit = 5){
+		$qb = $this->createQueryBuilder('o')
+					->leftJoin('o.progress', 'progress')
+					->where('progress.isDone = 0')
+					->orderBy('o.visitDate', 'ASC')
+					->getQuery();
+		$paginator = Pagination::paginate($qb, $currentPage, $limit);
+		return $paginator;
+	}
 
-    /*
-    public function findOneBySomeField($value): ?Order
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+	public function getCompleted($currentPage = 1, $limit = 5)
+	{
+		$qb = $this->createQueryBuilder('o')
+					->leftJoin('o.progress', 'progress')
+					->where('progress.isDone = 1')
+					->orderBy('progress.completionDate', 'DESC')
+					->getQuery();
+		$paginator = Pagination::paginate($qb, $currentPage, $limit);
+		return $paginator;
+	}
+
+	public function getForUser($currentPage = 1, $limit = 5)
+	{
+		$qb = $this->createQueryBuilder('o')
+			->leftJoin('o.progress', 'progress')
+			->orderBy('progress.isDone', 'ASC')
+			->addOrderBy('o.visitDate', 'DESC')
+			->addOrderBy('progress.completionDate', 'ASC')
+			->getQuery();
+		$paginator = Pagination::paginate($qb, $currentPage, $limit);
+		return $paginator;
+	}
 
     /**
      * @param $date \DateTime
