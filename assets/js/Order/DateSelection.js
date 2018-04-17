@@ -5,6 +5,7 @@ import TimeSelection from './TimeSelection';
 import 'moment/locale/lt';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import moment from 'moment';
+import Loader from "./Loader";
 
 export default class DateSelection extends React.Component {
 
@@ -14,7 +15,8 @@ export default class DateSelection extends React.Component {
         this.state = {
             showTimeSelection: false,
             dateSelected: null,
-            unavailableDays: []
+            unavailableDays: [],
+            isLoaded: false
         };
 
         this.onDateSelection = this.onDateSelection.bind(this);
@@ -36,7 +38,8 @@ export default class DateSelection extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        unavailableDays: this.datesToObjects(result)
+                        unavailableDays: this.datesToObjects(result),
+                        isLoaded: true
                     }, () => {
                         console.log(this.state.unavailableDays);
                     })
@@ -79,6 +82,9 @@ export default class DateSelection extends React.Component {
                 color: 'gray'
             }
         };
+
+        if(!this.state.isLoaded)
+            return <Loader/>;
 
         return (
             <div className={'datePickerContainer'}>

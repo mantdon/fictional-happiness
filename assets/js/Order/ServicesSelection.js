@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import ServiceOption from './ServiceOption';
+import Loader from './Loader';
 
 export default class ServicesSelection extends React.Component {
 
@@ -12,7 +13,8 @@ export default class ServicesSelection extends React.Component {
             servicesList: [],
             selectedServices: this.props.selectedServices,
             selectedServicesList: [],
-            searchValue: ''
+            searchValue: '',
+            isLoaded: false
         };
         this.selectService = this.selectService.bind(this);
         this.handleSearchBox = this.handleSearchBox.bind(this);
@@ -39,7 +41,8 @@ export default class ServicesSelection extends React.Component {
                     this.setState({
                         services: result,
                         shownServices: result,
-                        servicesList: this.formAvailableServiceList(result, this.selectService)
+                        servicesList: this.formAvailableServiceList(result, this.selectService),
+                        isLoaded: true
                     });
                 },
                 (error) => {
@@ -152,23 +155,27 @@ export default class ServicesSelection extends React.Component {
 
     render(){
         return <div className={'serviceSelectionDialog'}>
-                    <h1>Pasirinkite paslaugas</h1>
-                    <div className={'serviceSelectionContainer'}>
-                        <div className={'serviceOptionsContainer'}>
-                            <input
-                                className={'searchBox'}
-                                type='text'
-                                value={this.state.searchValue}
-                                onChange={this.handleSearchBox}
-                            />
-                            <div className={'scrollable-vertical searchableServices'}>
-                                {this.state.servicesList}
-                            </div>
-                        </div>
-                        <div className={'serviceOptionsContainer scrollable-vertical align-right'}>
-                            {this.state.selectedServicesList}
+                <h1>Pasirinkite paslaugas</h1>
+                { this.state.isLoaded ?
+                <div className={'serviceSelectionContainer'}>
+                    <div className={'serviceOptionsContainer'}>
+                        <input
+                            className={'searchBox'}
+                            type='text'
+                            value={this.state.searchValue}
+                            onChange={this.handleSearchBox}
+                        />
+                        <div className={'scrollable-vertical searchableServices'}>
+                            {this.state.servicesList}
                         </div>
                     </div>
-                </div>;
+                    <div className={'serviceOptionsContainer scrollable-vertical align-right'}>
+                        {this.state.selectedServicesList}
+                    </div>
+                </div>
+                    :
+                    <Loader/>
+                }
+            </div>;
     }
 }

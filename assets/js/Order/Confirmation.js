@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import Loader from "./Loader";
 
 export default class Confirmation extends React.Component {
     constructor(props) {
@@ -7,7 +8,8 @@ export default class Confirmation extends React.Component {
         this.state = {
             orderCompleted: false,
             errors: [],
-            cost: 0
+            cost: 0,
+            isSubmitted: false
         };
         this.submitOrder = this.submitOrder.bind(this);
     }
@@ -21,6 +23,10 @@ export default class Confirmation extends React.Component {
 
     submitOrder()
     {
+        this.setState({
+            isSubmitted: true
+        });
+
         let services = this.props.services;
         let vehicle = this.props.vehicle;
         let date = this.props.date.format('YYYY-MM-DD HH:mm');
@@ -73,7 +79,11 @@ export default class Confirmation extends React.Component {
     render(){
         return <div className={'text-center'}>
             <div>kaina ${this.state.cost}</div>
-            <div className={'orderDialogButton'} onClick={this.submitOrder}>Mokėti</div>
+            {!this.state.isSubmitted ?
+                <div className={'orderDialogButton'} onClick={this.submitOrder}>Mokėti</div>
+                :
+                <Loader/>
+            }
         </div>;
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import VehicleOption from './Option';
+import Loader from './Loader';
 
 export default class OrderPage extends React.Component {
 
@@ -41,7 +42,11 @@ export default class OrderPage extends React.Component {
     render() {
         return  <div>
             <h1>Pasirinkite automobilį</h1>
-                    <div className={'optionsContainer'}> {this.formOptions(this.state.items) }</div>
+            {this.state.isLoaded ?
+                <div className={'optionsContainer'}> {this.formOptions(this.state.items)}</div>
+                :
+                <Loader/>
+            }
                 </div>;
     }
 }
