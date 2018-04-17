@@ -41,7 +41,7 @@ export default class OrderPage extends React.Component {
 
     render() {
         return  <div>
-            <h1>Pasirinkite automobilį</h1>
+            <h1 className={'orderDialogLabel'}>Automobilio pasirinkimas</h1>
             {this.state.isLoaded ?
                 <div className={'optionsContainer'}> {this.formOptions(this.state.items)}</div>
                 :

@@ -78,6 +78,7 @@ export default class Confirmation extends React.Component {
 
     render(){
         return <div className={'text-center'}>
+            <h1 className={'orderDialogLabel'}>Užsakymo patvirtinimas</h1>
             <div>kaina ${this.state.cost}</div>
             {!this.state.isSubmitted ?
                 <div className={'orderDialogButton'} onClick={this.submitOrder}>Mokėti</div>

@@ -95,7 +95,6 @@
 
 .datePickerContainer{
     text-align: center;
-    padding-top: 50px;
 }
 
 .timeSelectionContainer{
@@ -105,4 +104,8 @@
     border: 1px gray solid;
     text-align: center;
     padding: 5px 5px 5px 5px;
+}
+
+.orderDialogLabel{
+    margin-bottom: 20px;
 }

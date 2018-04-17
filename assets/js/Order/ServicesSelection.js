@@ -155,8 +155,8 @@ export default class ServicesSelection extends React.Component {
 
     render(){
         return <div className={'serviceSelectionDialog'}>
-                <h1>Pasirinkite paslaugas</h1>
-                { this.state.isLoaded ?
+            <h1 className={'orderDialogLabel'}>Paslaugų pasirinkimas</h1>
+            { this.state.isLoaded ?
                 <div className={'serviceSelectionContainer'}>
                     <div className={'serviceOptionsContainer'}>
                         <input
