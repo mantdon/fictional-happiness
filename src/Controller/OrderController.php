@@ -123,8 +123,11 @@ class OrderController extends Controller
 	{
 		$oc->finalizeOrder($order);
 
-		$messageTitle = "Order complete";
-		$messageBody = $this->renderView('Email/order_complete.html.twig');
+		$messageTitle = "Užsakymas įvykdytas";
+		$messageBody = $this->renderView('Email/order_complete.html.twig',
+										array(
+											'order' => $order
+										));
 		$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
 		$mm->sendMessageToProfile($message, $order->getUser());
 		$mm->sendMessageToEmail($message, $order->getUser());
