@@ -161,7 +161,6 @@ class OrderPage extends React.Component {
 
     render() {
         return <div className={'orderDialog col-sm-12'}>
-            <h1 className={'orderDialogLabel'}>Paslaugų pasirinkimas</h1>
             {this.state.dialog}
 
             <div className={'row orderDialogButtonsContainer'}>

@@ -152,12 +152,13 @@ export default class ServicesSelection extends React.Component {
             servicesList: this.formAvailableServiceList(results, this.selectService)
         });
     }
-//<div className={'serviceSelectionContainer'}>
+
     render(){
         return <div className={'row'}>
+            <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Paslaugų pasirinkimas</h1>
+            <div className={'offset-sm-2 col-sm-8'}>
             { this.state.isLoaded ?
-                <div className={'offset-sm-2 col-sm-8'}>
-                    <div className={'row'}>
+                    <div className={'row serviceSelectionContainer'}>
                         <div className={'col-sm-5'}>
                             <div className={'serviceOptionsContainer'}>
                                 <div className={"input-group"}>
@@ -184,10 +185,10 @@ export default class ServicesSelection extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
                     :
                     <Loader/>
                 }
+                </div>
             </div>;
     }
 }

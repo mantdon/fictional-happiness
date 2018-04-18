@@ -81,9 +81,9 @@ export default class Confirmation extends React.Component {
             <h1 className={'orderDialogLabel'}>Užsakymo patvirtinimas</h1>
             <p> Apsilankymo laikas: { this.props.date.format('YYYY-MM-DD HH:mm') }</p>
             <p> Automobilis: { this.props.vehicle.plateNumber } { this.props.vehicle.make } { this.props.vehicle.model } </p>
-            <div>kaina ${this.state.cost.toFixed(2)}</div>
+            <p>kaina ${this.state.cost.toFixed(2)}</p>
             {!this.state.isSubmitted ?
-                <div className={'orderDialogButton'} onClick={this.submitOrder}>Mokėti</div>
+                <div className={'btn-nav-dropdown orderDialogButton'} onClick={this.submitOrder}>Mokėti</div>
                 :
                 <Loader/>
             }

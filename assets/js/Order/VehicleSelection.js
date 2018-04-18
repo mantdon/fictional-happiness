@@ -40,12 +40,14 @@ export default class OrderPage extends React.Component {
     }
 
     render() {
-        return  <div>
-            <h1 className={'orderDialogLabel'}>Automobilio pasirinkimas</h1>
+        return  <div className={'row'}>
+            <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Automobilio pasirinkimas</h1>
             {this.state.isLoaded ?
                 <div className={'optionsContainer'}> {this.formOptions(this.state.items)}</div>
                 :
-                <Loader/>
+                <div className={'d-flex justify-content-center w-100'}>
+                    <Loader/>
+                </div>
             }
                 </div>;
     }
