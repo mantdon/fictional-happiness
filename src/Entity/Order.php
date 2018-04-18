@@ -32,7 +32,7 @@ class Order
     private $services;
 
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", scale=2)
      */
     private $cost;
 
@@ -48,7 +48,7 @@ class Order
 
 	/**
 	 * @ORM\OneToOne(targetEntity="OrderProgress")
-	 * @ORM\JoinColumn(name="progress_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="progress_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
     private $progress;
 

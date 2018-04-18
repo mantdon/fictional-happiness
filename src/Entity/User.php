@@ -80,6 +80,11 @@ class User implements UserInterface, \Serializable
     private $role;
 
 	/**
+	 * @ORM\Column(type="datetime")
+	 */
+    private $registrationDate;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
 	 */
     private $vehicles;
@@ -258,6 +263,20 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+	/**
+	 * @return \DateTime
+	 */
+	public function getRegistrationDate()
+	{
+		return $this->registrationDate;
+	}
+
+	public function setRegistrationDate(\DateTime $registrationDate)
+	{
+		$this->registrationDate = $registrationDate;
+
+		return $this;
+	}
 
     public function getSalt()
     {
@@ -291,6 +310,25 @@ class User implements UserInterface, \Serializable
 
     public function getMessages(){
     	return $this->messages;
+    }
+
+	/**
+	 * @return ArrayCollection
+	 */
+    public function getOrders()
+    {
+    	return $this->orders;
+    }
+
+    public function getNumberOfOngoingOrders()
+    {
+    	$count = 0;
+
+    	foreach($this->orders as $order)
+    		if($order->getProgress()->getIsDone() === false)
+    			$count++;
+
+    	return $count;
     }
 
     /** @see \Serializable::serialize() */

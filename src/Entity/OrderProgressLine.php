@@ -18,7 +18,7 @@ class OrderProgressLine
 
     /**
      * @ORM\ManyToOne(targetEntity="OrderProgress", inversedBy="lines")
-     * @ORM\JoinColumn(name="progress_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="progress_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $progress;
 
