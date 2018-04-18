@@ -91,7 +91,7 @@ class AvailableTimesFetcher
     {
         if($this->isToday($date)) {
             $now = $this->timeToFloat(date('H:i'));
-            $offset = ceil(($now - $this->workDayBeginsAt) / $this->hoursInterval);
+            $offset = ceil(($now - $this->workDayBeginsAt) / $this->hoursInterval) * $this->hoursInterval;
             if($offset > 0)
                 return $this->workDayBeginsAt + $offset;
         }
