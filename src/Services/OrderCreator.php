@@ -36,6 +36,8 @@ class OrderCreator
 
         $this->em->persist($order);
         $this->em->flush();
+
+        return $order;
     }
 
     private function setupProgress(\App\Entity\Order $order)

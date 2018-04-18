@@ -1,9 +1,14 @@
 {% spaceless %}
 <div>
-    <h2>Some header</h2>
     <br>
-    <p>
-        NEW MEESAGE
-    </p>
+    <p> Apsilankymo laikas: {{ order.visitDate | date('Y-m-d H:i') }}</p>
+    <p> Automobilis: {{ order.vehicle.plateNumber }} {{ order.vehicle.make }} {{ order.vehicle.model }} </p>
+    <p> Paslaugos: </p>
+    <ul>
+        {% for service in order.services%}
+            <li>{{ service.name }} </li>
+        {% endfor %}
+    </ul>
+    <p> Kaina: ${{ order.cost }} </p>
 </div>
 {% endspaceless %}

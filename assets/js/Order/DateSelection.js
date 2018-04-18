@@ -5,6 +5,7 @@ import TimeSelection from './TimeSelection';
 import 'moment/locale/lt';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import moment from 'moment';
+import Loader from "./Loader";
 
 export default class DateSelection extends React.Component {
 
@@ -14,7 +15,8 @@ export default class DateSelection extends React.Component {
         this.state = {
             showTimeSelection: false,
             dateSelected: null,
-            unavailableDays: []
+            unavailableDays: [],
+            isLoaded: false
         };
 
         this.onDateSelection = this.onDateSelection.bind(this);
@@ -36,9 +38,8 @@ export default class DateSelection extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        unavailableDays: this.datesToObjects(result)
-                    }, () => {
-                        console.log(this.state.unavailableDays);
+                        unavailableDays: this.datesToObjects(result),
+                        isLoaded: true
                     })
                 },
                 (error) => {
@@ -54,8 +55,11 @@ export default class DateSelection extends React.Component {
         return dates.map((date) => new Date(date))
     }
 
-    onDateSelection(date)
+    onDateSelection(date, modifiers = {})
     {
+        if(modifiers.disabled)
+            return;
+
         this.setState({
             showTimeSelection: true,
             dateSelected: date
@@ -70,22 +74,23 @@ export default class DateSelection extends React.Component {
     }
 
     render(){
-        const modifiers = {
-            unavailable: this.state.unavailableDays
-        };
+        let disabled = [{ before: new Date()}, { daysOfWeek: [0]}];
+        disabled = disabled.concat(this.state.unavailableDays);
 
-        const modifiersStyles = {
-            unavailable: {
-                color: 'gray'
-            }
-        };
+        const content = this.state.showTimeSelection === true
+            ? <TimeSelection onTimeSelection={this.props.onDateSelection} date={this.state.dateSelected} onExit={this.onTimeSelectionExit}/>
+            : <DayPicker className={'calendarContainer'} showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}
+                         disabledDays={disabled} fromMonth={new Date()}/>;
 
         return (
-            <div className={'datePickerContainer'}>
-                {this.state.showTimeSelection === true
-                    ? <TimeSelection onTimeSelection={this.props.onDateSelection} date={this.state.dateSelected} onExit={this.onTimeSelectionExit}/>
-                    : <DayPicker className={'timeSelectionElementSize'} showOutsideDays localeUtils={MomentLocaleUtils} locale={'lt'} onDayClick={this.onDateSelection}
-                    modifiers={modifiers} modifiersStyles={modifiersStyles}/>}
+            <div className={'datePickerContainer row'}>
+                <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Atvykimo laiko pasirinkimas</h1>
+                <div className={'d-flex justify-content-center w-100'}>
+                {this.state.isLoaded
+                    ? content
+                    : <Loader/>
+                }
+                </div>
             </div>
         );
     }

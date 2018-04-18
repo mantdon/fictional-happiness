@@ -11,7 +11,7 @@ use App\Services\AvailableTimesFetcher;
 use App\Services\MessageManager;
 use App\Services\OrderCreator;
 use App\Services\UnavailableDaysFinder;
-use DoctrineExtensions\Query\Mysql\Date;
+use App\Services\UserManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,8 +22,15 @@ class OrderController extends Controller
     /**
      * @Route("/order", name="order")
      */
-    public function home(Request $request)
+    public function home(Request $request,
+                        UserManager $userManager)
     {
+        if(!$userManager->hasUserFilledPersonalInformation($this->getUser()))
+        {
+            $this->addFlash('notice', 'Prieš atliekant užsakymą privalote užpildyti savo informaciją');
+            return $this->redirectToRoute('user_settings', array('redirect' => 1));
+        }
+
         if ($this->getUser()->getVehicles()->count() === 0) {
             $vehicle = new Vehicle();
             $form = $this->createForm(VehicleType::class, $vehicle);
@@ -47,11 +54,22 @@ class OrderController extends Controller
     /**
      * @Route("order/submit")
      */
-    public function submit(Request $request, OrderCreator $orderCreator)
+    public function submit(Request $request,
+                           OrderCreator $orderCreator,
+                           MessageManager $messageManager)
     {
         $content = json_decode($request->getContent(), true);
 		$user = $this->getUser();
-        $orderCreator->createOrder($content['vehicle'], $content['services'], $content['date'], $user);
+
+        $order = $orderCreator->createOrder($content['vehicle'], $content['services'], $content['date'], $user);
+
+        $messageTitle = 'Užsakymas pateiktas';
+        $messageContent = $this->renderView('Email/order_placed.html.twig', array('order' => $order));
+        $recipient = $this->getUser();
+
+        $message = $messageManager->fetchOrCreateMessage($messageTitle, $messageContent);
+        $messageManager->sendMessageToEmail($message, $recipient);
+        $messageManager->sendMessageToProfile($message, $recipient);
 
         return new JsonResponse($request->request->get('services'));
     }
@@ -63,7 +81,7 @@ class OrderController extends Controller
     {
         $content = json_decode($request->getContent(), true);
 
-        $times = $fetcher->fetchDay(new \DateTime($content['date']));
+        $times = $fetcher->fetchDay($content['date']);
 
         return new JsonResponse($times);
     }

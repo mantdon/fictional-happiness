@@ -1,9 +1,10 @@
 .Option{
-    border-top: solid 1px gray;
+    border-top: solid 1px #433e3f;;
+    background: #b07156;
 }
 
 .Option:hover{
-    background: #e6ffff;
+    background: #794c39;
 }
 
 .serviceName{
@@ -26,23 +27,22 @@
 }
 
 .serviceOptionsContainer{
-    display: inline-block;
     vertical-align: top;
-    height: 100%;
-    width: 45%;
-    background: white;
-}
-
-.serviceOptionsContainer > input{
-    height: 15%;
+    height: 438px;
+    background: #b07156;
+    border: 4px double #433e3f;
 }
 
 .searchableServices{
-    height: 84%;
+    height: 391px;
 }
 
 .align-right{
     float: right;
+}
+
+.align-text-right{
+    text-align: right;
 }
 
 .scrollable-vertical{
@@ -55,35 +55,39 @@
 }
 
 .orderDialog{
-    border: solid 1px gray;
+    border-top: 1px solid #433e3f;
     margin-top: 50px;
-    background: white;
-    height: 60vh;
-    padding: 40px 0 40px 0;
+    background: linear-gradient(#b0a18e,#c0b7b1);
+    padding-top: 50px;
+    text-align: center;
+    color: white;
 }
 
 .searchBox{
     width: 100%;
+    background: #b0a18e;
+    color: white;
 }
+
+.searchBox:focus{
+    background: #c0b7b1;
+    color: white;
+}
+
 
 .serviceSelectionContainer{
-    width:70%;
-    display: block;
+    padding: 0 100px 0 100px;
     height: 100%;
-    margin: auto;
-}
-
-.serviceSelectionDialog{
-    height: 70%;
 }
 
 .orderDialogButtonsContainer{
+    text-align: initial;
+    height: 35px;
+    margin-top: 30px;
 }
 
 .orderDialogButton{
     display: inline-block;
-    margin: 5px 5px 5px 5px;
-    background: purple;
     padding: 5px 5px 5px 5px;
 }
 
@@ -93,14 +97,22 @@
 
 .datePickerContainer{
     text-align: center;
-    padding-top: 50px;
 }
 
 .timeSelectionContainer{
     display: inline-block;
     width: 200px;
-    background-color: white;
+    background-color: #b07156;
     border: 1px gray solid;
     text-align: center;
     padding: 5px 5px 5px 5px;
+}
+
+.orderDialogLabel{
+    margin-bottom: 20px;
+}
+
+.calendarContainer{
+    background-color: #b07156;
+    border: 4px double #433e3f;
 }

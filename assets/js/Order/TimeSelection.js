@@ -2,13 +2,15 @@ import React from 'react';
 import {render} from 'react-dom';
 import TimeOption from './TimeOption';
 import moment from 'moment';
+import Loader from './Loader';
 
 export default class TimeSelection extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            timesList: []
+            timesList: [],
+            isLoaded: false
         };
         this.handleTimeSelection = this.handleTimeSelection.bind(this);
     }
@@ -31,7 +33,8 @@ export default class TimeSelection extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        timesList: this.formTimesList(result)
+                        timesList: this.formTimesList(result),
+                        isLoaded: true
                     });
                 },
                 (error) => {
@@ -63,7 +66,10 @@ export default class TimeSelection extends React.Component {
             <div className={'timeSelectionContainer'}>
                 <span>{moment(this.props.date).format('YYYY-MM-DD')}</span>
                 <span onClick={this.props.onExit} className={'close'} aria-hidden="true">&times;</span>
-                {this.state.timesList}
+                {this.state.isLoaded
+                    ? this.state.timesList
+                    : <Loader/>
+                }
             </div>
         );
     }

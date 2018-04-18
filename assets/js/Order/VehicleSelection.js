@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import VehicleOption from './Option';
+import Loader from './Loader';
 
 export default class OrderPage extends React.Component {
 
@@ -39,9 +40,15 @@ export default class OrderPage extends React.Component {
     }
 
     render() {
-        return  <div>
-            <h1>Pasirinkite automobilį</h1>
-                    <div className={'optionsContainer'}> {this.formOptions(this.state.items) }</div>
+        return  <div className={'row'}>
+            <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Automobilio pasirinkimas</h1>
+            {this.state.isLoaded ?
+                <div className={'optionsContainer'}> {this.formOptions(this.state.items)}</div>
+                :
+                <div className={'d-flex justify-content-center w-100'}>
+                    <Loader/>
+                </div>
+            }
                 </div>;
     }
 }

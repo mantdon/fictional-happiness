@@ -46,7 +46,7 @@ class UnavailableDaysFinder
 
         for($day = 1; $day <= $daysInMonth; $day++)
         {
-            $dateToCheck = $dateTemplate . $day;
+            $dateToCheck = $dateTemplate . $this->formatDayString($day);
             $orders = $this->availableTimesFetcher->fetchDay($dateToCheck);
 
             if(count($orders) === 0)
@@ -59,5 +59,12 @@ class UnavailableDaysFinder
     private function getDaysInMonth($date)
     {
         return $date->format('t');
+    }
+
+    private function formatDayString($day)
+    {
+        if($day < 10)
+            return '0' . $day;
+        return $day;
     }
 }

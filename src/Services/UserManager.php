@@ -39,4 +39,18 @@ class UserManager
 		    $user->getRoles()
 	    );
     }
+
+    /**
+     * Checks whether user has completed registration by filling his personal information fields.
+     * @param $user User
+     * @return bool
+     */
+    public function hasUserFilledPersonalInformation($user)
+    {
+        return !(empty($user->getFirstName()) ||
+            empty($user->getLastName()) ||
+            empty($user->getPhone()) ||
+            empty($user->getAddress()) ||
+            empty($user->getCity()));
+    }
 }

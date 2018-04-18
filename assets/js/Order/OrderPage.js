@@ -39,6 +39,8 @@ class OrderPage extends React.Component {
     {
         this.setState({
             selectedServices: services
+        }, () => {
+            this.updateButtonsStates();
         });
     }
 
@@ -98,14 +100,14 @@ class OrderPage extends React.Component {
 
     formForwardsButton()
     {
-        return <div className={'orderDialogButton ' + this.disableButton(this.state.isBackwardsActive)} onClick={this.previousStep}>
+        return <div className={'btn-nav-dropdown orderDialogButton ' + this.disableButton(this.state.isBackwardsActive)} onClick={this.previousStep}>
             Atgal
         </div>;
     }
 
     formBackwardsButton()
     {
-        return <div className={'orderDialogButton align-right ' + this.disableButton(this.state.isForwardsActive)} onClick={this.nextStep}>
+        return <div className={'btn-nav-dropdown orderDialogButton ' + this.disableButton(this.state.isForwardsActive)} onClick={this.nextStep}>
             Sekantis
         </div>;
     }
@@ -119,9 +121,17 @@ class OrderPage extends React.Component {
         else if(this.state.step === 2)
         {
             this.setState({
-                isBackwardsActive: true,
-                isForwardsActive: true
+                isBackwardsActive: true
             });
+
+            if(this.state.selectedServices.length > 0)
+                this.setState({
+                    isForwardsActive: true
+                });
+            else
+                this.setState({
+                    isForwardsActive: false
+                });
         }
         else if(this.state.step <= this.state.totalSteps) {
             this.setState({
@@ -150,13 +160,17 @@ class OrderPage extends React.Component {
     }
 
     render() {
-        return <div className={'orderDialog'}>
-            <div className={'orderDialogButtonsContainer'}>
-                {this.formForwardsButton()}
-                {this.formBackwardsButton()}
-            </div>
-
+        return <div className={'orderDialog col-sm-12'}>
             {this.state.dialog}
+
+            <div className={'row orderDialogButtonsContainer'}>
+                <div className={'col-sm-6'}>
+                    {this.formForwardsButton()}
+                </div>
+                <div className={'col-sm-6 align-text-right'}>
+                    {this.formBackwardsButton()}
+                </div>
+            </div>
         </div>;
     }
 }
