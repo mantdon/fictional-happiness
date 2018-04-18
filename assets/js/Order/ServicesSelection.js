@@ -152,32 +152,37 @@ export default class ServicesSelection extends React.Component {
             servicesList: this.formAvailableServiceList(results, this.selectService)
         });
     }
-
+//<div className={'serviceSelectionContainer'}>
     render(){
-        return <div className={'serviceSelectionDialog'}>
-            <h1 className={'orderDialogLabel'}>Paslaugų pasirinkimas</h1>
+        return <div className={'row'}>
             { this.state.isLoaded ?
-                <div className={'serviceSelectionContainer'}>
-                    <div className={'serviceOptionsContainer'}>
-                        <div className={"input-group"}>
-                            <div className={'input-group-prepend'}>
-                                <i className={'input-group-text'}>
-                                    &#128269;
-                                </i>
+                <div className={'offset-sm-2 col-sm-8'}>
+                    <div className={'row'}>
+                        <div className={'col-sm-5'}>
+                            <div className={'serviceOptionsContainer'}>
+                                <div className={"input-group"}>
+                                    <div className={'input-group-prepend'}>
+                                        <i className={'input-group-text'}>
+                                            &#128269;
+                                        </i>
+                                    </div>
+                                    <input
+                                        className={'form-control searchBox'}
+                                        type='text'
+                                        value={this.state.searchValue}
+                                        onChange={this.handleSearchBox}
+                                    />
+                                </div>
+                                <div className={'scrollable-vertical searchableServices'}>
+                                    {this.state.servicesList}
+                                </div>
                             </div>
-                            <input
-                                className={'form-control searchBox'}
-                                type='text'
-                                value={this.state.searchValue}
-                                onChange={this.handleSearchBox}
-                            />
                         </div>
-                        <div className={'scrollable-vertical searchableServices'}>
-                            {this.state.servicesList}
+                        <div className={'offset-sm-2 col-sm-5'}>
+                            <div className={'serviceOptionsContainer scrollable-vertical'}>
+                                {this.state.selectedServicesList}
+                            </div>
                         </div>
-                    </div>
-                    <div className={'serviceOptionsContainer scrollable-vertical align-right'}>
-                        {this.state.selectedServicesList}
                     </div>
                 </div>
                     :

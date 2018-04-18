@@ -26,19 +26,22 @@
 }
 
 .serviceOptionsContainer{
-    display: inline-block;
     vertical-align: top;
-    height: 100%;
-    width: 45%;
-    background: white;
+    height: 438px;
+    background: #b07156;
+    border: 4px double #433e3f;
 }
 
 .searchableServices{
-    height: 84%;
+    height: 391px;
 }
 
 .align-right{
     float: right;
+}
+
+.align-text-right{
+    text-align: right;
 }
 
 .scrollable-vertical{
@@ -51,17 +54,19 @@
 }
 
 .orderDialog{
-    border: solid 1px gray;
+    border-top: 1px solid #433e3f;
     margin-top: 50px;
-    background: white;
-    height: 60vh;
-    padding: 40px 0 40px 0;
+    background: linear-gradient(#b0a18e,#c0b7b1);
+    padding: 40px 0 0 0;
     text-align: center;
+    color: white;
 }
 
 .searchBox{
     width: 100%;
+    background: #c0b7b1;
 }
+
 
 .serviceSelectionContainer{
     width:70%;
@@ -70,18 +75,14 @@
     margin: auto;
 }
 
-.serviceSelectionDialog{
-    height: 70%;
-}
-
 .orderDialogButtonsContainer{
     text-align: initial;
     height: 35px;
+    margin-top: 30px;
 }
 
 .orderDialogButton{
     display: inline-block;
-    background: purple;
     padding: 5px 5px 5px 5px;
 }
 

@@ -27,6 +27,7 @@ class RegistrationHandler
 
         $user = $form->getData();
         $user->setRole('ROLE_USER');
+        $user->setRegistrationDate(new \DateTime(date('Y/m/d H:i:s')));
         $this->userManager->createUser($user);
 
         return true;

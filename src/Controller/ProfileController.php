@@ -27,11 +27,30 @@ class ProfileController extends Controller
 	/**
 	 * @Route("/user/orders", name="user_orders")
 	 */
-	public function ordersTabActions(){
-		return $this->render('Profile/Orders/profile_orders.html.twig', array(
-			'user' => $this->getUser(),
-			//'orders' => $this->getUser()->getOrders()
-		));
+	public function ordersTabActions(Request $request){
+		$page = $this->loadPageValue( $request );
+		return $this->redirectToRoute( 'user_orders_page', [ $this->pageParameterName => $page ] );
+	}
+
+	/**
+	 * @Route("/user/orders/page/{page}", name="user_orders_page", requirements={"page"="\d+"})
+	 */
+	public function ongoingOrdersPageAction( PaginatedListFetcher $listFetcher, $page )
+	{
+		$list = $listFetcher->getOrdersForUser($page , 3);
+		// Load first page on invalid page entry.
+		// 'totalCount' check is needed to avoid redirection loops on empty list.
+		if( $list['totalCount'] !== 0 && $page > $list['pageCount'] || $page < 1 )
+			return $this->redirectToRoute( 'user_orders_page', array( $this->pageParameterName => 1 ) );
+
+		return $this->render( 'Profile/Orders/profile_orders.html.twig',
+		                      array(
+		                      	'user' => $this->getUser(),
+		                      	    'orders' => $list['items'],
+			                      'pageCount' => $list['pageCount'],
+			                      'currentPage' => $page,
+			                      'pageParameterName' => $this->pageParameterName,
+			                      'route' => 'user_orders_page' ) );
 	}
 
 	/**

@@ -18,6 +18,7 @@ class User implements UserInterface, \Serializable
     public function __construct(){
     	$this->vehicles = new ArrayCollection();
     	$this->messages = new ArrayCollection();
+    	$this->orders = new ArrayCollection();
     }
 
 	/**
@@ -79,6 +80,11 @@ class User implements UserInterface, \Serializable
     private $role;
 
 	/**
+	 * @ORM\Column(type="datetime")
+	 */
+    private $registrationDate;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
 	 */
     private $vehicles;
@@ -87,6 +93,11 @@ class User implements UserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
 	 */
     private $messages;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
+	 */
+    private $orders;
 
     public function getUsername()
     {
@@ -252,6 +263,20 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+	/**
+	 * @return \DateTime
+	 */
+	public function getRegistrationDate()
+	{
+		return $this->registrationDate;
+	}
+
+	public function setRegistrationDate(\DateTime $registrationDate)
+	{
+		$this->registrationDate = $registrationDate;
+
+		return $this;
+	}
 
     public function getSalt()
     {
@@ -285,6 +310,25 @@ class User implements UserInterface, \Serializable
 
     public function getMessages(){
     	return $this->messages;
+    }
+
+	/**
+	 * @return ArrayCollection
+	 */
+    public function getOrders()
+    {
+    	return $this->orders;
+    }
+
+    public function getNumberOfOngoingOrders()
+    {
+    	$count = 0;
+
+    	foreach($this->orders as $order)
+    		if($order->getProgress()->getIsDone() === false)
+    			$count++;
+
+    	return $count;
     }
 
     /** @see \Serializable::serialize() */

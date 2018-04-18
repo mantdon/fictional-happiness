@@ -1,30 +1,25 @@
-{% extends 'Profile/base.html.twig' %}
+{% extends 'Admin/base.html.twig' %}
 
-{% block tab_bar %}
-    {% include 'Profile/tab_bar.html.twig' with {
-        orders_active: 'true'
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        ongoing_orders_active: 'true'
     }%}
 {% endblock %}
 
-{% block tab_content %}
+{% block panel_content %}
     <div class="orders-table" id="orders">
         {% if orders.count > 0 %}
             <div class="list-group">
                 {% for order in orders %}
                     {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
-                    <a class="list-group-item" href="{{ path('user_order_show', {'id': order.id}) }}">
+                    <a class="list-group-item" href="{{ path('admin_ongoing_order_show', {"id": order.id}) }}">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">User: {{ order.user.firstName }} {{ order.user.lastName }}</h5>
                             <h6>{{ order.visitDate|date('Y/m/d') }}</h6>
                         </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5>Vehicle: {{ order.vehicle.make }} {{ order.vehicle.model }}</h5>
-                            {% if order.progress.isDone %}
-                                <h6>Completion date: {{ order.progress.completionDate|date('Y/m/d') }}</h6>
-                            {% endif %}
-                        </div>
+                        <h5>Vehicle: {{ order.vehicle.make }} {{ order.vehicle.model }}</h5>
                         <p class="mb-1">
-                        <h5>Services ordered: {{ order.services.count }}</h5>
+                            <h5>Services ordered: {{ order.services.count }}</h5>
                         </p>
                         <h6>${{ order.cost }}</h6>
                         <div class="progress">
