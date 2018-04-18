@@ -39,6 +39,8 @@ class OrderPage extends React.Component {
     {
         this.setState({
             selectedServices: services
+        }, () => {
+            this.updateButtonsStates();
         });
     }
 
@@ -119,9 +121,17 @@ class OrderPage extends React.Component {
         else if(this.state.step === 2)
         {
             this.setState({
-                isBackwardsActive: true,
-                isForwardsActive: true
+                isBackwardsActive: true
             });
+
+            if(this.state.selectedServices.length > 0)
+                this.setState({
+                    isForwardsActive: true
+                });
+            else
+                this.setState({
+                    isForwardsActive: false
+                });
         }
         else if(this.state.step <= this.state.totalSteps) {
             this.setState({
