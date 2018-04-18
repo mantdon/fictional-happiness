@@ -9,7 +9,22 @@
 .column-word-wrap{
     word-wrap: break-word;
 }
-
-.table-something{
-    color:white;
+.orders-table .list-group-item {
+    border: 4px double #B07156;
+    border-radius: 4px;
+    margin-bottom: 15px;
 }
+.orders-table .list-group-item, .services-table {
+    background: #433E3F;
+    color: #FFF;
+}
+.orders-table .progress {
+    margin-top: 15px;
+}
+.services-table {
+    border-radius: 4px;
+}
+.services-table tr:hover {
+    background: #B07156;
+}
+

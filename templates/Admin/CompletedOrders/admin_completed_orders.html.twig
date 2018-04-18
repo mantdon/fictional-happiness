@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block panel_content %}
-    <div class="tab-pane" id="orders">
+    <div class="orders-table" id="orders">
         {% if orders.count > 0 %}
             <div class="list-group">
                 {% for order in orders %}
@@ -22,7 +22,7 @@
                             <h6>Completed on: {{ order.progress.completionDate|date('Y/m/d') }}</h6>
                         </div>
                         <p class="mb-1">
-                        <h4>Services ordered: {{ order.services.count }}</h4>
+                        <h5>Services ordered: {{ order.services.count }}</h5>
                         </p>
                         <h6>${{ order.cost }}</h6>
                         <div class="progress">
