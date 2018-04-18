@@ -72,7 +72,7 @@ class OrderController extends Controller
     {
         $content = json_decode($request->getContent(), true);
 
-        $times = $fetcher->fetchDay(new \DateTime($content['date']));
+        $times = $fetcher->fetchDay($content['date']);
 
         return new JsonResponse($times);
     }

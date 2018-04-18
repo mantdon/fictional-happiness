@@ -23,7 +23,7 @@ class AvailableTimesFetcher
     }
 
     /**
-     * @param $date
+     * @param $date string
      * @return array containing available registration times at specified day.
      */
     public function fetchDay($date)
@@ -84,7 +84,7 @@ class AvailableTimesFetcher
 
 
     /**
-     * @param $date \DateTime
+     * @param $date string
      * @return float|int
      */
     private function getStartTime($date)
@@ -101,12 +101,12 @@ class AvailableTimesFetcher
 
     /**
      * Checks if given date is today.
-     * @param $date \DateTime
+     * @param $date string
      * @return bool
      */
     private function isToday($date)
     {
-        if(strcmp(date('Y-m-d'), $date->format('Y-m-d')) === 0)
+        if(strcmp(date('Y-m-d'), $date) === 0)
             return true;
         return false;
     }
