@@ -293,6 +293,14 @@ class User implements UserInterface, \Serializable
     	return $this->messages;
     }
 
+	/**
+	 * @return ArrayCollection
+	 */
+    public function getOrders()
+    {
+    	return $this->orders;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
