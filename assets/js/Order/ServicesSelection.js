@@ -159,12 +159,19 @@ export default class ServicesSelection extends React.Component {
             { this.state.isLoaded ?
                 <div className={'serviceSelectionContainer'}>
                     <div className={'serviceOptionsContainer'}>
-                        <input
-                            className={'searchBox'}
-                            type='text'
-                            value={this.state.searchValue}
-                            onChange={this.handleSearchBox}
-                        />
+                        <div className={"input-group"}>
+                            <div className={'input-group-prepend'}>
+                                <i className={'input-group-text'}>
+                                    &#128269;
+                                </i>
+                            </div>
+                            <input
+                                className={'form-control searchBox'}
+                                type='text'
+                                value={this.state.searchValue}
+                                onChange={this.handleSearchBox}
+                            />
+                        </div>
                         <div className={'scrollable-vertical searchableServices'}>
                             {this.state.servicesList}
                         </div>
