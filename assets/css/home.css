@@ -1,0 +1,16 @@
+.carousel-item {
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.carousel-caption h3, .carousel-caption p{
+    color: #e8edf3;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.portfolio-item {
+    margin-bottom: 30px;
+}
