@@ -48,7 +48,7 @@ class Order
 
 	/**
 	 * @ORM\OneToOne(targetEntity="OrderProgress")
-	 * @ORM\JoinColumn(name="progress_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="progress_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
     private $progress;
 
