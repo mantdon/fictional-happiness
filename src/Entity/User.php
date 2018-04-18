@@ -320,6 +320,17 @@ class User implements UserInterface, \Serializable
     	return $this->orders;
     }
 
+    public function getNumberOfOngoingOrders()
+    {
+    	$count = 0;
+
+    	foreach($this->orders as $order)
+    		if($order->getProgress()->getIsDone() === false)
+    			$count++;
+
+    	return $count;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
