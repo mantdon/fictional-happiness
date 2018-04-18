@@ -8,36 +8,40 @@
 
 {% block panel_content %}
     {% if services.count > 0%}
-        <table class="table">
-            <tr class="table-fixed">
-                <th>ID</th>
-                <th>Pavadinimas</th>
-                <th>Aprašymas</th>
-                <th>Kaina</th>
-                <th>Veiksmai</th>
-            </tr>
-            {% for service in services %}
+        <table class="table services-table admin-services-table">
+            <thead>
                 <tr class="table-fixed">
-                    {# For testing purposes only, should not be displayed otherwise #}
-                    <td>{{ service.id }}</td>
-                    <td>{{ service.name }}</td>
-                    {# Wrapping should be enabled for descriptions #}
-                    <td class="column-word-wrap">{{ service.description }}</td>
-                    <td>${{ service.price }}</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn custom-button dropdown-toggle" type="button" id="serviceActionDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
-                                Actions
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="serviceActionDropdown">
-                                <a class="dropdown-item" href="{{ path('service_edit', {('id'):service.id }) }}">Edit</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ path('service_show', {('id'):service.id }) }}">Delete</a>
-                            </div>
-                        </div>
-                    </td>
+                    <th>ID</th>
+                    <th>Pavadinimas</th>
+                    <th>Aprašymas</th>
+                    <th>Kaina</th>
+                    <th>Veiksmai</th>
                 </tr>
-            {% endfor %}
+            </thead>
+            <tbody>
+                {% for service in services %}
+                    <tr class="table-fixed">
+                        {# For testing purposes only, should not be displayed otherwise #}
+                        <td>{{ service.id }}</td>
+                        <td>{{ service.name }}</td>
+                        {# Wrapping should be enabled for descriptions #}
+                        <td class="column-word-wrap">{{ service.description }}</td>
+                        <td>${{ service.price }}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn custom-button dropdown-toggle" type="button" id="serviceActionDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="serviceActionDropdown">
+                                    <a class="dropdown-item" href="{{ path('service_edit', {('id'):service.id }) }}">Edit</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ path('service_show', {('id'):service.id }) }}">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
         {# pageOffset - number of page buttons to display on either side of
            currently active one.

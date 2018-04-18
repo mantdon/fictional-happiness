@@ -5,11 +5,105 @@
 {% set home_active = 'true' %}
 
 {% block content %}
-    {# Seen by unauthenticated users #}
-    {% if not app.user %}
-        <h1>Hello, world</h1>
-        {# Seen by authenticated users #}
-    {% else %}
-        <h1>Hello, {{ app.user.emailname }}</h1>
-    {% endif %}
+
+    <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <!-- Slide One - Set the background image for this slide in the line below -->
+                <div class="carousel-item active" style="background-image: url({{ asset('build/images/oilChange.4b6cb467.jpg') }})">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Alyvos keitimas</h3>
+                        <p>Keičiant alyvą naudojame geriausius produktus, kad automobilis tarnautų ilgiau.</p>
+                    </div>
+                </div>
+                <!-- Slide Two - Set the background image for this slide in the line below -->
+                <div class="carousel-item" style="background-image: url({{ asset('build/images/engineRepair.1f2e2b65.jpg') }})">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Variklio remontas</h3>
+                        <p>Mūsų specialistai atliks variklio diagnostiką ir pašalins rastus gedimus.</p>
+                    </div>
+                </div>
+                <!-- Slide Three - Set the background image for this slide in the line below -->
+                <div class="carousel-item" style="background-image: url({{ asset('build/images/carCheck.c447ddb4.jpg') }})">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Gedimų tikrinimas</h3>
+                        <p>Jūsų automobiliui atliksimę nuodugnią apžiūra ir nustatysime galimus gedimus.</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </header>
+
+    <h1>Kompanijos viekla</h1>
+
+    <div class="row">
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="{{ asset('build/images/tireChange.524556fa.jpg') }}" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">Ratų montavimas</a>
+                    </h4>
+                    <p class="card-text">Metai iš metų nuolatiniai klientai užsuka į mūsų servisą pairuošti naajam sezonui</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="{{ asset('build/images/engine.4d7ea655.jpg') }}" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">Variklio remontas</a>
+                    </h4>
+                    <p class="card-text">Variklio remonto darbus atliekame patikimai ir kruopščiai. Dėl turimos geriausios diagnostinės įrangos gedimus nustatome greitai.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="{{ asset('build/images/check.69aec21a.jpg') }}" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">Mašinos paruošimas</a>
+                    </h4>
+                    <p class="card-text">Mūsų specialistai sutvarkys jūsų automobilį ir paruoš jį ekplotavimui arba techninei apžiūrai.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Features Section -->
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Kompanija ProjectX</h2>
+            <p>Moderni kompanija pasižymi:</p>
+            <ul>
+                <li>
+                    <strong>Įsipareigojimų laikymusi</strong>
+                </li>
+                <li>Gerais specialistais</li>
+                <li>Kruopščiu darbu</li>
+                <li>Sąžiningomis kainomis</li>
+            </ul>
+            <p>Autoservisas nori plėstis ir visuomet ieško naujų darbuotojų.</p>
+        </div>
+        <div class="col-lg-6">
+            <img class="img-fluid rounded" src="{{ asset('build/images/company.af947b59.jpg') }}" alt="">
+        </div>
+    </div>
+    <!-- /.row -->
 {% endblock %}

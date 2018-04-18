@@ -54,7 +54,12 @@
             <h6>Servisai:</h6>
             <ul class="list-group">
                 {% for line in order.progress.lines %}
-                    <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">{{ line.service.name }}</li>
+                    <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">
+                        {{ line.service.name }}
+                        {% if line.completedOn is not null %}
+                            <h6>Completed: {{ line.completedOn|date('Y/m/d') }}</h6>
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
             <hr>
