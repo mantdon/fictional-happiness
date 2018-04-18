@@ -30,7 +30,7 @@ class AvailableTimesFetcher
     {
         $orders = $this->em->getRepository('App:Order')->findAllOnDate($date);
 
-        return $this->formAvailableVisitTimes($orders);
+        return $this->formAvailableVisitTimes($date, $orders);
     }
 
     /**
@@ -38,12 +38,12 @@ class AvailableTimesFetcher
      * @param $orders
      * @return array
      */
-    private function formAvailableVisitTimes($orders)
+    private function formAvailableVisitTimes($date, $orders)
     {
         $availableTimes = [];
         $orderIndex = $this->findIndexOfFirstOrderInWorkday($orders);
 
-        for ($i = $this->workDayBeginsAt; $i < $this->workDayEndsAt; $i += $this->hoursInterval)
+        for ($i = $this->getStartTime($date); $i < $this->workDayEndsAt; $i += $this->hoursInterval)
         {
             $formattedTime = $this->floatToTime($i);
 
@@ -54,33 +54,6 @@ class AvailableTimesFetcher
         }
 
         return $availableTimes;
-    }
-
-
-    private function shouldTimeBeAdded($orders, $orderIndex, $formattedTime)
-    {
-        if($orderIndex < count($orders))
-        {
-            $currentOrderTime = $orders[$orderIndex]->getVisitDate()->format('H:i');
-            if($this->isTimeOccupied($formattedTime, $currentOrderTime))
-                return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Smarter "algorithm" should be used here
-     * @param $orderTime |DateTime
-     * @param $checkTime \DateTime
-     * @return bool
-     */
-    private function isTimeOccupied($orderTime, $checkTime)
-    {
-        if (strcmp($orderTime, $checkTime) === 0)
-                return true;
-
-        return false;
     }
 
     /**
@@ -107,5 +80,71 @@ class AvailableTimesFetcher
         $minutes = 60 * ($number % 1);
 
         return date('H:i', strtotime($hours . ':' . $minutes));
+    }
+
+
+    /**
+     * @param $date \DateTime
+     * @return float|int
+     */
+    private function getStartTime($date)
+    {
+        if($this->isToday($date)) {
+            $now = $this->timeToFloat(date('H:i'));
+            $offset = ceil(($now - $this->workDayBeginsAt) / $this->hoursInterval);
+            if($offset > 0)
+                return $this->workDayBeginsAt + $offset;
+        }
+
+        return $this->workDayBeginsAt;
+    }
+
+    /**
+     * Checks if given date is today.
+     * @param $date \DateTime
+     * @return bool
+     */
+    private function isToday($date)
+    {
+        if(strcmp(date('Y-m-d'), $date->format('Y-m-d')) === 0)
+            return true;
+        return false;
+    }
+
+    /**
+     * Converts time string to float. Hours and minutes only (H:i).
+     * @param $time
+     * @return float|int
+     */
+    private function timeToFloat($time)
+    {
+        $parts = explode(':', $time);
+        return $parts[0] + floor(($parts[1]/60)*100) / 100;
+    }
+
+    private function shouldTimeBeAdded($orders, $orderIndex, $formattedTime)
+    {
+        if($orderIndex < count($orders))
+        {
+            $currentOrderTime = $orders[$orderIndex]->getVisitDate()->format('H:i');
+            if($this->isTimeOccupied($formattedTime, $currentOrderTime))
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Smarter "algorithm" should be used here
+     * @param $orderTime |DateTime
+     * @param $checkTime \DateTime
+     * @return bool
+     */
+    private function isTimeOccupied($orderTime, $checkTime)
+    {
+        if (strcmp($orderTime, $checkTime) === 0)
+                return true;
+
+        return false;
     }
 }
