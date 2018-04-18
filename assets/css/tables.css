@@ -9,7 +9,56 @@
 .column-word-wrap{
     word-wrap: break-word;
 }
-
-.table-something{
-    color:white;
+.orders-table .list-group-item {
+    border: 4px double #B07156;
+    border-radius: 4px;
+    margin-bottom: 15px;
 }
+.orders-table .list-group-item, .services-table {
+    background: #433E3F;
+    color: #e8edf3;
+}
+.orders-table .progress {
+    margin-top: 15px;
+}
+
+.orders-table .list-group-item:hover{
+    color: #c69c72 !important;
+    border-color: #c69c72;
+}
+
+.services-table {
+    border-radius: 4px;
+}
+
+.services-table tbody tr td{
+    vertical-align: middle;
+    border-top: 1px solid #c0b7b1;
+}
+
+.services-table tbody tr:hover{
+    background: #c69c72;
+    color: #433E3F;
+}
+
+.services-table tbody tr:hover td{
+    border-top: 1px solid #433E3F;
+    border-bottom: 1px solid #433E3F;
+}
+
+.services-table thead tr th{
+    background-color: #B07156;
+    color: #e8edf3;
+    border-top: 1px solid #433e3f;
+    border-bottom: 1px solid #433e3f;
+}
+
+.services-table tr:last-child{
+    border: 1px solid #433e3f;
+}
+
+.admin-services-table tbody tr td{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+

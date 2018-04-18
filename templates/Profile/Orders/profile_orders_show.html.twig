@@ -1,0 +1,71 @@
+{% extends 'Profile/base.html.twig' %}
+
+{% block tab_bar %}
+    {% include 'Profile/tab_bar.html.twig' with {
+        orders_active: 'true'
+    }%}
+{% endblock %}
+
+{% block tab_content %}
+    <div class="panel" style="width:100%; margin: 0">
+        <div class="d-flex justify-content-between w-100">
+            <h5>Order #{{ order.id }}</h5>
+            <h5>{{ order.visitDate|date('Y/m/d') }}</h5>
+        </div>
+        {% if order.progress.isDone %}
+            <h5 style="width:100%; text-align: right;">Completed on: {{ order.progress.completionDate|date('Y/m/d') }}</h5>
+        {% endif %}
+        <table class="table">
+            <tr>
+                <th class="text-center" colspan="2" style="border: none; border-right: 1px solid white">User</th>
+                <th class="text-center" colspan="2" style="border: none;">Vehicle</th>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td style="border-right: 1px solid white">{{ order.user.firstName }} {{ order.user.lastName }}</td>
+                <td>Make</td>
+                <td>{{ order.vehicle.make }}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td style="border-right: 1px solid white">{{ order.user.email }}</td>
+                <td>Model:</td>
+                <td>{{ order.vehicle.model }}</td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td style="border-right: 1px solid white">{{ order.user.city }} {{ order.user.address }}</td>
+                <td>Year of production:</td>
+                <td>{{ order.vehicle.yearOfProduction }}</td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td style="border-right: 1px solid white">{{ order.user.phone }}</td>
+                <td>Plate number:</td>
+                <td>{{ order.vehicle.plateNumber }}</td>
+            </tr>
+        </table>
+        <hr>
+        {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="background: #b07156; width: {{ progressPercentage }}%;"></div>
+            <small class="align-self-center justify-content-center d-flex position-absolute" style="width: 95%; font-size: 14px; color:black">{{ order.progress.numberOfServicesCompleted }} / {{ order.services.count }}</small>
+        </div>
+        <hr>
+        <div>
+            <h6>Servisai:</h6>
+            <ul class="list-group">
+                {% for line in order.progress.lines %}
+                    <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">
+                        {{ line.service.name }}
+                        {% if line.completedOn is not null %}
+                            <h6>Completed: {{ line.completedOn|date('Y/m/d') }}</h6>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr>
+        </div>
+        <a type="button" class="btn custom-button" href="{{ path('user_orders') }}">Back</a>
+    </div>
+{% endblock %}

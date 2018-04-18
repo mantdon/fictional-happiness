@@ -19,15 +19,14 @@
                         <li class="list-group-item"><strong>Miestas: </strong>{{  user.city }}</li>
                         <li class="list-group-item"><strong>Adresas: </strong>{{ user.address }}</li>
                         <li class="list-group-item"><strong>Telefono nr: </strong>{{ user.phone }}</li>
-                        <li class="list-group-item last-item"><strong>Užsiregistruota: </strong>NIY</li>
+                        <li class="list-group-item last-item"><strong>Užsiregistruota: </strong>{{ user.registrationDate|date('Y/m/d') }}</li>
                     </ul>
                 </div>
 
                 <ul class="list-group">
                     <li class="list-group-item first-item">Veikla</li>
-                    <li class="list-group-item"><strong>Einamieji užsakymai: </strong>NIY</li>
-                    <li class="list-group-item"><strong>Iš viso užsakymų: </strong>NIY</li>
-                    <li class="list-group-item last-item"><span class="pull-left"><strong>Paskutinis prisijungimas: </strong></span>NIY</li>
+                    <li class="list-group-item"><strong>Einamieji užsakymai:</strong> {{ user.numberOfOngoingOrders }}</li>
+                    <li class="list-group-item last-item"><strong>Iš viso užsakymų:</strong> {{ user.orders.count }}</li>
                 </ul>
             </div>
 
