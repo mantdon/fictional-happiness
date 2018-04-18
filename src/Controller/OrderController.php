@@ -8,6 +8,7 @@ use App\Services\AvailableTimesFetcher;
 use App\Services\MessageManager;
 use App\Services\OrderCreator;
 use App\Services\UnavailableDaysFinder;
+use App\Services\UserManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,8 +22,15 @@ class OrderController extends Controller
     /**
      * @Route("/", name="order")
      */
-    public function home(Request $request)
+    public function home(Request $request,
+                        UserManager $userManager)
     {
+        if(!$userManager->hasUserFilledPersonalInformation($this->getUser()))
+        {
+            $this->addFlash('notice', 'Prieš atliekant užsakymą privalote užpildyti savo informaciją');
+            return $this->redirectToRoute('user_settings', array('redirect' => 1));
+        }
+
         if ($this->getUser()->getVehicles()->count() === 0) {
             $vehicle = new Vehicle();
             $form = $this->createForm(VehicleType::class, $vehicle);

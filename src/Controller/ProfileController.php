@@ -73,9 +73,9 @@ class ProfileController extends Controller
 	}
 
 	/**
-	 * @Route("/user/settings", name="user_settings")
+	 * @Route("/user/settings/{redirect}", name="user_settings")
 	 */
-	public function settingsTabAction(Request $request){
+	public function settingsTabAction(Request $request, $redirect = 0){
 	    $user = $this->getUser();
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
@@ -84,6 +84,9 @@ class ProfileController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('notice', 'User updated[PH]');
+            if($redirect === '1') {
+                return $this->redirectToRoute('order');
+            }
         }
 
 		return $this->render('Profile/Settings/profile_settings.html.twig', array(
