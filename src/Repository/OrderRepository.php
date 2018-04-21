@@ -42,13 +42,15 @@ class OrderRepository extends ServiceEntityRepository
 		return $paginator;
 	}
 
-	public function getForUser($currentPage = 1, $limit = 5)
+	public function getForUser(\App\Entity\User $user, $currentPage = 1, $limit = 5)
 	{
 		$qb = $this->createQueryBuilder('o')
+			->where('o.user = ?1')
 			->leftJoin('o.progress', 'progress')
 			->orderBy('progress.isDone', 'ASC')
 			->addOrderBy('o.visitDate', 'DESC')
 			->addOrderBy('progress.completionDate', 'ASC')
+			->setParameter(1, $user)
 			->getQuery();
 		$paginator = Pagination::paginate($qb, $currentPage, $limit);
 		return $paginator;
