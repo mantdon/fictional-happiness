@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email", message="Pasirinktas elektroninis paštas jau užregistruotas")
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     public function __construct(){
     	$this->vehicles = new ArrayCollection();
@@ -80,9 +81,15 @@ class User implements UserInterface, \Serializable
     private $role;
 
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
     private $registrationDate;
+
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isEnabled = true;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
@@ -278,6 +285,24 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
+    /**
+     * @return mixed
+     */
+    public function getIsEnabled()
+    {
+        return $this->isEnabled;
+    }
+
+    /**
+     * @param mixed $isEnabled
+     * @return User
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        $this->isEnabled = $isEnabled;
+        return $this;
+    }
+
     public function getSalt()
     {
         return null;
@@ -349,5 +374,21 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->password,
             ) = unserialize($serialized);
+    }
+
+    public function isAccountNonExpired(){
+        return true;
+    }
+
+    public function isAccountNonLocked() {
+        return true;
+    }
+
+    public function isCredentialsNonExpired(){
+        return true;
+    }
+
+    public function isEnabled() {
+        return $this->isEnabled;
     }
 }

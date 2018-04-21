@@ -1,0 +1,45 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        users_active: 'true'
+    } %}
+{% endblock %}
+
+{% block panel_content %}
+    {% block heading %}
+    {% endblock %}
+    <table class="table table-fixed">
+        <tbody>
+        <tr>
+            <th>ID</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>El-Paštas</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Vardas</th>
+            <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
+        </tr>
+        <tr>
+            <th>Telefono nr.</th>
+            <td>{{ user.phone }}</td>
+        </tr>
+        <tr>
+            <th>Miestas</th>
+            <td>{{ user.city }}</td>
+        </tr>
+        <tr>
+            <th>Adresas</th>
+            <td>{{ user.address }}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% block confirmation %}
+    {% endblock %}
+    <a class="btn btn-warning button-full-width" href="{{ path('admin_users') }}">Atšaukti</a>
+{% endblock %}
