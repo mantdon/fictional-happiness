@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\OrderProgressLine;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
+use App\Helpers\EnumOrderStatusType;
 use App\Helpers\PreviousPageExtractor;
 use App\Services\AvailableTimesFetcher;
 use App\Services\MessageManager;
@@ -176,6 +177,18 @@ class OrderController extends Controller
 		                     	'user' => $this->getUser(),
 			                     'order' => $order
 		                     ));
+	}
+
+	/**
+	 * @Route("user/orders/cancel/{id}", name="user_order_cancel", requirements={"id"="\d+"})
+	 */
+	public function userOrderCancelAction(Request $request, Order $order, OrderCreator $oc)
+	{
+		if($this->getUser() === $order->getUser()){
+			$message = $oc->changeStatus($order, EnumOrderStatusType::Canceled);
+			$this->addFlash('notice', $message);
+		}
+		return $this->redirectToRoute('user_orders');
 	}
 
 	private function savePreviousPaginationPage(Request $request){
