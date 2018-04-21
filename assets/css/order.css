@@ -21,7 +21,6 @@
     display: block;
     margin: auto;
     width: 40%;
-    margin-top: 50px;
     background: white;
     text-align: center;
 }
@@ -109,7 +108,7 @@
 }
 
 .orderDialogLabel{
-    margin-bottom: 20px;
+    margin-bottom: 70px;
 }
 
 .calendarContainer{
