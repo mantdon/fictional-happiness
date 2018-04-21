@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Helpers\EnumOrderStatusType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +52,11 @@ class Order
 	 * @ORM\JoinColumn(name="progress_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
     private $progress;
+
+    /**
+     * @ORM\Column(type="orderstatus")
+     */
+    private $status;
 
     public function __construct() {
         $this->services = new ArrayCollection();
@@ -167,6 +173,18 @@ class Order
 	public function setProgress($progress)
 	{
 		$this->progress = $progress;
+
+		return $this;
+	}
+
+	public function getStatus(): string
+	{
+		return $this->status;
+	}
+
+	public function setStatus(string $status)
+	{
+		$this->status = $status;
 
 		return $this;
 	}
