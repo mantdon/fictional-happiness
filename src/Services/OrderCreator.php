@@ -9,6 +9,7 @@ use App\Entity\OrderProgressLine;
 use App\Entity\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Helpers\EnumOrderStatusType;
 
 class OrderCreator
 {
@@ -30,7 +31,8 @@ class OrderCreator
             ->setServices($services)
             ->setCost($this->calculateCost($services))
             ->setVisitDate($visitDate)
-	        ->setUser($user);
+	        ->setUser($user)
+	        ->setStatus(EnumOrderStatusType::Placed);
 
         $this->setupProgress($order);
 
@@ -107,6 +109,20 @@ class OrderCreator
 		    $order->getProgress()->setIsDone( true )
 			                     ->setCompletionDate(new \DateTime(date('Y/m/d H:i:s')));
 	    }
+    }
+
+    public function changeStatus(\App\Entity\Order $order, string $status)
+    {
+    	$message = "Order cancelled";
+	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
+	    	return $message = "Only recently placed and not ongoing orders may be cancelled.";
+	    else{
+		    $order->setStatus($status);
+		    $this->em->persist($order);
+		    $this->em->flush();
+	    }
+
+		return $message;
     }
 
     /**
