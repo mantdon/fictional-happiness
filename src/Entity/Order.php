@@ -28,7 +28,7 @@ class Order
     /**
      * @var service
      * @ORM\ManyToMany(targetEntity="App\Entity\Service")
-     * @ORM\JoinColumn(name="services_ids",referencedColumnName="id")
+     * @ORM\JoinColumn(name="services_ids", referencedColumnName="id", onDelete="CASCADE")
      */
     private $services;
 
