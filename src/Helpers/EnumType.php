@@ -12,7 +12,7 @@ abstract class EnumType extends Type {
 
 	public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
 	{
-		return "VARCHAR(255)";
+		return "INT";
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform)
@@ -40,7 +40,7 @@ abstract class EnumType extends Type {
                 implode('", "', self::keys())
             ));
 		}
-		return (string) $value;
+		return (int) $value;
 	}
 
 	public function getName()
@@ -63,12 +63,12 @@ abstract class EnumType extends Type {
 		return array_values(static::$map);
 	}
 
-	private static function isValid(string $key)
+	private static function isValid(int $key)
 	{
 		return isset(static::$map[$key]);
 	}
 
-	public static function getValue(string $key)
+	public static function getValue(int $key)
 	{
 		if(self::isValid($key))
 		{
