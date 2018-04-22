@@ -51,6 +51,7 @@
         <hr>
         {% if order.progress.numberOfServicesCompleted == order.services.count%}
             <a type="button" class="btn custom-button w-100" onclick="showModal('finalizeOrder')">Finalize</a>
+            {% include 'Admin/OngoingOrders/admin_ongoing_orders_finalize.html.twig' %}
             <hr>
         {% endif %}
         <div>
@@ -69,6 +70,13 @@
             <hr>
         </div>
         <a type="button" class="btn custom-button" href="{{ path('admin_ongoing_orders') }}">Back</a>
-        {% include 'Admin/OngoingOrders/admin_ongoing_orders_finalize.html.twig' %}
+        {% if order.status == "Placed" %}
+            <div class="w-100">
+                <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('approveOrder')">Approve order</a>
+                <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('terminateOrder')">Terminate order</a>
+            </div>
+            {% include 'Util/order_approve_modal.html.twig' %}
+            {% include 'Util/order_terminate_modal.html.twig' %}
+        {% endif %}
     </div>
 {% endblock %}
