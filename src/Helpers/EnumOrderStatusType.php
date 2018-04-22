@@ -9,12 +9,13 @@ class EnumOrderStatusType extends EnumType
 	// [ClassName]::class, to output valid enumeration keys.
 	protected static $enumType = EnumOrderStatusType::class;
 
-	// Define enumeration keys. Used in database table
-	public const Complete =     'CMP';
-	public const Canceled =     'CNC';
-	public const Terminated =   'TRM';
-	public const Placed =       'PLC';
-	public const Ongoing =      'ONG';
+	// Define enumeration keys. Used in database table.
+	// Integer values define the desired sorting order.
+	public const Ongoing    = 0;
+	public const Placed     = 1;
+	public const Complete   = 2;
+	public const Terminated = 3;
+	public const Canceled   = 4;
 
 	// Map keys to user readable values.
 	// Mapped values are displayed instead of keys when
