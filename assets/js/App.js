@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 
 var $ = require('jquery');
 require('bootstrap');
+require('jquery-bootstrap-scrolling-tabs');
+require('@fortawesome/fontawesome-free');
 require("../img/logo.png");
 require("../img/home page/oilChange.jpg");
 require("../img/home page/engineRepair.jpg");
@@ -21,4 +23,13 @@ window.setTimeout(function () {
         $(this).remove();
     });
 }, 5000);
+
+$('.nav-tabs').scrollingTabs({
+    bootstrapVersion: 4,
+    cssClassLeftArrow: 'fas fa-caret-left',
+    cssClassRightArrow: 'fas fa-caret-right',
+    scrollToTabEdge: true,
+    disableScrollArrowsOnFullyScrolled: true,
+    enableSwiping: true
+});
 
