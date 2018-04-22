@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Helpers\EnumOrderStatusType;
 use App\Helpers\Pagination;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -24,8 +25,12 @@ class OrderRepository extends ServiceEntityRepository
 	public function getAll($currentPage = 1, $limit = 5){
 		$qb = $this->createQueryBuilder('o')
 					->leftJoin('o.progress', 'progress')
-					->where('progress.isDone = 0')
-					->orderBy('o.visitDate', 'ASC')
+					->where('o.status = ?1')
+					->orWhere('o.status = ?2')
+					->orderBy('o.status', 'ASC')
+					->addOrderBy('o.visitDate', 'ASC')
+					->setParameter(1, EnumOrderStatusType::Placed)
+					->setParameter(2, EnumOrderStatusType::Ongoing)
 					->getQuery();
 		$paginator = Pagination::paginate($qb, $currentPage, $limit);
 		return $paginator;
