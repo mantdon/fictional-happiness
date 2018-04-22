@@ -9,7 +9,7 @@
 {% block tab_content %}
     <div class="orders-table" id="orders">
         {% if orders.count > 0 %}
-            <div class="list-group">
+            <div class="list-group scrollable-div">
                 {% for order in orders %}
                     {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
                     <a class="list-group-item" href="{{ path('user_order_show', {'id': order.id}) }}">
