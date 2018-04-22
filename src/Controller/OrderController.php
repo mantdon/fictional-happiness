@@ -182,13 +182,59 @@ class OrderController extends Controller
 	/**
 	 * @Route("user/orders/cancel/{id}", name="user_order_cancel", requirements={"id"="\d+"})
 	 */
-	public function userOrderCancelAction(Request $request, Order $order, OrderCreator $oc)
+	public function userOrderCancelAction(Order $order, OrderCreator $oc, MessageManager $mm)
 	{
 		if($this->getUser() === $order->getUser()){
-			$message = $oc->changeStatus($order, EnumOrderStatusType::Canceled);
-			$this->addFlash('notice', $message);
+			$satusChangeMessage = $oc->cancelOrder($order);
+			$this->addFlash('notice', $satusChangeMessage);
+
+			$messageTitle = "Užsakymas atšauktas";
+			$messageBody = $this->renderView('Email/order_cancelled.html.twig',
+			                                 array(
+				                                 'order' => $order
+			                                 ));
+			$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
+			$mm->sendMessageToProfile($message, $order->getUser());
 		}
 		return $this->redirectToRoute('user_orders');
+	}
+
+	/**
+	 * @Route("admin/orders/terminate/{id}", name="admin_order_terminate", requirements={"id"="\d+"})
+	 */
+	public function adminOrderTerminateAction(Order $order, OrderCreator $oc, MessageManager $mm)
+	{
+		$satusChangeMessage = $oc->terminateOrder($order);
+		$this->addFlash('notice', $satusChangeMessage);
+
+		$messageTitle = "Užsakymas nutrauktas";
+		$messageBody = $this->renderView('Email/order_terminated.html.twig',
+		                                 array(
+			                                 'order' => $order
+		                                 ));
+		$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
+		$mm->sendMessageToProfile($message, $order->getUser());
+
+		return $this->redirectToRoute('admin_ongoing_orders');
+	}
+
+	/**
+	 * @Route("admin/orders/approve/{id}", name="admin_order_approve", requirements={"id"="\d+"})
+	 */
+	public function adminOrderApproveAction(Order $order, OrderCreator $oc, MessageManager $mm)
+	{
+		$satusChangeMessage = $oc->approveOrder($order);
+		$this->addFlash('notice', $satusChangeMessage);
+
+		$messageTitle = "Užsakymo vykdymas pradėtas";
+		$messageBody = $this->renderView('Email/order_approved.html.twig',
+		                                 array(
+			                                 'order' => $order
+		                                 ));
+		$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
+		$mm->sendMessageToProfile($message, $order->getUser());
+
+		return $this->redirectToRoute('admin_ongoing_orders');
 	}
 
 	private function savePreviousPaginationPage(Request $request){
