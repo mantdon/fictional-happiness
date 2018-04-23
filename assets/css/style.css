@@ -7,3 +7,11 @@ header .logo {
     max-height: 60vh;
     overflow: auto;
 }
+
+.about-panel{
+    color: #e8edf3;
+    background: #433e3f;
+    border: 4px double #b0a18e;
+    padding-top: 15px;
+    padding-left: 10%
+}
