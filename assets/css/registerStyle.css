@@ -21,7 +21,7 @@
     width: 100%;
     height: 40px;
 
-    background: #433e3f;
+    background: #433e3f !important;
     border: 2px solid #b07156;
     border-left-color: #c69c72;
     border-top-color: #c69c72;
