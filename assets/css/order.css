@@ -1,5 +1,7 @@
 .Option{
     border-top: solid 1px #433e3f;;
+    padding-top: 5px;
+    padding-bottom: 5px;
     background: #b07156;
 }
 
@@ -27,13 +29,15 @@
 
 .serviceOptionsContainer{
     vertical-align: top;
-    height: 438px;
+    height: 40vh;
+    max-height: 40vh;
+    width: 100%;
     background: #b07156;
     border: 4px double #433e3f;
 }
 
 .searchableServices{
-    height: 391px;
+    height: calc(100% - 38px);
 }
 
 .align-right{
@@ -83,6 +87,8 @@
     text-align: initial;
     height: 35px;
     margin-top: 30px;
+    display: inline-block;
+    width: 100%;
 }
 
 .orderDialogButton{
@@ -133,5 +139,9 @@ screen and (max-width: 992px) {
 
     .optionsContainer{
         width: 90vw;
+    }
+
+    .orderDialogButtonsContainer{
+        margin-bottom: 40px;
     }
 }
