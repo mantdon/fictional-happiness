@@ -6,59 +6,31 @@
 
 {% block content %}
     <h1 class="text-center">Apie mus</h1>
-    <div class="grid">
-        <div class="grid-table">
-            <table class="table date-table">
-                <thead>
-                <tr>
-                    <th>Day</th>
-                    <th>Work hours</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for weekDay in weekDays %}
-                    {% if currentDay is same as(weekDay) %}
-                        <tr class="table-fixed current-day">
-                        <td>{{ weekDay }}</td>
-                    {% else %}
-                        <tr class="table-fixed">
-                        <td>{{ weekDay }}</td>
-                    {% endif %}
-                    {% if weekDay is same as('Saturday') or weekDay is same as('Sunday') %}
-                        <td>Not working</td>
-                        </tr>
-                    {% else %}
-                        <td>8:00 - 17:00</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
+        <div class="row justify-content-center">
+
         </div>
-        <!-- Features Section -->
-        <div class="row">
-            <div class="col-lg-6">
+        <div class="row h-100">
+            <div class="col-sm-6">
+                <div class="h-100 about-panel">
                 <h2>Kompanija ProjectX</h2>
                 <p>Moderni kompanija pasižymi:</p>
                 <ul>
-                    <li>
-                        <strong>Įsipareigojimų laikymusi</strong>
-                    </li>
+                    <li>Įsipareigojimų laikymusi</li>
                     <li>Gerais specialistais</li>
                     <li>Kruopščiu darbu</li>
                     <li>Sąžiningomis kainomis</li>
                 </ul>
                 <p>Autoservisas nori plėstis ir visuomet ieško naujų darbuotojų.</p>
+                    </div>
             </div>
-            <div class="col-lg-6">
-
+            <div class="col-sm-6">
+                <div class="h-100 about-panel">
+                <h2 class="text-left">Kontaktai</h2>
+                <h5><i class="fas fa-wrench"></i> Dirbame darbo dienomis <strong>09</strong><sup>00</sup> - <strong>17</strong><sup>00</sup></h5>
+                <h6><i class="fas fa-home"></i> Studentų gatvė 100, Kaunas</h6>
+                <h6><i class="fas fa-phone"></i> +370600000</h6>
+                <h6><i class="fas fa-envelope"></i> spaminator9001@outlook.com</h6>
+                </div>
             </div>
         </div>
-        <!-- /.row -->
-    </div>
-    <br>
-    <h2 class="text-left">Contacts</h2>
-    <p><i class="fas fa-home"></i> Studentų gatvė 100, Kaunas</p>
-    <p><i class="fas fa-phone"></i> +370600000</p>
-    <p><i class="fas fa-envelope"></i> spaminator9001@outlook.com</p>
 {% endblock %}
