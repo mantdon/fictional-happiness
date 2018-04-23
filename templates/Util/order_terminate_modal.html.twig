@@ -1,0 +1,25 @@
+<div class="modal fade" id="terminateOrder" tabindex="-1" role="dialog" aria-labelledby="terminateOrderLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #433e3f;" id="terminateOrderLabel">Nutraukti užsakymą</h5>
+                <a style="color: #433e3f;" onclick="showModal('terminateOrder')" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </a>
+            </div>
+            <div class="modal-body" style="color: #433e3f;">
+                <p>
+                    Nutraukti užsakymą galima tik tuomet jei jis nėra apmokėtas
+                    ir jo vykdymas nebuvo pradėtas.
+                </p>
+                <p>
+                    Nutraukti užsakymai negali būti toliau vykdomi.
+                </p>
+                <p>Ar tikrai norite nutraukti šį užsakymą?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn custom-button w-100" href="{{ path('admin_order_terminate', {'id': order.id}) }}">NUTRAUKTI UŽSAKYMĄ</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+{% spaceless %}
+    <div>
+        <br>
+        <p> Užsakymas #{{ order.id }} buvo nutrauktas.</p>
+        <p> Apsilankymo laikas: {{ order.visitDate | date('Y-m-d H:i') }}</p>
+        <p> Automobilis: {{ order.vehicle.plateNumber }} {{ order.vehicle.make }} {{ order.vehicle.model }} </p>
+        <p> Paslaugos: </p>
+        <ul>
+            {% for service in order.services%}
+                <li>{{ service.name }} </li>
+            {% endfor %}
+        </ul>
+        <p> Kaina: ${{ order.cost }} </p>
+        <br>
+        <p>
+            Nutraukimo priežastis: [Maybe provide a text field to input the termination cause.]
+        </p>
+    </div>
+{% endspaceless %}

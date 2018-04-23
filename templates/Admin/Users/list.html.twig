@@ -8,28 +8,31 @@
 
 {% block panel_content %}
     <h5 class="text-left m-3">{{ userCount }} Registruoti vartojojai</h5>
-    <table class="table">
-        <tr class="table-fixed">
-            <th>ID</th>
-            <th>El-Paštas</th>
-            <th>Vardas</th>
-            <th>Telefonas</th>
-            <th>Paskyros šalinimas</th>
-        </tr>
-
-        {% for user in users %}
+    <table class="table services-table admin-services-table">
+        <thead>
             <tr class="table-fixed">
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
-                <td>{{ user.phone }}</td>
-                <td>
-                    {% if 'ROLE_USER' in user.roles %}
-                        <a href="{{ path('user_show', {id: user.id}) }}"><button type="button" class="btn btn-danger">Ištrinti</button></a>
-                    {% endif %}
-                </td>
+                <th>ID</th>
+                <th>El-Paštas</th>
+                <th>Vardas</th>
+                <th>Telefonas</th>
+                <th>Paskyros šalinimas</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr class="table-fixed">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>
+                        {% if 'ROLE_USER' in user.roles %}
+                            <a href="{{ path('user_show', {id: user.id}) }}"><button type="button" class="btn custom-button">Ištrinti</button></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     {# pageOffset - number of page buttons to display on either side of
        currently active one.

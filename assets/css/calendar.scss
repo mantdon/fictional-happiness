@@ -243,4 +243,19 @@ screen and (max-width: 992px)  {
         table-layout: fixed;
     }
 
+    .DayPicker-NavButton{
+        width: 2.5rem;
+        height: 2.5rem;
+        top: -0.5rem;
+    }
+
+    .DayPicker-NavButton--prev {
+        left:1rem;
+    }
+
+    .DayPicker-NavButton--next {
+        right:1rem;
+    }
+
+
 }
