@@ -159,7 +159,7 @@ export default class ServicesSelection extends React.Component {
             <div className={'offset-sm-2 col-sm-8'}>
             { this.state.isLoaded ?
                     <div className={'row serviceSelectionContainer'}>
-                        <div className={'col-sm-5'}>
+                        <div className={'col-lg-5 media-full-width'}>
                             <div className={'serviceOptionsContainer'}>
                                 <div className={"input-group"}>
                                     <div className={'input-group-prepend'}>
@@ -179,7 +179,7 @@ export default class ServicesSelection extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className={'offset-sm-2 col-sm-5'}>
+                        <div className={'offset-lg-2 col-lg-5'}>
                             <div className={'serviceOptionsContainer scrollable-vertical'}>
                                 {this.state.selectedServicesList}
                             </div>

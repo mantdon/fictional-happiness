@@ -115,3 +115,23 @@
     background-color: #b07156;
     border: 4px double #433e3f;
 }
+
+@media
+screen and (max-width: 992px) {
+
+    .serviceSelectionContainer{
+        padding: 0 0 0 0;
+    }
+
+    .media-full-width {
+        width: 100vw !important;
+    }
+
+    .serviceOptionsContainer{
+        margin-bottom: 40px;
+    }
+
+    .optionsContainer{
+        width: 90vw;
+    }
+}
