@@ -20,6 +20,10 @@ class HomeController extends Controller
      */
     public function about()
     {
-        return $this->render('about.html.twig');
+        $currentDay = date('l');
+        $weekDays = array('Monday', 'Thursday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        return $this->render('about.html.twig', array('currentDay' => $currentDay,
+            'weekDays' => $weekDays
+        ));
     }
 }

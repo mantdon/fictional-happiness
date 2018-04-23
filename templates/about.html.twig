@@ -5,6 +5,37 @@
 {% set about_active = 'true' %}
 
 {% block content %}
+    <h1 class="text-center">Apie mus</h1>
+    <table class="table date-table">
+        <thead>
+        <tr>
+            <th>Day</th>
+            <th>Work hours</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for weekDay in weekDays %}
+                {% if currentDay is same as(weekDay) %}
+                    <tr class="table-fixed current-day">
+                        <td>{{ weekDay }}</td>
+                {% else %}
+                    <tr class="table-fixed">
+                        <td>{{ weekDay }}</td>
+                {% endif %}
+                {% if weekDay is same as('Saturday') or weekDay is same as('Sunday') %}
+                        <td>Not working</td>
+                    </tr>
+                {% else %}
+                        <td>8:00 - 17:00</td>
+                    </tr>
+                {% endif %}
+             {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <h3 class="text-left">Contacts</h3>
+    <h5><i class="material-icons align-middle">home</i> Studentų gatvė 100, Kaunas</h5>
+    <h5><i class="material-icons align-middle">phone</i> +370600000</h5>
+    <h5><i class="material-icons align-middle">email</i> servisas@gmail.com</h5>
 
-<h1>Some info about us</h1>
 {% endblock %}
