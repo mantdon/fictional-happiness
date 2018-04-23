@@ -7,19 +7,27 @@
 {% endblock %}
 
 {% block panel_content %}
-    <div class="orders-table" id="orders">
+    <div class="orders-table scrollable-div" id="orders">
         {% if orders.count > 0 %}
             <div class="list-group">
                 {% for order in orders %}
                     {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
                     <a class="list-group-item" href="{{ path('admin_ongoing_order_show', {"id": order.id}) }}">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">User: {{ order.user.firstName }} {{ order.user.lastName }}</h5>
+                            <h6>Order #{{ order.id }}</h6>
                             <h6>{{ order.visitDate|date('Y/m/d') }}</h6>
                         </div>
-                        <h5>Vehicle: {{ order.vehicle.make }} {{ order.vehicle.model }}</h5>
+                        <h6>
+                            {% include 'Util/order_status.html.twig' with {
+                                order_status: order.status
+                            } %}
+                        </h6>
+                        <hr>
+                        <h6 class="mb-1">User: {{ order.user.firstName }} {{ order.user.lastName }}</h6>
+                        <h6>Vehicle: {{ order.vehicle.make }} {{ order.vehicle.model }}</h6>
+                        <hr>
                         <p class="mb-1">
-                            <h5>Services ordered: {{ order.services.count }}</h5>
+                            <h6>Services ordered: {{ order.services.count }}</h6>
                         </p>
                         <h6>${{ order.cost }}</h6>
                         <div class="progress">
@@ -29,11 +37,11 @@
                     </a>
                 {% endfor %}
             </div>
+    </div>
             {% include 'Util/pagination.html.twig' with{
                 pageOffset: 2
             }%}
         {% else %}
             <h1>Currently there are no ongoing orders.</h1>
         {% endif %}
-    </div>
 {% endblock %}

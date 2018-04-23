@@ -9,6 +9,7 @@ use App\Entity\OrderProgressLine;
 use App\Entity\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Helpers\EnumOrderStatusType;
 
 class OrderCreator
 {
@@ -30,7 +31,8 @@ class OrderCreator
             ->setServices($services)
             ->setCost($this->calculateCost($services))
             ->setVisitDate($visitDate)
-	        ->setUser($user);
+	        ->setUser($user)
+	        ->setStatus(EnumOrderStatusType::Placed);
 
         $this->setupProgress($order);
 
@@ -104,9 +106,47 @@ class OrderCreator
     {
 	    if($order->getServices()->count() === $order->getProgress()->getNumberOfServicesCompleted())
 	    {
+	    	$this->changeStatus($order, EnumOrderStatusType::Complete);
 		    $order->getProgress()->setIsDone( true )
 			                     ->setCompletionDate(new \DateTime(date('Y/m/d H:i:s')));
 	    }
+    }
+
+    private function changeStatus(\App\Entity\Order $order, string $status)
+    {
+	    $order->setStatus($status);
+	    $this->em->persist($order);
+	    $this->em->flush();
+    }
+
+    public function cancelOrder(\App\Entity\Order $order)
+    {
+	    $message = "Order cancelled";
+	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
+		    return $message = "Only recently placed and not ongoing orders may be cancelled.";
+	    else
+	    	$this->changeStatus($order, EnumOrderStatusType::Canceled);
+	    return $message;
+    }
+
+    public function terminateOrder(\App\Entity\Order $order)
+    {
+	    $message = "Order terminated";
+	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
+		    return $message = "Only recently placed and not ongoing orders may be terminated.";
+	    else
+	    	$this->changeStatus($order, EnumOrderStatusType::Terminated);
+	    return $message;
+    }
+
+    public function approveOrder(\App\Entity\Order $order)
+    {
+    	$message = "Užsakymo #".$order->getId()." vykdymas pradėtas.";
+	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
+	    	return $message = "Tik naujai pateiktų ir vykdyti nepradėtų užsakymų vykdymas gali būti pradėtas.";
+	    else
+	    	$this->changeStatus($order, EnumOrderStatusType::Ongoing);
+	    return $message;
     }
 
     /**
