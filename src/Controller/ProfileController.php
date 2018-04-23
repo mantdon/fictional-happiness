@@ -98,8 +98,8 @@ class ProfileController extends Controller
 	    $user = $this->getUser();
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
         if( $form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('notice', 'User updated[PH]');
@@ -107,6 +107,7 @@ class ProfileController extends Controller
                 return $this->redirectToRoute('order');
             }
         }
+        $entityManager->refresh($user);
 
 		return $this->render('Profile/Settings/profile_settings.html.twig', array(
 			'user' => $user,

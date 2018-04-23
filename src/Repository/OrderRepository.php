@@ -24,9 +24,11 @@ class OrderRepository extends ServiceEntityRepository
 	// Used by PaginatedListFetcher. Due for cleanup.
 	public function getAll($currentPage = 1, $limit = 5){
 		$qb = $this->createQueryBuilder('o')
-					->leftJoin('o.progress', 'progress')
+					->leftJoin('o.progress', 'p')
+					->leftJoin('o.user', 'u')
 					->where('o.status = ?1')
 					->orWhere('o.status = ?2')
+					->andWhere('u.isEnabled = 1')
 					->orderBy('o.status', 'ASC')
 					->addOrderBy('o.visitDate', 'ASC')
 					->setParameter(1, EnumOrderStatusType::Placed)

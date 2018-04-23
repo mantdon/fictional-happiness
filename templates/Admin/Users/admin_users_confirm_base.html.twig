@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block panel_content %}
-    <h1>The following user will be deleted, are you sure?</h1>
-
+    {% block heading %}
+    {% endblock %}
     <table class="table table-fixed">
         <tbody>
         <tr>
@@ -29,9 +29,17 @@
             <th>Telefono nr.</th>
             <td>{{ user.phone }}</td>
         </tr>
+        <tr>
+            <th>Miestas</th>
+            <td>{{ user.city }}</td>
+        </tr>
+        <tr>
+            <th>Adresas</th>
+            <td>{{ user.address }}</td>
+        </tr>
         </tbody>
     </table>
-
-    {{ include('Admin/Users/_delete_form.html.twig') }}
+    {% block confirmation %}
+    {% endblock %}
     <a class="btn btn-warning button-full-width" href="{{ path('admin_users') }}">Atšaukti</a>
 {% endblock %}

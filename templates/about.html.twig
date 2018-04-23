@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Apie mus{% endblock %}
+
+{% set about_active = 'true' %}
+
+{% block content %}
+    <h1 class="text-center">Apie mus</h1>
+        <div class="row justify-content-center">
+
+        </div>
+        <div class="row h-100">
+            <div class="col-sm-6">
+                <div class="h-100 about-panel">
+                <h2>Kompanija ProjectX</h2>
+                <p>Moderni kompanija pasižymi:</p>
+                <ul>
+                    <li>Įsipareigojimų laikymusi</li>
+                    <li>Gerais specialistais</li>
+                    <li>Kruopščiu darbu</li>
+                    <li>Sąžiningomis kainomis</li>
+                </ul>
+                <p>Autoservisas nori plėstis ir visuomet ieško naujų darbuotojų.</p>
+                    </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="h-100 about-panel">
+                <h2 class="text-left">Kontaktai</h2>
+                <h5><i class="fas fa-wrench"></i> Dirbame darbo dienomis <strong>09</strong><sup>00</sup> - <strong>17</strong><sup>00</sup></h5>
+                <h6><i class="fas fa-home"></i> Studentų gatvė 100, Kaunas</h6>
+                <h6><i class="fas fa-phone"></i> +370600000</h6>
+                <h6><i class="fas fa-envelope"></i> spaminator9001@outlook.com</h6>
+                </div>
+            </div>
+        </div>
+{% endblock %}

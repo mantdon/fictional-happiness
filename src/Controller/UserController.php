@@ -19,28 +19,50 @@ class UserController extends Controller
 	    return $this->redirectToRoute('user_vehicles');
     }
 
-	/**
-	 * @Route("admin/users/delete/{id}", name="user_show", methods="GET")
-	 */
-    public function show(Request $request, User $user){
-	    $this->savePreviousPaginationPage($request);
-	    return $this->render('Admin/Users/admin_users_delete_confirm.html.twig', ['user' => $user]);
+    /**
+     * @Route("admin/users/unban/{id}", name="user_unban", methods="GET")
+     */
+    public function unban(Request $request, User $user){
+        $this->savePreviousPaginationPage($request);
+        return $this->render('Admin/Users/admin_users_unban_confirm.html.twig', ['user' => $user]);
     }
 
-	/**
-	 * @Route("admin/users/delete/{id}", name="user_delete", methods="DELETE")
-	 */
-	public function delete(Request $request, User $user)
-	{
-		if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($user);
-			$em->flush();
-			$this->addFlash('notice', 'User removed[PH]');
-		}
+    /**
+     * @Route("admin/users/unban/{id}", name="user_unban_confirm", methods="POST")
+     */
+    public function unbanConfirm(Request $request, User $user)
+    {
+        if ($this->isCsrfTokenValid('unban'.$user->getId(), $request->request->get('_token'))) {
+            $user->setIsEnabled(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('notice', 'User unbanned[PH]');
+        }
+        return $this->redirectToRoute('admin_users');
+    }
+    /**
+     * @Route("admin/users/ban/{id}", name="user_ban", methods="GET")
+     */
+    public function ban(Request $request, User $user){
+        $this->savePreviousPaginationPage($request);
+        return $this->render('Admin/Users/admin_users_ban_confirm.html.twig', ['user' => $user]);
+    }
 
-		return $this->redirectToRoute('admin_users');
-	}
+    /**
+     * @Route("admin/users/ban/{id}", name="user_ban_confirm", methods="POST")
+     */
+    public function banConfirm(Request $request, User $user)
+    {
+        if ($this->isCsrfTokenValid('ban'.$user->getId(), $request->request->get('_token'))) {
+            $user->setIsEnabled(false);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('notice', 'User banned[PH]');
+        }
+        return $this->redirectToRoute('admin_users');
+    }
 
 	private function savePreviousPaginationPage(Request $request){
 		if(!$this->get('session')->has('previous_page')) {
