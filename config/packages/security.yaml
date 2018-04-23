@@ -15,6 +15,7 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         global:
+            http_basic: ~
             pattern:    ^/
             provider:   provider
             anonymous:  ~
