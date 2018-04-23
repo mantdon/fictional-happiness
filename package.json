@@ -17,6 +17,7 @@
     "build": "encore production"
   },
   "dependencies": {
+    "awesome-react-steps": "^0.1.7",
     "@fortawesome/fontawesome-free": "^5.1.0-4",
     "bootstrap": "^4.1.0",
     "jquery-bootstrap-scrolling-tabs": "^2.4.0",
