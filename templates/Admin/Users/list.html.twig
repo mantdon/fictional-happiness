@@ -30,9 +30,9 @@
                 <td>
                     {% if 'ROLE_USER' in user.roles %}
                         {% if user.isEnabled is same as(true) %}
-                            <a href="{{ path('user_ban', {id: user.id}) }}"><button type="button" class="btn btn-warning">Blokuoti</button></a>
+                            <a href="{{ path('user_ban', {id: user.id}) }}"><button type="button" class="btn custom-button">Blokuoti</button></a>
                         {% else %}
-                            <a href="{{ path('user_unban', {id: user.id}) }}"><button type="button" class="btn btn-warning">Atblokuoti</button></a>
+                            <a href="{{ path('user_unban', {id: user.id}) }}"><button type="button" class="btn custom-button">Atblokuoti</button></a>
                         {% endif %}
                     {% endif %}
                 </td>
