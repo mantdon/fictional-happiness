@@ -64,7 +64,7 @@
 }
 
 .Arrows--step__current .Arrows--step--arrow {
-    fill: rgba(200, 200, 125, 0.75);
+    fill: #b07156;
 }
 
 .Arrows--step__current .Arrows--step--label , .Arrows--step__current .Arrows--step--number{
@@ -73,15 +73,16 @@
 }
 
 .Arrows--step__passed .Arrows--step--arrow{
-  fill: rgba(102, 153, 0, 0.25);
+    fill: #c0b7b1;
 }
 
-@media (min-width: 540px) {
+@media screen and (max-width: 1024px) {
     .Arrows--step--number {
         font-size: 1.5rem;
+        margin-left: 0.5rem;
     }
 
     .Arrows--step--label {
-        font-size: 0.9rem;
+        display: none;
     }
 }
