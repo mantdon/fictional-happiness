@@ -35,8 +35,43 @@
     border: 4px double #433e3f;
 }
 
+.service-search-icon{
+    display: none;
+    float: left;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    width: 30px;
+    text-align: center;
+    height: 40px;
+    vertical-align: middle;
+    color: #c69c72;
+    background: #433e3f;
+    border: 1px solid #c69c72;
+}
+
+.service-search{
+    width: 100%;
+    height: 40px;
+
+    background: #433e3f !important;
+    border: 1px solid #c69c72;
+    border-radius: 1px;
+    color: #e8edf3;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.service-search:active,
+.service-search:focus{
+    border-color: #F6C08E;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.075), 0 0 8px rgba(198, 156, 114, 1) !important;
+}
+
 .searchableServices{
-    height: calc(100% - 38px);
+    height: calc(100% - 40px);
 }
 
 .align-right{
