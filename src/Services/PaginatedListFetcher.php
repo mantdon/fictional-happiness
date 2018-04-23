@@ -33,10 +33,10 @@ class PaginatedListFetcher
 		    'totalCount' => $results->count()];
     }
 
-    public function getOrdersForUser($page = 1, $limit = 5)
+    public function getOrdersForUser(\App\Entity\User $user, $page = 1, $limit = 5)
     {
 	    $repository = $this->em->getRepository('App:Order');
-	    $results = $repository->getForUser($page, $limit);
+	    $results = $repository->getForUser($user, $page, $limit);
 
 	    $pageCount = ceil($results->count() / $limit);
 

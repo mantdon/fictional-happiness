@@ -1,0 +1,21 @@
+<div class="modal fade" id="approveOrder" tabindex="-1" role="dialog" aria-labelledby="approveOrderLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #433e3f;" id="approveOrderLabel">Pradėti užsakymo vykdymą</h5>
+                <a style="color: #433e3f;" onclick="showModal('approveOrder')" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </a>
+            </div>
+            <div class="modal-body" style="color: #433e3f;">
+                <p>
+                    Pradėtas vykdyti užsakymas nebegali būti nutrauktas.
+                </p>
+                <p>Ar tikrai norite pradėti vykdyti šį užsakymą?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn custom-button w-100" href="{{ path('admin_order_approve', {'id': order.id}) }}">PRADĖTI UŽSAKYMĄ</a>
+            </div>
+        </div>
+    </div>
+</div>

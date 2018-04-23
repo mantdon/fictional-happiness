@@ -12,9 +12,17 @@
             <h5>Order #{{ order.id }}</h5>
             <h5>{{ order.visitDate|date('Y/m/d') }}</h5>
         </div>
-        {% if order.progress.isDone %}
-            <h5 style="width:100%; text-align: right;">Completed on: {{ order.progress.completionDate|date('Y/m/d') }}</h5>
-        {% endif %}
+        <div class="d-flex justify-content-between w-100">
+            <h5>
+                {% include 'Util/order_status.html.twig' with {
+                    order_status: order.status
+                }%}
+            </h5>
+            {% if order.progress.isDone %}
+                <h5>Completed on: {{ order.progress.completionDate|date('Y/m/d') }}</h5>
+            {% endif %}
+        </div>
+        <hr>
         <table class="table">
             <tr>
                 <th class="text-center" colspan="2" style="border: none; border-right: 1px solid white">User</th>
@@ -66,6 +74,10 @@
             </ul>
             <hr>
         </div>
-        <a type="button" class="btn custom-button" href="{{ path('user_orders') }}">Back</a>
+        <a type="button" class="btn custom-button w-100" href="{{ path('user_orders') }}">Back</a>
+        {% if order.status == "Placed" %}
+            <a type="button" class="btn custom-button w-100" onclick="showModal('cancelOrder')">Cancel order</a>
+            {% include 'Util/order_cancel_modal.html.twig' %}
+        {% endif %}
     </div>
 {% endblock %}
