@@ -164,10 +164,10 @@ class OrderPage extends React.Component {
             {this.state.dialog}
 
             <div className={'row orderDialogButtonsContainer'}>
-                <div className={'col-sm-6'}>
+                <div className={'w-50 float-left'}>
                     {this.formForwardsButton()}
                 </div>
-                <div className={'col-sm-6 align-text-right'}>
+                <div className={'w-50 align-text-right float-left'}>
                     {this.formBackwardsButton()}
                 </div>
             </div>
