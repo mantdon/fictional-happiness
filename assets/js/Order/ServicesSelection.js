@@ -156,7 +156,7 @@ export default class ServicesSelection extends React.Component {
     render(){
         return <div className={'row'}>
             <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Paslaugų pasirinkimas</h1>
-            <div className={'offset-sm-2 col-sm-8'}>
+            <div className={'col-sm-12'}>
             { this.state.isLoaded ?
                     <div className={'row serviceSelectionContainer'}>
                         <div className={'col-lg-5 media-full-width'}>
@@ -168,7 +168,7 @@ export default class ServicesSelection extends React.Component {
                                         </i>
                                     </div>
                                     <input
-                                        className={'form-control searchBox'}
+                                        className={'form-control searchBox textField'}
                                         type='text'
                                         value={this.state.searchValue}
                                         onChange={this.handleSearchBox}
