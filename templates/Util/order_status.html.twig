@@ -1,0 +1,18 @@
+Status:
+<span style="color:
+{% if order_status == 'Complete' %}
+    #b07156
+{% elseif order_status == 'Placed' %}
+    #c0b7b1
+{% elseif order_status == 'Ongoing' %}
+    #c69c72
+{% elseif order_status == 'Canceled' %}
+    #8e6e53
+{% elseif order_status == 'Terminated' %}
+    #7a7265
+{% else %}
+    #e8edf3
+{% endif %}
+        ;">
+    {{ order_status }}
+</span>
