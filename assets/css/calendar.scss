@@ -228,3 +228,18 @@ $disabledDaysColor: #723B45;
     background: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
+
+@media
+screen and (max-width: 992px)  {
+
+    .DayPicker-Day {
+        display: table-cell;
+        padding: 1rem 0 1rem 0;
+    }
+
+    .DayPicker-Month {
+        width: 100vw;
+        margin: 0 0 0 0;
+    }
+
+}
