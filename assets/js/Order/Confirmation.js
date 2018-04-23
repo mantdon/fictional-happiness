@@ -78,7 +78,6 @@ export default class Confirmation extends React.Component {
 
     render(){
         return <div className={'text-center'}>
-            <h1 className={'orderDialogLabel'}>Užsakymo patvirtinimas</h1>
             <p> Apsilankymo laikas: { this.props.date.format('YYYY-MM-DD HH:mm') }</p>
             <p> Automobilis: { this.props.vehicle.plateNumber } { this.props.vehicle.make } { this.props.vehicle.model } </p>
             <p>kaina ${this.state.cost.toFixed(2)}</p>
