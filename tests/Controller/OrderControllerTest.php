@@ -30,6 +30,7 @@ class PostControllerTest extends WebTestCase
 
         $fixtures = array(
             'App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser',
+            'App\Tests\Fixtures\LoadUserWithoutVehiclesAndOrders'
         );
         $this->loadFixtures($fixtures);
     }
@@ -48,5 +49,16 @@ class PostControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('html:contains("Prieš atliekant užsakymą privalote užpildyti savo informaciją")')->count() > 0);
     }
 
+    public function testUserAccessOrderPage()
+    {
+        $this->client = static::createClient(array('environment' => 'test'), array(
+            'PHP_AUTH_USER' => 'info@complete.com',
+            'PHP_AUTH_PW'   => 'pass',
+        ));
+
+        $crawler = $this->client->request('GET', '/order');
+
+        $this->assertTrue($crawler->filterXPath('//div[contains(@id, "VehicleSelection")]')->count() === 1);
+    }
 
 }
