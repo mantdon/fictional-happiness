@@ -1,5 +1,6 @@
 .Option{
-    border-top: solid 1px #433e3f;;
+    border-bottom: solid 1px #433e3f;
+    padding: 0.5rem 0 0.5rem 0;
     background: #b07156;
 }
 
@@ -80,14 +81,18 @@
 }
 
 .orderDialogButtonsContainer{
-    text-align: initial;
-    height: 35px;
+    display: flex;
+    justify-content: space-between;
     margin-top: 30px;
 }
 
 .orderDialogButton{
     display: inline-block;
     padding: 5px 5px 5px 5px;
+}
+
+.align-right{
+    float: right;
 }
 
 .orderButtonDisabled{
@@ -105,6 +110,7 @@
     border: 1px gray solid;
     text-align: center;
     padding: 5px 5px 5px 5px;
+    position: relative;
 }
 
 .orderDialogLabel{
@@ -114,6 +120,20 @@
 .calendarContainer{
     background-color: #b07156;
     border: 4px double #433e3f;
+}
+
+.exitTimeSelection{
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+}
+
+.dateLabel{
+    padding-bottom: 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    border-bottom: solid 1px #433e3f;
 }
 
 @media
@@ -132,6 +152,14 @@ screen and (max-width: 992px) {
     }
 
     .optionsContainer{
+        width: 90vw;
+    }
+
+    .close{
+        font-size: 3rem;
+    }
+
+    .timeSelectionContainer{
         width: 90vw;
     }
 }

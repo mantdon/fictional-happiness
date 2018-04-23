@@ -100,15 +100,15 @@ class OrderPage extends React.Component {
 
     formForwardsButton()
     {
-        return <div className={'btn-nav-dropdown orderDialogButton ' + this.disableButton(this.state.isBackwardsActive)} onClick={this.previousStep}>
-            Atgal
+        return <div className={'btn-nav-dropdown orderDialogButton ' + this.disableButton(this.state.isForwardsActive)} onClick={this.nextStep}>
+            Sekantis
         </div>;
     }
 
     formBackwardsButton()
     {
-        return <div className={'btn-nav-dropdown orderDialogButton ' + this.disableButton(this.state.isForwardsActive)} onClick={this.nextStep}>
-            Sekantis
+        return <div className={'btn-nav-dropdown orderDialogButton ' + this.disableButton(this.state.isBackwardsActive)} onClick={this.previousStep}>
+            Atgal
         </div>;
     }
 
@@ -163,12 +163,10 @@ class OrderPage extends React.Component {
         return <div className={'orderDialog col-sm-12'}>
             {this.state.dialog}
 
-            <div className={'row orderDialogButtonsContainer'}>
-                <div className={'col-sm-6'}>
-                    {this.formForwardsButton()}
-                </div>
-                <div className={'col-sm-6 align-text-right'}>
+            <div className={'row'}>
+                <div className={'col-sm-12 orderDialogButtonsContainer'}>
                     {this.formBackwardsButton()}
+                    {this.formForwardsButton()}
                 </div>
             </div>
         </div>;
