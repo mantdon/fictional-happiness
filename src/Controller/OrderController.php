@@ -44,7 +44,7 @@ class OrderController extends Controller
                 $entityManager->persist($vehicle);
                 $entityManager->flush();
             } else
-                return $this->render('Order/order_vehicle_add', array(
+                return $this->render('Order/order_vehicle_add.html.twig', array(
                     'form' => $form->createView()
                 ));
         }

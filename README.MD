@@ -39,3 +39,39 @@ Creating user with Admin privileges
 
 
 `php bin/console app:admin:create [username] [password]`
+
+Functional tests
+=
+
+To set up test database open `phpunit.xml.dist` and add/edit
+
+```xml
+<php>
+      <!--........-->
+      <env name="DATABASE_URL" value="mysql://[username]:[password]@127.0.0.1:3306/fictional-happiness_tests" />
+      <!-- define your env variables for the test env here -->
+ </php>
+ ```
+Tests should extend `Liip\FunctionalTestBundle\Test\WebTestCase`.
+ 
+To set up test database and load fixtures use this method: 
+```php
+public function setUp()
+    {
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        if (!isset($metadatas)) {
+            $metadatas = $em->getMetadataFactory()->getAllMetadata();
+        }
+        $schemaTool = new SchemaTool($em);
+        $schemaTool->dropDatabase();
+        if (!empty($metadatas)) {
+            $schemaTool->createSchema($metadatas);
+        }
+        $this->postFixtureSetup();
+
+        $fixtures = array(
+            'Path/To/Fixture',
+        );
+        $this->loadFixtures($fixtures);
+    }
+```
