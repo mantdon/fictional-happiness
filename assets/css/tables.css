@@ -52,7 +52,9 @@
     border-top: 1px solid #433e3f;
     border-bottom: 1px solid #433e3f;
 }
-
+.date-table tr {
+    border-left: 1px solid #433e3f;
+}
 .services-table tr:last-child, .date-table tr:last-child{
     border: 1px solid #433e3f;
 }
@@ -60,25 +62,17 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
-.date-table {
-    margin-top: 15px;
-    width: 30%;
-}
 .date-table td, .date-table th {
     text-align: center;
     vertical-align: middle;
 }
 .date-table .current-day {
-    background: #414342;
+    background: #7A7265;
 }
-@media only screen and (max-width: 968px) {
-    .date-table {
-        width: 50%;
-    }
-}
-@media only screen and (max-width: 468px) {
-    .date-table {
-        width: 100%;
-    }
+.grid {
+    display: grid;
+    margin-top: 35px;
+    grid-template-columns: auto auto;
+    grid-column-gap: 45px;
 }
 

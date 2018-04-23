@@ -6,36 +6,60 @@
 
 {% block content %}
     <h1 class="text-center">Apie mus</h1>
-    <table class="table date-table">
-        <thead>
-        <tr>
-            <th>Day</th>
-            <th>Work hours</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for weekDay in weekDays %}
-                {% if currentDay is same as(weekDay) %}
-                    <tr class="table-fixed current-day">
+    <div class="grid">
+        <div class="grid-table">
+            <table class="table date-table">
+                <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Work hours</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for weekDay in weekDays %}
+                    {% if currentDay is same as(weekDay) %}
+                        <tr class="table-fixed current-day">
                         <td>{{ weekDay }}</td>
-                {% else %}
-                    <tr class="table-fixed">
+                    {% else %}
+                        <tr class="table-fixed">
                         <td>{{ weekDay }}</td>
-                {% endif %}
-                {% if weekDay is same as('Saturday') or weekDay is same as('Sunday') %}
+                    {% endif %}
+                    {% if weekDay is same as('Saturday') or weekDay is same as('Sunday') %}
                         <td>Not working</td>
-                    </tr>
-                {% else %}
+                        </tr>
+                    {% else %}
                         <td>8:00 - 17:00</td>
-                    </tr>
-                {% endif %}
-             {% endfor %}
-        </tbody>
-    </table>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Features Section -->
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Kompanija ProjectX</h2>
+                <p>Moderni kompanija pasižymi:</p>
+                <ul>
+                    <li>
+                        <strong>Įsipareigojimų laikymusi</strong>
+                    </li>
+                    <li>Gerais specialistais</li>
+                    <li>Kruopščiu darbu</li>
+                    <li>Sąžiningomis kainomis</li>
+                </ul>
+                <p>Autoservisas nori plėstis ir visuomet ieško naujų darbuotojų.</p>
+            </div>
+            <div class="col-lg-6">
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
     <br>
-    <h3 class="text-left">Contacts</h3>
-    <h5><i class="material-icons align-middle">home</i> Studentų gatvė 100, Kaunas</h5>
-    <h5><i class="material-icons align-middle">phone</i> +370600000</h5>
-    <h5><i class="material-icons align-middle">email</i> servisas@gmail.com</h5>
+    <h2 class="text-left">Contacts</h2>
+    <p><i class="material-icons align-middle">home</i> Studentų gatvė 100, Kaunas</p>
+    <p><i class="material-icons align-middle">phone</i> +370600000</p>
+    <p><i class="material-icons align-middle">email</i> spaminator9001@outlook.com</p>
 
 {% endblock %}
