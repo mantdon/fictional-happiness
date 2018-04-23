@@ -1,0 +1,61 @@
+.scrtabs-tab-container * {
+  box-sizing: border-box;
+}
+
+.scrtabs-tab-container .tab-content {
+  clear: left; }
+
+.scrtabs-tab-container.scrtabs-bootstrap4 .scrtabs-tabs-movable-container > .navbar-nav {
+  -ms-flex-direction: row;
+  flex-direction: row; }
+
+.scrtabs-tabs-fixed-container {
+  float: left;
+  overflow: hidden;
+  width: 100%; }
+
+.scrtabs-tabs-movable-container {
+  position: relative; }
+.scrtabs-tabs-movable-container .tab-content {
+  display: none; }
+
+.scrtabs-tab-container.scrtabs-rtl .scrtabs-tabs-movable-container > ul.nav-tabs {
+  padding-right: 0; }
+
+.scrtabs-tab-scroll-arrow {
+    border: 1px solid black;
+    border-bottom: none;
+    display: none;
+    float: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 30px;
+    text-align: center;
+    color: #b07156;
+    background: #433e3f;
+}
+.scrtabs-tab-scroll-arrow:hover {
+  color: #433e3f;
+    background-color: #b0a18e;
+}
+
+.scrtabs-tab-scroll-arrow,
+.scrtabs-tab-scroll-arrow .scrtabs-click-target {
+  cursor: pointer; }
+
+.scrtabs-tab-scroll-arrow.scrtabs-with-click-target {
+  cursor: default; }
+
+.scrtabs-tab-scroll-arrow.scrtabs-disable,
+.scrtabs-tab-scroll-arrow.scrtabs-disable .scrtabs-click-target {
+  color: #e8edf3;
+
+}
+
+.scrtabs-tab-scroll-arrow.scrtabs-disable:hover{
+    cursor: not-allowed;
+    background: #433e3f;
+}
+
+.scrtabs-tabs-fixed-container ul.nav-tabs > li {
+  white-space: nowrap; }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helpers\EnumOrderStatusType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -350,7 +351,7 @@ class User implements AdvancedUserInterface, \Serializable
     	$count = 0;
 
     	foreach($this->orders as $order)
-    		if($order->getProgress()->getIsDone() === false)
+    		if($order->getStatus() === EnumOrderStatusType::getValue(EnumOrderStatusType::Ongoing))
     			$count++;
 
     	return $count;

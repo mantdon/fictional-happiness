@@ -37,7 +37,7 @@ class ProfileController extends Controller
 	 */
 	public function ongoingOrdersPageAction( PaginatedListFetcher $listFetcher, $page )
 	{
-		$list = $listFetcher->getOrdersForUser($page , 3);
+		$list = $listFetcher->getOrdersForUser($this->getUser(), $page , 3);
 		// Load first page on invalid page entry.
 		// 'totalCount' check is needed to avoid redirection loops on empty list.
 		if( $list['totalCount'] !== 0 && $page > $list['pageCount'] || $page < 1 )
