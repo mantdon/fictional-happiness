@@ -45,7 +45,6 @@ class UserController extends Controller
      * @Route("admin/users/ban/{id}", name="user_ban", methods="GET")
      */
     public function ban(Request $request, User $user){
-        dump($user->getOrders());
         $this->savePreviousPaginationPage($request);
         return $this->render('Admin/Users/admin_users_ban_confirm.html.twig', ['user' => $user]);
     }
