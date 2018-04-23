@@ -1,4 +1,5 @@
 $borderColor: #b07156;
+$disabledDaysColor: #723B45;
 
 .DayPicker {
     display: inline-block;
@@ -167,7 +168,7 @@ $borderColor: #b07156;
 }
 
 .DayPicker-Day--disabled {
-    color: #FFE1CC;
+    color: $disabledDaysColor;
     cursor: default;
     /* background-color: #eff1f1; */
 }
