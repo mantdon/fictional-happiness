@@ -17,7 +17,6 @@
             <th>Miestas</th>
             <th>Adresas</th>
             <th>Paskyros blokavimas</th>
-            <th>Paskyros šalinimas</th>
         </tr>
 
         {% for user in users %}
@@ -35,11 +34,6 @@
                         {% else %}
                             <a href="{{ path('user_unban', {id: user.id}) }}"><button type="button" class="btn btn-warning">Atblokuoti</button></a>
                         {% endif %}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if 'ROLE_USER' in user.roles %}
-                        <a href="{{ path('user_show', {id: user.id}) }}"><button type="button" class="btn btn-danger">Ištrinti</button></a>
                     {% endif %}
                 </td>
             </tr>

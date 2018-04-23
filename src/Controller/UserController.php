@@ -45,6 +45,7 @@ class UserController extends Controller
      * @Route("admin/users/ban/{id}", name="user_ban", methods="GET")
      */
     public function ban(Request $request, User $user){
+        dump($user->getOrders());
         $this->savePreviousPaginationPage($request);
         return $this->render('Admin/Users/admin_users_ban_confirm.html.twig', ['user' => $user]);
     }
@@ -63,29 +64,6 @@ class UserController extends Controller
         }
         return $this->redirectToRoute('admin_users');
     }
-
-	/**
-	 * @Route("admin/users/delete/{id}", name="user_show", methods="GET")
-	 */
-    public function show(Request $request, User $user){
-	    $this->savePreviousPaginationPage($request);
-	    return $this->render('Admin/Users/admin_users_delete_confirm.html.twig', ['user' => $user]);
-    }
-
-	/**
-	 * @Route("admin/users/delete/{id}", name="user_delete", methods="DELETE")
-	 */
-	public function delete(Request $request, User $user)
-	{
-		if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($user);
-			$em->flush();
-			$this->addFlash('notice', 'User removed[PH]');
-		}
-
-		return $this->redirectToRoute('admin_users');
-	}
 
 	private function savePreviousPaginationPage(Request $request){
 		if(!$this->get('session')->has('previous_page')) {
