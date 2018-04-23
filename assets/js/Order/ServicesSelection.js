@@ -163,12 +163,11 @@ export default class ServicesSelection extends React.Component {
                             <div className={'serviceOptionsContainer'}>
                                 <div className={"input-group"}>
                                     <div className={'input-group-prepend'}>
-                                        <i className={'input-group-text'}>
-                                            &#128269;
+                                        <i className={'fas fa-search service-search-icon'}>
                                         </i>
                                     </div>
                                     <input
-                                        className={'form-control searchBox textField'}
+                                        className={'form-control searchBox service-search'}
                                         type='text'
                                         value={this.state.searchValue}
                                         onChange={this.handleSearchBox}
