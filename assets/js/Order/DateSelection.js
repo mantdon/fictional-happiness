@@ -84,7 +84,6 @@ export default class DateSelection extends React.Component {
 
         return (
             <div className={'datePickerContainer row'}>
-                <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Atvykimo laiko pasirinkimas</h1>
                 <div className={'d-flex justify-content-center w-100'}>
                 {this.state.isLoaded
                     ? content

@@ -5,6 +5,7 @@ import ServicesSelection from './ServicesSelection';
 import Confirmation from "./Confirmation";
 import DateSelection from "./DateSelection";
 import Success from "./Success";
+import { Arrows } from "awesome-react-steps";
 
 class OrderPage extends React.Component {
 
@@ -161,6 +162,20 @@ class OrderPage extends React.Component {
 
     render() {
         return <div className={'orderDialog col-sm-12'}>
+            {this.state.step < 5 ?
+                <Arrows
+                model={{
+                steps: [
+                    {label: "Automobilis"},
+                    {label: "Paslaugos"},
+                    {label: "Data ir laikas"},
+                    {label: "Patvirtinimas"}
+                ],
+                current: this.state.step - 1
+            }}
+                />
+                : null
+            }
             {this.state.dialog}
 
             <div className={'row'}>
