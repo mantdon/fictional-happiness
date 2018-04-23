@@ -17,6 +17,7 @@
     "build": "encore production"
   },
   "dependencies": {
+    "awesome-react-steps": "^0.1.7",
     "bootstrap": "^4.1.0",
     "moment": "^2.22.0",
     "popper.js": "^1.14.3",
