@@ -155,19 +155,19 @@ export default class ServicesSelection extends React.Component {
 
     render(){
         return <div className={'row'}>
-            <div className={'offset-sm-2 col-sm-8'}>
+            <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Paslaugų pasirinkimas</h1>
+            <div className={'col-sm-12'}>
             { this.state.isLoaded ?
                     <div className={'row serviceSelectionContainer'}>
-                        <div className={'col-sm-5'}>
+                        <div className={'col-lg-5 media-full-width'}>
                             <div className={'serviceOptionsContainer'}>
                                 <div className={"input-group"}>
                                     <div className={'input-group-prepend'}>
-                                        <i className={'input-group-text'}>
-                                            &#128269;
+                                        <i className={'fas fa-search service-search-icon'}>
                                         </i>
                                     </div>
                                     <input
-                                        className={'form-control searchBox'}
+                                        className={'form-control searchBox service-search'}
                                         type='text'
                                         value={this.state.searchValue}
                                         onChange={this.handleSearchBox}
@@ -178,7 +178,7 @@ export default class ServicesSelection extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className={'offset-sm-2 col-sm-5'}>
+                        <div className={'offset-lg-2 col-lg-5'}>
                             <div className={'serviceOptionsContainer scrollable-vertical'}>
                                 {this.state.selectedServicesList}
                             </div>

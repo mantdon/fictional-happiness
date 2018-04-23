@@ -64,8 +64,8 @@ export default class TimeSelection extends React.Component {
     render(){
         return (
             <div className={'timeSelectionContainer'}>
-                <span>{moment(this.props.date).format('YYYY-MM-DD')}</span>
-                <span onClick={this.props.onExit} className={'close'} aria-hidden="true">&times;</span>
+                <p className={'dateLabel'}>{moment(this.props.date).format('YYYY-MM-DD')}</p>
+                <span onClick={this.props.onExit} className={'close exitTimeSelection'} aria-hidden="true">&times;</span>
                 {this.state.isLoaded
                     ? this.state.timesList
                     : <Loader/>
