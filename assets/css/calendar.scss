@@ -240,6 +240,7 @@ screen and (max-width: 992px)  {
     .DayPicker-Month {
         width: 100vw;
         margin: 0 0 0 0;
+        table-layout: fixed;
     }
 
 }
