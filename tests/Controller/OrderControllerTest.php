@@ -17,6 +17,7 @@ class PostControllerTest extends WebTestCase
 
     public function setUp()
     {
+        $this->client = static::createClient(array('environment' => 'test'));
         $em = $this->getContainer()->get('doctrine')->getManager();
         if (!isset($metadatas)) {
             $metadatas = $em->getMetadataFactory()->getAllMetadata();
@@ -37,12 +38,10 @@ class PostControllerTest extends WebTestCase
 
     public function testUserRedirectionIfNotAllPersonalInformationFieldsAreFilled()
     {
-        $this->client = static::createClient(array('environment' => 'test'), array(
+        $this->client->request('GET', '/order', array(), array(), array(
             'PHP_AUTH_USER' => 'info@incomplete.com',
             'PHP_AUTH_PW'   => 'pass',
         ));
-
-        $this->client->request('GET', '/order');
 
         $crawler = $this->client->followRedirect();
         
@@ -51,12 +50,10 @@ class PostControllerTest extends WebTestCase
 
     public function testUserAccessOrderPage()
     {
-        $this->client = static::createClient(array('environment' => 'test'), array(
+        $crawler = $this->client->request('GET', '/order', array(), array(), array(
             'PHP_AUTH_USER' => 'info@complete.com',
             'PHP_AUTH_PW'   => 'pass',
         ));
-
-        $crawler = $this->client->request('GET', '/order');
 
         $this->assertTrue($crawler->filterXPath('//div[contains(@id, "VehicleSelection")]')->count() === 1);
     }
