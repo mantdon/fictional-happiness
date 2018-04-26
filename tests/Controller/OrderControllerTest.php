@@ -3,8 +3,11 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use App\Services\AvailableTimesFetcher;
 use App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser;
+use App\Util\Clock;
 use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
@@ -30,10 +33,16 @@ class PostControllerTest extends WebTestCase
         $this->postFixtureSetup();
 
         $fixtures = array(
+            'App\DataFixtures\AppFixtures',
             'App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser',
-            'App\Tests\Fixtures\LoadUserWithoutVehiclesAndOrders'
+            'App\Tests\Fixtures\LoadUserWithVehicles'
         );
         $this->loadFixtures($fixtures);
+    }
+
+    public static function setUpBeforeClass()
+    {
+        ClockMock::register(Clock::class);
     }
 
     public function testUserRedirectionIfNotAllPersonalInformationFieldsAreFilled()
@@ -56,6 +65,28 @@ class PostControllerTest extends WebTestCase
         ));
 
         $this->assertTrue($crawler->filterXPath('//div[contains(@id, "VehicleSelection")]')->count() === 1);
+    }
+
+    /**
+     * @group time-sensitive
+     */
+    public function testIfUnavailableDaysAreFetched()
+    {
+        $now = new \DateTime('2018-05-02');
+        ClockMock::withClockMock($now->format('U'));
+
+        $this->client->request('GET', '/order/fetch_unavailable_days', array(), array(), array(
+            'PHP_AUTH_USER' => 'info@complete.com',
+            'PHP_AUTH_PW'   => 'pass',
+        ));
+
+        $response = $this->client->getResponse();
+
+        $responseData = json_decode($response->getContent(), true);
+
+        $this->assertEquals(count($responseData), 1);
+
+        $this->assertEquals("2018-05-18", $responseData[0]);
     }
 
 }
