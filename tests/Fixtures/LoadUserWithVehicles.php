@@ -19,7 +19,8 @@ class LoadUserWithVehicles implements FixtureInterface
         ['vehicle' => ['id' => '1'], 'services' => [['id' => '1'], ['id' => '2']], 'date' => '2018-05-18 13:00'],
         ['vehicle' => ['id' => '1'], 'services' => [['id' => '1'], ['id' => '2']], 'date' => '2018-05-18 09:00'],
         ['vehicle' => ['id' => '1'], 'services' => [['id' => '1'], ['id' => '2']], 'date' => '2018-05-18 11:00'],
-        ['vehicle' => ['id' => '1'], 'services' => [['id' => '1'], ['id' => '2']], 'date' => '2018-05-18 15:00']
+        ['vehicle' => ['id' => '1'], 'services' => [['id' => '1'], ['id' => '2']], 'date' => '2018-05-18 15:00'],
+        ['vehicle' => ['id' => '1'], 'services' => [['id' => '1'], ['id' => '2']], 'date' => '2018-05-02 15:00']
     ];
 
     public function load(ObjectManager $manager): void
