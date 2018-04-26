@@ -153,4 +153,21 @@ class MessageManager{
 			->setBody($message->getContent(), 'text/html');
 		$this->mailer->send($message);
 	}
+
+    /**
+     * @param User $user
+     * @return int count of unread messages in user's inbox.
+     */
+    public function getUsersUnreadMessagesCount($user)
+    {
+        return $user->getMessages()->filter(
+            function($entry) {
+                if (!$entry->getIsRead()) {
+                    return true;
+                }
+
+                return false;
+            }
+        )->count();
+    }
 }
