@@ -3,6 +3,7 @@
 {% set services_label = "Servisai" %}
 {% set ongoing_orders_label = "Einamieji užsakymai" %}
 {% set completed_orders_label = "Įvykdyti užsakymai" %}
+{% set create_employee_label = "Sukurti darbuotoją" %}
 
 <ul class="nav nav-tabs tab-bar">
     <li class="nav-item">
@@ -38,6 +39,13 @@
             <span class="nav-link active">{{ completed_orders_label }}</span>
         {% else %}
             <a class="nav-link" href="{{ path('admin_completed_orders') }}">{{ completed_orders_label }}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if create_active is defined %}
+            <span class="nav-link active">{{ create_employee_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('admin_create_employee') }}">{{ create_employee_label }}</a>
         {% endif %}
     </li>
 </ul>
