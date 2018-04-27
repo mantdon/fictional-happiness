@@ -4,7 +4,6 @@ import {render} from 'react-dom';
 var $ = require('jquery');
 require('bootstrap');
 require('jquery-bootstrap-scrolling-tabs');
-require('@fortawesome/fontawesome-free');
 require("../img/logo.png");
 require("../img/home page/oilChange.jpg");
 require("../img/home page/engineRepair.jpg");

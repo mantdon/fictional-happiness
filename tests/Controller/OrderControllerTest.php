@@ -2,43 +2,37 @@
 
 namespace App\Tests\Controller;
 
+use App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser;
+use App\Tests\Fixtures\LoadUserWithoutVehiclesAndOrders;
+use App\Tests\CustomWebTestCase;
 use App\Services\AvailableTimesFetcher;
 use App\Services\UnavailableDaysFinder;
 use Doctrine\ORM\Tools\SchemaTool;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bridge\PhpUnit\ClockMock;
 
-class OrderControllerTest extends WebTestCase
+class OrderControllerTest extends CustomWebTestCase
 {
     private $client;
 
-    public function setUp()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
+        parent::__construct($name, $data, $dataName);
         $this->client = static::createClient(array('environment' => 'test'));
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        if (!isset($metadatas)) {
-            $metadatas = $em->getMetadataFactory()->getAllMetadata();
-        }
-        $schemaTool = new SchemaTool($em);
-        $schemaTool->dropDatabase();
-        if (!empty($metadatas)) {
-            $schemaTool->createSchema($metadatas);
-        }
-        $this->postFixtureSetup();
-
-        $fixtures = array(
-            'App\DataFixtures\AppFixtures',
-            'App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser',
-            'App\Tests\Fixtures\LoadUserWithVehicles'
-        );
-        $this->loadFixtures($fixtures);
     }
 
     public static function setUpBeforeClass()
-    {
+	{
+		parent::setUpBeforeClass();
         ClockMock::register(AvailableTimesFetcher::class);
         ClockMock::register(UnavailableDaysFinder::class);
-    }
+		printf("Loading fixtures for: %s\n", self::class);
+		$fixtures = array(
+			LoadIncompletePersonalDetailsFilledUser::class,
+			LoadUserWithoutVehiclesAndOrders::class
+		);
+		(new self)->loadFixtures($fixtures, false);
+	}
 
     public function testUserRedirectionIfNotAllPersonalInformationFieldsAreFilled()
     {

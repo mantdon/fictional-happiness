@@ -15,7 +15,9 @@
                 <th>El-Paštas</th>
                 <th>Vardas</th>
                 <th>Telefonas</th>
-                <th>Paskyros šalinimas</th>
+                <th>Miestas</th>
+                <th>Adresas</th>
+                <th>Paskyros blokavimas</th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +27,15 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
                     <td>{{ user.phone }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>{{ user.address }}</td>
                     <td>
                         {% if 'ROLE_USER' in user.roles %}
-                            <a href="{{ path('user_show', {id: user.id}) }}"><button type="button" class="btn custom-button">Ištrinti</button></a>
+                            {% if user.isEnabled is same as(true) %}
+                                <a href="{{ path('user_ban', {id: user.id}) }}"><button type="button" class="btn custom-button">Blokuoti</button></a>
+                            {% else %}
+                                <a href="{{ path('user_unban', {id: user.id}) }}"><button type="button" class="btn custom-button">Atblokuoti</button></a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
