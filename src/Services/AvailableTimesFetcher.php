@@ -153,4 +153,16 @@ class AvailableTimesFetcher
 
         return false;
     }
+
+    /**
+     * Checks if day has any available times.
+     * @param $date string 'Y-m-d'
+     * @return bool
+     */
+    public function hasDayAvailableTimes($date)
+    {
+        if (count($this->fetchDay($date)) === 0)
+            return false;
+        return true;
+    }
 }

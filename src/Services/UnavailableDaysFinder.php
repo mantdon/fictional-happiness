@@ -7,15 +7,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UnavailableDaysFinder
 {
-    private $em;
     private $availableTimesFetcher;
 
     private $registrationBoundsInMonths = 3; //all dates after this interval will be unavailable.
 
-    public function __construct(EntityManagerInterface $em,
-                                AvailableTimesFetcher $availableTimesFetcher)
+    public function __construct(AvailableTimesFetcher $availableTimesFetcher)
     {
-        $this->em = $em;
         $this->availableTimesFetcher = $availableTimesFetcher;
     }
 
@@ -23,7 +20,7 @@ class UnavailableDaysFinder
     {
         $unavailableDays = [];
 
-        $now = new \DateTime(date('Y-m-d H:i', time()));
+        $now = new \DateTime(date('Y-m-d', time()));
 
         for($month = 0; $month < $this->registrationBoundsInMonths; $month++)
         {
@@ -38,19 +35,18 @@ class UnavailableDaysFinder
      * Not the most efficient solution, but works. Should be done in one query.
      * @param $date \DateTime
      */
-    public function findDaysInMonth($date)
+    private function findDaysInMonth($date)
     {
         $unavailableDays = [];
         $daysInMonth = $this->getDaysInMonth($date);
         $dateTemplate = $date->format('Y-m-');
 
-        for($day = 1; $day <= $daysInMonth; $day++)
+        for ($day = 1; $day <= $daysInMonth; $day++)
         {
             $dateToCheck = $dateTemplate . $this->formatDayString($day);
-            $orders = $this->availableTimesFetcher->fetchDay($dateToCheck);
-
-            if(count($orders) === 0)
+            if ($this->availableTimesFetcher->hasDayAvailableTimes($dateToCheck)) {
                 $unavailableDays[] = $dateToCheck;
+            }
         }
 
         return $unavailableDays;
