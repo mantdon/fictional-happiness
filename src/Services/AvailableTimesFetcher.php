@@ -41,9 +41,10 @@ class AvailableTimesFetcher
     private function formAvailableVisitTimes($date, $orders)
     {
         $availableTimes = [];
-        $orderIndex = $this->findIndexOfFirstOrderInWorkday($orders);
+        $startTime = $this->getStartTime($date);
+        $orderIndex = $this->findNextIndexAfterStartTime($orders, $startTime);
 
-        for ($i = $this->getStartTime($date); $i < $this->workDayEndsAt; $i += $this->hoursInterval)
+        for ($i = $startTime; $i < $this->workDayEndsAt; $i += $this->hoursInterval)
         {
             $formattedTime = $this->floatToTime($i);
 
@@ -58,16 +59,17 @@ class AvailableTimesFetcher
 
     /**
      * Is used for skipping orders that were registered for a time out of working hours range.
-     * @param $orders
+     * @param $orders array
+     * @param $startTime float
      * @return int
      */
-    private function findIndexOfFirstOrderInWorkday($orders)
+    private function findNextIndexAfterStartTime($orders, $startTime)
     {
         $index = 0;
 
         foreach($orders as $order)
         {
-            if($order->getVisitDate()->format('H:i') < $this->floatToTime($this->workDayBeginsAt))
+            if($order->getVisitDate()->format('H:i') < $this->floatToTime($startTime))
                 $index++;
         }
 
@@ -91,7 +93,11 @@ class AvailableTimesFetcher
     {
         if($this->isToday($date)) {
             $now = $this->timeToFloat(date('H:i', time()));
-            $offset = ceil(($now - $this->workDayBeginsAt) / $this->hoursInterval) * $this->hoursInterval;
+            $registrationTimesPassed = ($now - $this->workDayBeginsAt) / $this->hoursInterval;
+            if (abs($registrationTimesPassed - round($registrationTimesPassed)) < 0.0001)
+                $registrationTimesPassed += 1;
+
+            $offset = ceil($registrationTimesPassed) * $this->hoursInterval;
             if($offset > 0)
                 return $this->workDayBeginsAt + $offset;
         }
