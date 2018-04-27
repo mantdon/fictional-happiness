@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1 class="text-center">Employee panel</h1>
+    <hr>
+    <div class="admin">
+        <div class="row">
+            <div class="col-sm-12 top-content">
+                {% block panels %}
+                    {% include 'Employee/employee_panels.html.twig' with {
+                        home_active: 'true'
+                    }%}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="row h-100">
+            <div class="col-sm-12 bottom-content">
+                {% block panel_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
