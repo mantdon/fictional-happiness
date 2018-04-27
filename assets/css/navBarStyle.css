@@ -135,6 +135,23 @@
 }
 /*</editor-fold>*/
 
+.notification_dot{
+    color: white;
+    top: -6px;
+    right: -6px;
+    position: absolute;
+    z-index: 1000;
+    display: block;
+    border-radius: 50%;
+    border: 2px solid #ffd633;
+    background-color: #FF7C33;
+    text-align: center;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 10px 1px #ffd633;
+}
+
 /*<editor-fold desc="Collapse/Expand options by screen width">*/
 @media (max-width: 575px) {
     .navbar-expand-sm .navbar-nav .show .dropdown-menu{

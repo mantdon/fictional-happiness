@@ -5,3 +5,7 @@
 .message-unread{
     color: #b07156 !important;
 }
+
+.message-unread-glow{
+    text-shadow: 0 0 7px #ffd633;
+}
