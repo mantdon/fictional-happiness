@@ -1,0 +1,45 @@
+{% block panel_content %}
+    <h5 class="text-left m-3">{{ userCount }} Registruoti vartojojai</h5>
+    <table class="table services-table admin-services-table">
+        <thead>
+        <tr class="table-fixed">
+            <th>ID</th>
+            <th>El-Paštas</th>
+            <th>Vardas</th>
+            <th>Telefonas</th>
+            <th>Miestas</th>
+            <th>Adresas</th>
+            <th>Paskyros blokavimas</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr class="table-fixed">
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.address }}</td>
+                <td>
+                    {% if 'ROLE_USER' in user.roles %}
+                        {% if user.isEnabled is same as(true) %}
+                            <a href="{{ path('user_ban', {id: user.id}) }}"><button type="button" class="btn custom-button">Blokuoti</button></a>
+                        {% else %}
+                            <a href="{{ path('user_unban', {id: user.id}) }}"><button type="button" class="btn custom-button">Atblokuoti</button></a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# pageOffset - number of page buttons to display on either side of
+       currently active one.
+    #}
+    {% include 'Util/pagination.html.twig' with {
+        pageOffset: 2,
+        previousPageLabel: "Previous",
+        nextPageLabel: "Next"
+    } %}
+{% endblock %}
