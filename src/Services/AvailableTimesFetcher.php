@@ -3,7 +3,6 @@
 namespace App\Services;
 
 
-use App\Util\Clock;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AvailableTimesFetcher
@@ -91,7 +90,7 @@ class AvailableTimesFetcher
     private function getStartTime($date)
     {
         if($this->isToday($date)) {
-            $now = $this->timeToFloat(Clock::now()->format('H:i'));
+            $now = $this->timeToFloat(date('H:i', time()));
             $offset = ceil(($now - $this->workDayBeginsAt) / $this->hoursInterval) * $this->hoursInterval;
             if($offset > 0)
                 return $this->workDayBeginsAt + $offset;
@@ -107,7 +106,7 @@ class AvailableTimesFetcher
      */
     private function isToday($date)
     {
-        if(strcmp(Clock::now()->format('Y-m-d'), $date) === 0)
+        if(strcmp(date('Y-m-d', time()), $date) === 0)
             return true;
         return false;
     }

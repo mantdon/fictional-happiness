@@ -3,7 +3,6 @@
 namespace App\Services;
 
 
-use App\Util\Clock;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UnavailableDaysFinder
@@ -24,7 +23,7 @@ class UnavailableDaysFinder
     {
         $unavailableDays = [];
 
-        $now = Clock::now();
+        $now = new \DateTime(date('Y-m-d H:i', time()));
 
         for($month = 0; $month < $this->registrationBoundsInMonths; $month++)
         {
