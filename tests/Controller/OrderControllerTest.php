@@ -2,19 +2,13 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
 use App\Services\AvailableTimesFetcher;
-use App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser;
-use App\Util\Clock;
+use App\Services\UnavailableDaysFinder;
 use Doctrine\ORM\Tools\SchemaTool;
-use Symfony\Bridge\PhpUnit\ClockMock;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Bridge\PhpUnit\ClockMock;
 
-class PostControllerTest extends WebTestCase
+class OrderControllerTest extends WebTestCase
 {
     private $client;
 
@@ -42,7 +36,8 @@ class PostControllerTest extends WebTestCase
 
     public static function setUpBeforeClass()
     {
-        ClockMock::register(Clock::class);
+        ClockMock::register(AvailableTimesFetcher::class);
+        ClockMock::register(UnavailableDaysFinder::class);
     }
 
     public function testUserRedirectionIfNotAllPersonalInformationFieldsAreFilled()
