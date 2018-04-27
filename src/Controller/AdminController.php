@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Services\PaginatedListFetcher;
+use App\Services\UserManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Form\RegistrationType;
+use App\Entity\User;
 
 /**
  * @Route("/admin")
@@ -135,6 +138,36 @@ class AdminController extends Controller
 			                      'pageParameterName' => $this->pageParameterName,
 			                      'route' => 'admin_completed_orders_page' ) );
 	}
+
+    /**
+     * @Route("/createemployee", name="admin_create_employee")
+     */
+    public function createEmployeeAction(Request $request,
+                                         UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $user->setRole('ROLE_EMPLOYEE');
+            $user->setRegistrationDate(new \DateTime());
+            $this->userManager->createUser($user);
+
+            $this->addFlash(
+                'notice',
+                'Registration successful, welcome ' . $user->getEmailName() . '!');
+
+            return $this->redirectToRoute( 'admin_create_employee' );
+        }
+
+        return $this->render(
+            'Admin/Users/create_employee.html.twig',
+            array('form' => $form->createView())
+        );
+    }
 
 	private function saveFinalPaginationPage(int $page_count){
 		if(!$this->get('session')->has('last_page')) {
