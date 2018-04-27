@@ -8,6 +8,7 @@ use App\Repository\OrderRepository;
 use App\Services\AvailableTimesFetcher;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ClockMock;
 
 class AvailableTimesFetcherTest extends TestCase
 {
@@ -58,13 +59,22 @@ class AvailableTimesFetcherTest extends TestCase
         return $order;
     }
 
+    public static function setUpBeforeClass()
+    {
+        ClockMock::register(AvailableTimesFetcher::class);
+    }
+
     /**
+     * @group time-sensitive
      * @dataProvider getData
      */
     public function testItFetchesCorrectAvailableTimes($data)
     {
+        $now = new \DateTime($data['date']);
+        ClockMock::withClockMock($now->format('U'));
+
         $availableTimesFetcher = new AvailableTimesFetcher($this->objectManager);
-        $result = $availableTimesFetcher->fetchDay($data['date']);
+        $result = $availableTimesFetcher->fetchDay($now->format('Y-m-d'));
         $this->assertEquals($data['expected'], $result);
     }
 
@@ -78,9 +88,11 @@ class AvailableTimesFetcherTest extends TestCase
 
     public static function getData()
     {
-        yield [['date' => '2018-08-10', 'expected' => ['11:00', '13:00']]];
-        yield [['date' => '2018-08-11', 'expected' => []]];
-        yield [['date' => '2018-08-12', 'expected' => ['09:00', '11:00', '13:00', '15:00']]];
-        yield [['date' => '2018-08-13', 'expected' => ['15:00']]];
+        yield [['date' => '2018-08-10 10:12', 'expected' => ['11:00', '13:00']]];
+        yield [['date' => '2018-08-11 07:20', 'expected' => []]];
+        yield [['date' => '2018-08-12 8:30', 'expected' => ['09:00', '11:00', '13:00', '15:00']]];
+        yield [['date' => '2018-08-13 12:10', 'expected' => ['15:00']]];
+        yield [['date' => '2018-08-12 15:00', 'expected' => []]];
+        yield [['date' => '2018-08-12 23:20', 'expected' => []]];
     }
 }
