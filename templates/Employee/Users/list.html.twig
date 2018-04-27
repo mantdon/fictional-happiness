@@ -1,0 +1,10 @@
+{% extends 'Employee/base.html.twig' %}
+
+{% block panels %}
+    {% include 'Employee/employee_panels.html.twig' with {
+        users_active: 'true'
+    }%}
+{% endblock %}
+{% block panel_content %}
+    {% include 'user_list_table.html.twig' %}
+{% endblock %}
