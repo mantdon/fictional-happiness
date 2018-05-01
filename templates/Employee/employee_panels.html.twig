@@ -1,6 +1,7 @@
 {% set home_label = "Home" %}
 {% set users_label = "Vartotojai" %}
 {% set ongoing_orders_label = "Einamieji užsakymai" %}
+{% set changepassword_label = "Keisti slaptažodį" %}
 
 <ul class="nav nav-tabs tab-bar">
     <li class="nav-item">
@@ -22,6 +23,13 @@
             <span class="nav-link active">{{ ongoing_orders_label }}</span>
         {% else %}
             <a class="nav-link" href="{{ path('employee_ongoing_orders') }}">{{ ongoing_orders_label }}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if changepassword_active is defined %}
+            <span class="nav-link active">{{ changepassword_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('employee_changepassword') }}">{{ changepassword_label }}</a>
         {% endif %}
     </li>
 </ul>
