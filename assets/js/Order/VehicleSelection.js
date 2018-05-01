@@ -12,7 +12,7 @@ export default class OrderPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/user/vehicles/get", {
+        fetch("/order/user/vehicles/get", {
             credentials: "same-origin"
         })
             .then(res => res.json())
