@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Message;
-use App\Helpers\Pagination;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -21,23 +20,22 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-	// Used by PaginatedListFetcher. Due for cleanup.
-	public function getAll($currentPage = 1, $limit = 5){
-		$qb = $this->createQueryBuilder('message')
-					->getQuery();
-		$paginator = Pagination::paginate($qb, $currentPage, $limit);
-		return $paginator;
-	}
-
-	public function getByTitleAndContent(string $title, string $content){
+	/**
+	 * Returns a message with specified $title and $content from the database.
+	 * If such message does not exist, initializes a new message.
+	 * @param string $title
+	 * @param string $content
+	 * @return Message
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
+	public function getByTitleAndContent(string $title, string $content): ?Message
+	{
     	$qb = $this->createQueryBuilder('message');
     	$qb->select('message')
 		    ->where('message.title = ?1')
 		    ->andWhere('message.content = ?2')
-    	    ->setParameters(array(
-    	    	            1 => $title,
-	                        2 => $content
-	                        )
+    	    ->setParameters([1 => $title,
+							 2 => $content]
 	        );
 
 		try {
