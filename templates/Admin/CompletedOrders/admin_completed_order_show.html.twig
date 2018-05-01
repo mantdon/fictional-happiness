@@ -2,7 +2,7 @@
 
 {% block panels %}
     {% include 'Admin/admin_panels.html.twig' with {
-        ongoing_orders_active: 'true'
+        completed_orders_active: 'true'
     }%}
 {% endblock %}
 
@@ -64,6 +64,6 @@
             </ul>
             <hr>
         </div>
-        <a type="button" class="btn custom-button" href="{{ path('admin_ongoing_orders') }}">Back</a>
+        <a type="button" class="btn custom-button" href="{{ path('admin_completed_orders') }}">Back</a>
     </div>
 {% endblock %}

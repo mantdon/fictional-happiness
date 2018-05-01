@@ -21,7 +21,7 @@
     </li>
     {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('service_index') }}">{{ services_label }}</a>
+            <a class="nav-link" href="{{ path('services_page') }}">{{ services_label }}</a>
         </li>
     {% endif %}
     {% if about_active is defined and about_active == "true" %}

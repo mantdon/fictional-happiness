@@ -2,38 +2,24 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
 use App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser;
-use Doctrine\ORM\Tools\SchemaTool;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use App\Tests\Fixtures\LoadUserWithoutVehiclesAndOrders;
+use App\Tests\CustomWebTestCase;
 
-class PostControllerTest extends WebTestCase
+class OrderControllerTest extends CustomWebTestCase
 {
     private $client;
 
-    public function setUp()
-    {
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        if (!isset($metadatas)) {
-            $metadatas = $em->getMetadataFactory()->getAllMetadata();
-        }
-        $schemaTool = new SchemaTool($em);
-        $schemaTool->dropDatabase();
-        if (!empty($metadatas)) {
-            $schemaTool->createSchema($metadatas);
-        }
-        $this->postFixtureSetup();
-
-        $fixtures = array(
-            'App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser',
-            'App\Tests\Fixtures\LoadUserWithoutVehiclesAndOrders'
-        );
-        $this->loadFixtures($fixtures);
-    }
+	public static function setUpBeforeClass()
+	{
+		parent::setUpBeforeClass();
+		printf("Loading fixtures for: %s\n", self::class);
+		$fixtures = array(
+			LoadIncompletePersonalDetailsFilledUser::class,
+			LoadUserWithoutVehiclesAndOrders::class
+		);
+		(new self)->loadFixtures($fixtures, false);
+	}
 
     public function testUserRedirectionIfNotAllPersonalInformationFieldsAreFilled()
     {
@@ -60,5 +46,4 @@ class PostControllerTest extends WebTestCase
 
         $this->assertTrue($crawler->filterXPath('//div[contains(@id, "VehicleSelection")]')->count() === 1);
     }
-
 }

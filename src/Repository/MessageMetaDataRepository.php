@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\MessageMetaData;
-use App\Helpers\Pagination;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -20,24 +21,19 @@ class MessageMetaDataRepository extends ServiceEntityRepository
         parent::__construct($registry, MessageMetaData::class);
     }
 
-    // Used by PaginatedListFetcher. Due for cleanup.
-	public function getAll($user, $currentPage = 1, $limit = 5){
-		$qb = $this->createQueryBuilder('messageMetaData')
-					->where('messageMetaData.recipient = ?1')
-					->andWhere('messageMetaData.isDeletedByUser = 0')
-					->orderBy('messageMetaData.dateSent', 'DESC')
-					->setParameter(1, $user)
-					->getQuery();
-		$paginator = Pagination::paginate($qb, $currentPage, $limit);
-		return $paginator;
-	}
-
-	public function getMetaDataOfUserMessages(User $user)
+	/**
+	 * Intended to be called by PaginationHandler to paginate the query
+	 * @param User $user
+	 * @return Query a query for all messages sent to the $user, sorted by
+	 * sending date in descending order.
+	 */
+	public function getUserMessages(User $user): Query
 	{
     	return $this->createQueryBuilder('messageMetaData')
 				    ->where('messageMetaData.recipient = ?1')
+				    ->andWhere('messageMetaData.isDeletedByUser = 0')
+				    ->orderBy('messageMetaData.dateSent', 'DESC')
 				    ->setParameter(1, $user)
-		            ->getQuery()
-		            ->getResult();
+		            ->getQuery();
 	}
 }
