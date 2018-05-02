@@ -29,7 +29,7 @@ class UnavailableDaysFinderTest extends TestCase
             ['2018-08-13',
                 true
             ],
-            ['2019-09-03',
+            ['2018-09-03',
                 true
             ],
             ['2018-12-23',
