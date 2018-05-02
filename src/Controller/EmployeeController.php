@@ -21,11 +21,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class EmployeeController extends Controller
 {
-    private $pageParameterName = "page";
+    private $pageParameterName = 'page';
 
-    /**
-     * @Route("/", name="employee_home")
-     */
+	/**
+	 * @Route("/", name="employee_home")
+	 * @throws \LogicException
+	 */
     public function home()
     {
         $user = $this->getUser();
@@ -113,7 +114,7 @@ class EmployeeController extends Controller
      * @return RedirectResponse
      * @throws \LogicException
      */
-    public function adminOrderTerminateAction(Order $order, OrderCreator $oc, MessageManager $mm): RedirectResponse
+    public function employeeOrderTerminateAction(Order $order, OrderCreator $oc, MessageManager $mm): RedirectResponse
     {
         $statusChangeMessage = $oc->terminateOrder($order);
         $this->addFlash('notice', $statusChangeMessage);
@@ -128,7 +129,7 @@ class EmployeeController extends Controller
         $message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
         $mm->sendMessageToProfile($message, $order->getUser());
 
-        return $this->redirectToRoute('admin_ongoing_orders');
+        return $this->redirectToRoute('employee_ongoing_orders');
     }
 
     /**
@@ -139,7 +140,7 @@ class EmployeeController extends Controller
      * @return RedirectResponse
      * @throws \LogicException
      */
-    public function adminOrderApproveAction(Order $order, OrderCreator $oc, MessageManager $mm): RedirectResponse
+    public function employeeOrderApproveAction(Order $order, OrderCreator $oc, MessageManager $mm): RedirectResponse
     {
         $statusChangeMessage = $oc->approveOrder($order);
         $this->addFlash('notice', $statusChangeMessage);
@@ -154,7 +155,7 @@ class EmployeeController extends Controller
         $message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
         $mm->sendMessageToProfile($message, $order->getUser());
 
-        return $this->redirectToRoute('admin_ongoing_orders');
+        return $this->redirectToRoute('employee_ongoing_orders');
     }
 
     /**
@@ -271,44 +272,5 @@ class EmployeeController extends Controller
             'user' => $this->getUser(),
             'form' => $form->createView()
         ));
-    }
-    private function saveFinalPaginationPage(int $page_count){
-        if(!$this->get('session')->has('last_page')) {
-            $this->get( 'session' )->set('last_page', $page_count );
-        }
-    }
-
-    private function loadPageValue(Request $request, $defaultValue = 1){
-        $previous_page_key = 'previous_page';
-        $last_page_key = 'last_page';
-        $page = NULL;
-        if($this->lastPageRequired($request))
-            $page = $this->loadAndClearPageFromSession($last_page_key);
-        elseif($this->previousPageRequired($previous_page_key))
-            $page = $this->loadAndClearPageFromSession($previous_page_key);
-        if($page === NULL)
-            return $defaultValue;
-        return $page;
-    }
-
-    private function lastPageRequired(Request $request){
-        // Going to last page if coming back from creating a new service.
-        preg_match("/new/", $request->headers->get('referer'), $match);
-        if(count($match) === 1)
-            return true;
-        return false;
-    }
-
-    private function previousPageRequired(string $previous_page_key){
-        if($this->get('session')->has($previous_page_key))
-            return true;
-        return false;
-    }
-
-    public function loadAndClearPageFromSession(string $page_key){
-        $savedPage = $this->get( 'session' )->get($page_key);
-        $this->get('session')->remove($page_key);
-
-        return $savedPage;
     }
 }
