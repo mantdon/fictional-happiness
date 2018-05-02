@@ -3,12 +3,10 @@
 namespace App\Tests\Controller;
 
 use App\Tests\Fixtures\LoadIncompletePersonalDetailsFilledUser;
-use App\Tests\Fixtures\LoadUserWithoutVehiclesAndOrders;
+use App\Tests\Fixtures\LoadUserWithVehicles;
 use App\Tests\CustomWebTestCase;
 use App\Services\AvailableTimesFetcher;
 use App\Services\UnavailableDaysFinder;
-use Doctrine\ORM\Tools\SchemaTool;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bridge\PhpUnit\ClockMock;
 
 class OrderControllerTest extends CustomWebTestCase
@@ -29,7 +27,7 @@ class OrderControllerTest extends CustomWebTestCase
 		printf("Loading fixtures for: %s\n", self::class);
 		$fixtures = array(
 			LoadIncompletePersonalDetailsFilledUser::class,
-			LoadUserWithoutVehiclesAndOrders::class
+			LoadUserWithVehicles::class
 		);
 		(new self)->loadFixtures($fixtures, false);
 	}
