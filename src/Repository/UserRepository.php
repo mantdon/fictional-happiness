@@ -1,15 +1,17 @@
 <?php
 namespace App\Repository;
 
-use App\Helpers\Pagination;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class UserRepository extends EntityRepository
 {
-    public function getAll($currentPage = 1, $limit = 5)
+	/**
+	 * Intended to be called by PaginationHandler to paginate the query
+	 * @return Query a query for all users.
+	 */
+    public function getAll(): Query
     {
-        $qb = $this->createQueryBuilder('s')->getQuery();
-        $paginator = Pagination::paginate($qb, $currentPage, $limit);
-        return $paginator;
+        return $this->createQueryBuilder('u')->getQuery();
     }
 }

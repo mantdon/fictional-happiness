@@ -1,8 +1,8 @@
-{% extends 'Admin/base.html.twig' %}
+{% extends 'Employee/base.html.twig' %}
 
 {% block panels %}
-    {% include 'Admin/admin_panels.html.twig' with {
-        completed_orders_active: 'true'
+    {% include 'Employee/employee_panels.html.twig' with {
+        ongoing_orders_active: 'true'
     }%}
 {% endblock %}
 
@@ -12,7 +12,6 @@
             <h5>Order #{{ order.id }}</h5>
             <h5>{{ order.visitDate|date('Y/m/d') }}</h5>
         </div>
-        <h4 style="width:100%; text-align: right;">Completed on: {{ order.progress.completionDate|date('Y/m/d') }}</h4>
         <table class="table">
             <tr>
                 <th class="text-center" colspan="2" style="border: none; border-right: 1px solid white">User</th>
@@ -50,20 +49,34 @@
             <small class="align-self-center justify-content-center d-flex position-absolute" style="width: 95%; font-size: 14px; color:black">{{ order.progress.numberOfServicesCompleted }} / {{ order.services.count }}</small>
         </div>
         <hr>
+        {% if order.progress.numberOfServicesCompleted == order.services.count%}
+            <a type="button" class="btn custom-button w-100" onclick="showModal('finalizeOrder')">Finalize</a>
+            {% include 'Employee/OngoingOrders/employee_ongoing_orders_finalize.html.twig' %}
+            <hr>
+        {% endif %}
         <div>
             <h6>Servisai:</h6>
             <ul class="list-group">
                 {% for line in order.progress.lines %}
-                    <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">
-                        {{ line.service.name }}
-                        {% if line.completedOn is not null %}
-                            <h6>Completed: {{ line.completedOn|date('Y/m/d') }}</h6>
+                    <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">{{ line.service.name }}
+                        {% if line.isDone %}
+                            <a class="btn custom-button" href="{{ path('employee_ongoing_order_undo_service', {'id':line.id}) }}">Unmark as done</a>
+                        {% else %}
+                            <a class="btn custom-button" href="{{ path('employee_ongoing_order_complete_service', {'id':line.id}) }}">Mark as done</a>
                         {% endif %}
                     </li>
                 {% endfor %}
             </ul>
             <hr>
         </div>
-        <a type="button" class="btn custom-button" href="{{ path('admin_completed_orders') }}">Back</a>
+        <a type="button" class="btn custom-button" href="{{ path('employee_ongoing_orders') }}">Back</a>
+        {% if order.status == "Placed" %}
+            <div class="w-100">
+                <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('approveOrder')">Approve order</a>
+                <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('terminateOrder')">Terminate order</a>
+            </div>
+            {% include 'Util/order_approve_modal.html.twig' %}
+            {% include 'Util/order_terminate_modal.html.twig' %}
+        {% endif %}
     </div>
 {% endblock %}

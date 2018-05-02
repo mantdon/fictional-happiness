@@ -1,0 +1,43 @@
+{% set home_label = "Home" %}
+{% set users_label = "Vartotojai" %}
+{% set ongoing_orders_label = "Einamieji užsakymai" %}
+{% set settings_label = "Nustatymai" %}
+{% set changepassword_label = "Keisti slaptažodį" %}
+
+<ul class="nav nav-tabs tab-bar">
+    <li class="nav-item">
+        {% if home_active is defined %}
+            <span class="nav-link active">{{ home_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('employee_home') }}">{{ home_label }}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if users_active is defined %}
+            <span class="nav-link active">{{ users_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('employee_users') }}">{{ users_label }}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if ongoing_orders_active is defined %}
+            <span class="nav-link active">{{ ongoing_orders_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('employee_ongoing_orders') }}">{{ ongoing_orders_label }}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if settings_active is defined %}
+            <span class="nav-link active">{{ settings_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('employee_settings') }}">{{ settings_label }}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if changepassword_active is defined %}
+            <span class="nav-link active">{{ changepassword_label }}</span>
+        {% else %}
+            <a class="nav-link" href="{{ path('employee_changepassword') }}">{{ changepassword_label }}</a>
+        {% endif %}
+    </li>
+</ul>

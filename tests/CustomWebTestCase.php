@@ -6,13 +6,14 @@ namespace App\tests;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Doctrine\ORM\Tools\SchemaTool;
 
-class customWebTestCase extends WebTestCase
+class CustomWebTestCase extends WebTestCase
 {
-	/**
-	 * @var SchemaTool
-	 */
+	/** @var SchemaTool */
 	private static $schemaTool;
 	private static $em;
+	protected static $fixtures;
+	protected static $appendFixtures = false;
+
 	public static function setUpBeforeClass()
 	{
 		printf("Setting up database.\n");
@@ -20,17 +21,15 @@ class customWebTestCase extends WebTestCase
 		$kernel = static::createKernel();
 		$kernel->boot();
 		self::$em = $kernel->getContainer()->get('doctrine')->getManager();
-		$metadatas = self::$em->getMetadataFactory()->getAllMetadata();
+		$metadata = self::$em->getMetadataFactory()->getAllMetadata();
 		self::$schemaTool = new SchemaTool(self::$em);
-		if (!empty($metadatas)) {
-			self::$schemaTool->updateSchema($metadatas);
+		if(!empty($metadata)){
+			self::$schemaTool->updateSchema($metadata);
 		}
-	}
-
-	public static function tearDownAfterClass()
-	{
-		printf("\nDropping database.\n");
-		self::$schemaTool->dropDatabase();
+		if(static::$fixtures !== null){
+			printf("Loading fixtures for: %s\n", static::class);
+			(new self)->loadFixtures(static::$fixtures, static::$appendFixtures);
+		}
 	}
 }
 
