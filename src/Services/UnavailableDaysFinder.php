@@ -44,7 +44,7 @@ class UnavailableDaysFinder
         for ($day = $date->format('d'); $day <= $daysInMonth; $day++)
         {
             $dateToCheck = $dateTemplate . $this->formatDayString($day);
-            if ($this->availableTimesFetcher->hasDayAvailableTimes($dateToCheck)) {
+            if ($this->availableTimesFetcher->isDayUnavailable($dateToCheck)) {
                 $unavailableDays[] = $dateToCheck;
             }
         }

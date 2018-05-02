@@ -156,13 +156,14 @@ class AvailableTimesFetcher
 
     /**
      * Checks if day has any available times.
+     * This shouldn't be in this class, but I have no idea where to put it and it make ease to test UnavailableDaysFinder.
      * @param $date string 'Y-m-d'
      * @return bool
      */
-    public function hasDayAvailableTimes($date)
+    public function isDayUnavailable($date)
     {
         if (count($this->fetchDay($date)) === 0)
-            return false;
-        return true;
+            return true;
+        return false;
     }
 }
