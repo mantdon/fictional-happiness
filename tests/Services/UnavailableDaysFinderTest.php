@@ -29,6 +29,9 @@ class UnavailableDaysFinderTest extends TestCase
             ['2018-08-13',
                 true
             ],
+            ['2019-09-03',
+                true
+            ],
             ['2018-12-23',
                 true
             ]
@@ -52,7 +55,7 @@ class UnavailableDaysFinderTest extends TestCase
         $availableTimesFetcher = $this->createMock(AvailableTimesFetcher::class);
 
         $availableTimesFetcher->expects($this->any())
-            ->method('hasDayAvailableTimes')
+            ->method('isDayUnavailable')
             ->will($this->returnValueMap($this->data));
 
         $finder = new UnavailableDaysFinder($availableTimesFetcher);
@@ -63,8 +66,8 @@ class UnavailableDaysFinderTest extends TestCase
 
     public static function getData()
     {
-        yield [['now' => '2018-08-09', 'expected' => ['2018-08-10', '2018-08-11', '2018-08-12', '2018-08-13']]];
-        yield [['now' => '2018-08-11', 'expected' => ['2018-08-11', '2018-08-12', '2018-08-13']]];
+        yield [['now' => '2018-08-09', 'expected' => ['2018-08-10', '2018-08-11', '2018-08-12', '2018-08-13', '2018-09-03']]];
+        yield [['now' => '2018-08-11', 'expected' => ['2018-08-11', '2018-08-12', '2018-08-13', '2018-09-03']]];
         yield [['now' => '2019-10-23', 'expected' => []]];
     }
 }
