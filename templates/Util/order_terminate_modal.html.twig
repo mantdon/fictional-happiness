@@ -1,3 +1,6 @@
+{% if route_name is not defined %}
+    {% set route_name = 'admin_order_terminate' %}
+{% endif %}
 <div class="modal fade" id="terminateOrder" tabindex="-1" role="dialog" aria-labelledby="terminateOrderLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content custom-modal">
@@ -18,7 +21,7 @@
                 <p>Ar tikrai norite nutraukti šį užsakymą?</p>
             </div>
             <div class="modal-footer">
-                <a class="btn custom-button w-100" href="{{ path('admin_order_terminate', {'id': order.id}) }}">NUTRAUKTI UŽSAKYMĄ</a>
+                <a class="btn custom-button w-100" href="{{ path(route_name, {'id': order.id}) }}">NUTRAUKTI UŽSAKYMĄ</a>
             </div>
         </div>
     </div>

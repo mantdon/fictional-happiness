@@ -1,3 +1,6 @@
+{% if route_name is not defined %}
+    {% set route_name = 'admin_order_approve' %}
+{% endif %}
 <div class="modal fade" id="approveOrder" tabindex="-1" role="dialog" aria-labelledby="approveOrderLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content custom-modal">
@@ -14,7 +17,7 @@
                 <p>Ar tikrai norite pradėti vykdyti šį užsakymą?</p>
             </div>
             <div class="modal-footer">
-                <a class="btn custom-button w-100" href="{{ path('admin_order_approve', {'id': order.id}) }}">PRADĖTI UŽSAKYMĄ</a>
+                <a class="btn custom-button w-100" href="{{ path(route_name, {'id': order.id}) }}">PRADĖTI UŽSAKYMĄ</a>
             </div>
         </div>
     </div>
