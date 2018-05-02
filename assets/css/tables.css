@@ -76,3 +76,11 @@
     grid-column-gap: 45px;
 }
 
+.vehicles-list .list-group-item{
+    border: 4px double #B07156;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background: #433E3F;
+    color: #e8edf3;
+}
+
