@@ -7,8 +7,43 @@
 {% endblock %}
 
 {% block panel_content %}
-    <h1>
-        An incredibly detailed description of the tools available
-        to the employee.
-    </h1>
+    <div class="profile">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1>
+                    An incredibly detailed description of the tools available
+                    to the employee.
+                </h1>
+            </div>
+        </div>
+        <div class="row h-100">
+            <div class="col-sm-3 profile-panels-area">
+                <div>
+                    {# User object must passed with render call #}
+                    <ul class="list-group">
+                        <li class="list-group-item first-item">{{ user.emailname }}</li>
+                        <li class="list-group-item"><strong>Vardas: </strong> {{ user.firstname }} {{ user.lastname }}</li>
+                        <li class="list-group-item"><strong>Email: </strong>{{ user.email }}</li>
+                        <li class="list-group-item"><strong>Miestas: </strong>{{  user.city }}</li>
+                        <li class="list-group-item"><strong>Adresas: </strong>{{ user.address }}</li>
+                        <li class="list-group-item"><strong>Telefono nr: </strong>{{ user.phone }}</li>
+                        <li class="list-group-item last-item"><strong>Užsiregistruota: </strong>{{ user.registrationDate|date('Y/m/d') }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="row h-100">
+                    <div class="col-sm-12 profile-tabs-content-area">
+                        {% block tab_content %}
+                            <h3>
+                                An incredibly detailed description of the tools available
+                                to the employee.
+                            </h3>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
