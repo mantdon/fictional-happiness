@@ -41,8 +41,7 @@ class UnavailableDaysFinder
         $daysInMonth = $this->getDaysInMonth($date);
         $dateTemplate = $date->format('Y-m-');
 
-        for ($day = $date->format('d'); $day <= $daysInMonth; $day++)
-        {
+        for ($day = $this->getStartDay($date); $day <= $daysInMonth; $day++) {
             $dateToCheck = $dateTemplate . $this->formatDayString($day);
             if ($this->availableTimesFetcher->isDayUnavailable($dateToCheck)) {
                 $unavailableDays[] = $dateToCheck;
@@ -55,6 +54,20 @@ class UnavailableDaysFinder
     private function getDaysInMonth($date)
     {
         return $date->format('t');
+    }
+
+    /**
+     * Checks if month of given date is current month.
+     * If it is - returns a day of given date (Which is today).
+     * @param $date \DateTime
+     * @return int
+     */
+    private function getStartDay($date)
+    {
+        if(strcmp($date->format('Y-m'), date('Y-m', time())) === 0) {
+            return $date->format('j');
+        }
+        return 1;
     }
 
     private function formatDayString($day)
