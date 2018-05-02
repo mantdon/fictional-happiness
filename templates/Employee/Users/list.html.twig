@@ -1,11 +1,10 @@
-{% extends 'Admin/base.html.twig' %}
+{% extends 'Employee/base.html.twig' %}
 
 {% block panels %}
-    {% include 'Admin/admin_panels.html.twig' with {
+    {% include 'Employee/employee_panels.html.twig' with {
         users_active: 'true'
     }%}
 {% endblock %}
-
 {% block panel_content %}
     {% include 'users_list.html.twig' %}
 {% endblock %}

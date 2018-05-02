@@ -138,7 +138,7 @@ class UserController extends Controller
 	}
 
 	/**
-	 * @Route("user/vehicles/delete/{id}", name="delete_vehicle", methods="DELETE")
+	 * @Route("/vehicles/delete/{id}", name="delete_vehicle", methods="DELETE")
 	 * @param Request $request
 	 * @param Vehicle $vehicle
 	 * @return Response

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Services\UserManager;
 use App\Entity\OrderProgressLine;
 use App\Entity\Service;
 use App\Entity\User;
@@ -10,6 +11,7 @@ use App\Form\ServiceType;
 use App\Services\MessageManager;
 use App\Services\OrderCreator;
 use App\Services\PaginationHandler;
+use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +25,7 @@ class AdminController extends Controller
 {
 	private $pageParameterName = 'page';
 
-	/**
+    /**
 	 * @Route("", name="admin_home")
 	 */
 	public function home()
@@ -62,7 +64,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/users/ban/{id}", name="user_ban", methods="GET")
+	 * @Route("/users/ban/{id}", name="user_ban", methods="GET")
 	 * @param User $user
 	 * @return Response
 	 */
@@ -72,7 +74,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/users/ban/{id}", name="user_ban_confirm", methods="POST")
+	 * @Route("/users/ban/{id}", name="user_ban_confirm", methods="POST")
 	 * @param Request $request
 	 * @param User    $user
 	 * @return RedirectResponse
@@ -91,7 +93,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/users/unban/{id}", name="user_unban", methods="GET")
+	 * @Route("/users/unban/{id}", name="user_unban", methods="GET")
 	 * @param User $user
 	 * @return Response
 	 */
@@ -101,7 +103,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/users/unban/{id}", name="user_unban_confirm", methods="POST")
+	 * @Route("/users/unban/{id}", name="user_unban_confirm", methods="POST")
 	 * @param Request $request
 	 * @param User    $user
 	 * @return RedirectResponse
@@ -263,7 +265,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/ongoingorders/view/{id}", name="admin_ongoing_order_show", requirements={"id"="\d+"})
+	 * @Route("/ongoingorders/view/{id}", name="admin_ongoing_order_show", requirements={"id"="\d+"})
 	 * @param Order $order
 	 * @return Response
 	 */
@@ -329,7 +331,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/ongoingorder/completeservice/{id}", name="admin_ongoing_order_complete_service", requirements={"id": "\d+"})
+	 * @Route("/ongoingorder/completeservice/{id}", name="admin_ongoing_order_complete_service", requirements={"id": "\d+"})
 	 * @param OrderProgressLine $orderProgressLine
 	 * @param OrderCreator      $oc
 	 * @return RedirectResponse
@@ -345,7 +347,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/ongoingorder/undoservice/{id}", name="admin_ongoing_order_undo_service", requirements={"id": "\d+"})
+	 * @Route("/ongoingorder/undoservice/{id}", name="admin_ongoing_order_undo_service", requirements={"id": "\d+"})
 	 * @param OrderProgressLine $orderProgressLine
 	 * @param OrderCreator      $oc
 	 * @return RedirectResponse
@@ -361,7 +363,7 @@ class AdminController extends Controller
 	}
 
 	/**
-	 * @Route("admin/ongoingorder/finalize/{id}", name="admin_ongoing_order_finalize", requirements={"id": "\d+"})
+	 * @Route("/ongoingorder/finalize/{id}", name="admin_ongoing_order_finalize", requirements={"id": "\d+"})
 	 * @param Order          $order
 	 * @param MessageManager $mm
 	 * @param OrderCreator   $oc
@@ -413,6 +415,38 @@ class AdminController extends Controller
 		                      ]
 		);
 	}
+
+    /**
+     * @Route("/createemployee", name="admin_create_employee")
+     * @param userManager $userManager
+     * @return Response
+     */
+    public function createEmployeeAction(Request $request,
+                                         UserManager $userManager): Response
+    {
+        $this->userManager = $userManager;
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $user->setRole('ROLE_EMPLOYEE');
+            $user->setRegistrationDate(new \DateTime());
+            $this->userManager->createUser($user);
+
+            $this->addFlash(
+                'notice',
+                'Registration successful, welcome ' . $user->getEmailName() . '!');
+
+            return $this->redirectToRoute( 'admin_create_employee' );
+        }
+
+        return $this->render(
+            'Admin/EmployeeRegistration/create_employee.html.twig',
+            array('form' => $form->createView())
+        );
+    }
 
 	/**
 	 * @Route("/completedorders/view/{id}", name="admin_completed_order_show", requirements={"id"="\d+"})
