@@ -1,0 +1,49 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        create_active: 'true'
+    }%}
+{% endblock %}
+
+{% block panel_content %}
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <div class="panel w-100">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <h1 class="page-header">Darbuotojo registracija</h1>
+                        </div>
+                        {{ form_start(form) }}
+                        {{ form_errors(form.email) }}
+                        {{ form_label(form.email, null, {'label': 'El-paštas'}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                        {{ form_label(form.plainPassword.first, null, {'label': 'Slaptažodis'}) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_row(form.plainPassword.second, {'attr': {'class': 'textField'}, 'label': 'Pakartoti slaptažodį'} ) }}
+                        {{ form_errors(form.first_name) }}
+                        {{ form_label(form.first_name, null, {'label': 'Vardas'}) }}
+                        {{ form_widget(form.first_name, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_errors(form.last_name) }}
+                        {{ form_label(form.last_name, null, {'label': 'Pavardė'}) }}
+                        {{ form_widget(form.last_name, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_errors(form.phone) }}
+                        {{ form_label(form.phone, null, {'label': 'Telefonas'}) }}
+                        {{ form_widget(form.phone, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_errors(form.city) }}
+                        {{ form_label(form.city, null, {'label': 'Miestas'}) }}
+                        {{ form_widget(form.city, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_errors(form.address) }}
+                        {{ form_label(form.address, null, {'label': 'Adresas'}) }}
+                        {{ form_widget(form.address, {'attr': {'class': 'textField'}} ) }}
+                        {{ form_row(form.submit, {'attr': {'class': 'button'}, 'label': 'Registruotis'} ) }}
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
