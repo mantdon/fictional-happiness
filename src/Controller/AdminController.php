@@ -411,7 +411,7 @@ class AdminController extends Controller
 								'pageCount' => $paginationHandler->getPageCount(),
 								'currentPage' => $paginationHandler->getCurrentPage(),
 								'pageParameterName' => $this->pageParameterName,
-								'route' => 'admin_completed_orders_page'
+								'route' => 'admin_completed_orders'
 		                      ]
 		);
 	}

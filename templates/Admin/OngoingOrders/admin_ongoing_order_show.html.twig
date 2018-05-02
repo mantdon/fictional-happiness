@@ -59,17 +59,18 @@
             <ul class="list-group">
                 {% for line in order.progress.lines %}
                     <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">{{ line.service.name }}
-                        {% if line.isDone %}
-                            <a class="btn custom-button" href="{{ path('admin_ongoing_order_undo_service', {'id':line.id}) }}">Unmark as done</a>
-                        {% else %}
-                            <a class="btn custom-button" href="{{ path('admin_ongoing_order_complete_service', {'id':line.id}) }}">Mark as done</a>
+                        {% if order.status == "Ongoing" %}
+                            {% if line.isDone %}
+                                <a class="btn custom-button" href="{{ path('admin_ongoing_order_undo_service', {'id':line.id}) }}">Unmark as done</a>
+                            {% else %}
+                                <a class="btn custom-button" href="{{ path('admin_ongoing_order_complete_service', {'id':line.id}) }}">Mark as done</a>
+                            {% endif %}
                         {% endif %}
                     </li>
                 {% endfor %}
             </ul>
             <hr>
         </div>
-        <a type="button" class="btn custom-button" href="{{ path('admin_ongoing_orders') }}">Back</a>
         {% if order.status == "Placed" %}
             <div class="w-100">
                 <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('approveOrder')">Approve order</a>
@@ -78,5 +79,6 @@
             {% include 'Util/order_approve_modal.html.twig' %}
             {% include 'Util/order_terminate_modal.html.twig' %}
         {% endif %}
+        <a type="button" class="btn custom-button w-100" href="{{ path('admin_ongoing_orders') }}">Back</a>
     </div>
 {% endblock %}

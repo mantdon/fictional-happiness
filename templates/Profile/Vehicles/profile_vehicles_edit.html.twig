@@ -2,24 +2,14 @@
 
 <div class="modal fade" id="editVehicle" tabindex="-1" role="dialog" aria-labelledby="editVehicleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content custom-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="editVehicleLabel">Modifikuojamas automobilis</h5>
                 <a  href="{{ path('user_vehicles') }}" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="fas fa-times fa-sm"></i>
                 </a>
             </div>
-            <div class="modal-body">
-                {{ form_start(form) }}
-                {{ form_row(form.make, {'attr': {'class': 'form-control'}, 'label': 'Markė'}) }}
-                {{ form_row(form.model, {'attr': {'class': 'form-control'}, 'label': 'Modelis'}) }}
-                {{ form_row(form.year_of_production, {'attr': {'class': 'form-control'}, 'label': 'Pagaminimo metai'}) }}
-                {{ form_row(form.plate_number, {'attr': {'class': 'form-control'}, 'label': 'Numeriai'})}}
-            </div>
-            <div class="modal-footer">
-                {{ form_row(form.submit, {'attr': {'class': 'btn custom-button'}, 'label': 'Atnaujinti'}) }}
-                {{ form_end(form) }}
-            </div>
+            {% include 'Util/vehicle_add_form.html.twig' with{submitLabel: "Atnaujinti"}%}
         </div>
     </div>
 </div>

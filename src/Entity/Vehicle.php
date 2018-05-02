@@ -19,30 +19,52 @@ class Vehicle
 
 	/**
 	 * @ORM\Column(type="string", length=20);
-	 * @Assert\NotBlank(message="Needs a make")
-	 * @Assert\Type(type="alpha", message="Make from letters only")
+	 * @Assert\NotBlank(message="Įveskite automobilio markę.")
+	 * @Assert\Type(type="alpha", message="Automobilio markei leidžiamos tik raidės.")
+	 * @Assert\Length(
+	 *      min = 3,
+	 *      max = 12,
+	 *      minMessage = "Leistinas markės ilgis 3-12 simbolių.",
+	 *      maxMessage = "Leistinas markės ilgis 3-12 simbolių."
+	 * )
 	 */
     private $make;
 
 	/**
 	 * @ORM\Column(type="string", length=30)
-	 * @Assert\NotBlank(message="Needs a model")
-	 * @Assert\Type(type="alnum", message="Model from letters and numbers only")
+	 * @Assert\NotBlank(message="Įveskite automobilio modelį.")
+	 * @Assert\Type(type="alnum", message="Modelio pavadinime leidžiamos tik raidės ir skaičiai.")
+	 * @Assert\Length(
+	 *      min = 3,
+	 *      max = 12,
+	 *      minMessage = "Leistinas modelio ilgis 3-12 simbolių.",
+	 *      maxMessage = "Leistinas modelio ilgis 3-12 simbolių."
+	 * )
 	 */
     private $model;
 
 	/**
 	 * @ORM\Column(type="integer")
-	 * @Assert\Range(min = 1930, max=2018, minMessage="Too low", maxMessage="too high")
-	 * @Assert\NotBlank(message="Needs a year")
-	 * @Assert\Type(type="digit", message="only digits in year")
+	 * @Assert\Range(
+	 *     min = 1930,
+	 *     max = 2018,
+	 *     minMessage="Minimalūs leidžiami metai: 1930",
+	 *     maxMessage="Neegzistuoja automobilis pagamintas šiais metais")
+	 * @Assert\NotBlank(message="Įveskite automobilio pagaminimo metus.")
+	 * @Assert\Type(type="digit", message="Metai susideda tik iš skaičių")
 	 */
     private $year_of_production;
 
 	/**
 	 * @ORM\Column(type="string", length=7)
-	 * @Assert\NotBlank(message="needs plates")
-	 * @Assert\Type(type="alnum", message="Only digits and letters for plates")
+	 * @Assert\NotBlank(message="Įveskite automobilio numerius.")
+	 * @Assert\Type(type="alnum", message="Numeriai turi susidaryti tik iš raidžių ir skaičių.")
+	 * @Assert\Length(
+	 *      min = 5,
+	 *      max = 8,
+	 *      minMessage = "Leistinas numerių ilgis 5-8 simboliai.",
+	 *      maxMessage = "Leistinas numerių ilgis 5-8 simboliai."
+	 * )
 	 */
     private $plate_number;
 

@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('delete_message', {'id': messageData.id}) }}">
+<form class="w-100" method="post" action="{{ path('delete_message', {'id': messageData.id}) }}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ messageData.id) }}">
-    <button class="btn btn-danger">Ištrinti</button>
+    <button class="btn custom-button w-100">Ištrinti</button>
 </form>
