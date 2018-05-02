@@ -7,45 +7,40 @@
 {% endblock %}
 {% block tab_content %}
     <div>
-    <div class="tab-pane active" id="vehicles">
+    <div class="tab-pane" id="vehicles">
         {% if vehicles.count > 0 %}
-            <table class="table">
-                <tr class="table-fixed">
-                    <th>Modelis</th>
-                    <th>Marke</th>
-                    <th>Metai</th>
-                    <th>Numeriai</th>
-                    <th>Actions</th>
-                </tr>
+            <div class="list-group vehicles-list">
                 {% for vehicle in vehicles %}
-                    <tr class="table-fixed">
-                        <td>{{ vehicle.model }}</td>
-                        <td>{{ vehicle.make }}</td>
-                        <td>{{ vehicle.yearOfProduction }}</td>
-                        <td>{{ vehicle.plateNumber }}</td>
-                        <td>
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div class="mb-1">Automobilis: {{ vehicle.make }} {{ vehicle.model }} - {{ vehicle.yearOfProduction }}</div>
+                        </div>
+                        <p class="mb-1">
+                            Numeriai: {{ vehicle.plateNumber }}<br>
                             <div class="dropdown">
-                                <button class="btn custom-button dropdown-toggle" type="button" id="vehicleActionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
+                                <button class="w-100 btn custom-button dropdown-toggle" type="button" id="vehicleActionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Modifikuoti
                                 </button>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="vehicleActionDropdown">
-                                    <a class="dropdown-item" href="{{ path('edit_vehicle', {('id'):vehicle.id }) }}">Edit</a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom w-100" aria-labelledby="vehicleActionDropdown">
+                                    <a class="dropdown-item" href="{{ path('edit_vehicle', {('id'):vehicle.id }) }}">Keisti</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ path('show_vehicle', {('id'):vehicle.id}) }}">Delete</a>
+                                    <a class="dropdown-item" href="{{ path('show_vehicle', {('id'):vehicle.id}) }}">Ištrinti</a>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
+                        </p>
+                    </div>
                 {% endfor %}
-            </table>
+            </div>
         {% else %}
-            <span>
+            <div style="padding-bottom: 10px">
                 <strong>
-                    You currently have no vehicles registered,
-                    use the button below to add a new vehicle.
+                    Šiuo metu neturite priregistruotų automobilių.
+                    Naudokitės žemiau esančiu mygtuku, norėdami
+                    priregistruoti naują automobilį.
                 </strong>
-            </span><br>
+            </div>
+            <br>
         {% endif %}
-        <a class="btn custom-button" href="{{ path('add_vehicle') }}">Add new vehicle</a>
+        <a class="btn custom-button" href="{{ path('add_vehicle') }}">Pridėti naują automobilį</a>
     </div>
 {% endblock %}
