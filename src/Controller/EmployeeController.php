@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Services\PaginatedListFetcher;
+use App\Entity\ChangePassword;
+use App\Form\ChangePasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @Route("/employee")
  */
@@ -19,7 +22,10 @@ class EmployeeController extends Controller
      */
     public function home()
     {
-        return $this->render( 'Employee/Home/employee_home.html.twig' );
+        $user = $this->getUser();
+        return $this->render( 'Employee/Home/employee_home.html.twig', array(
+            'user' => $user
+        ) );
     }
     /**
      * @Route("/users", name="employee_users")
@@ -75,6 +81,29 @@ class EmployeeController extends Controller
                 'currentPage' => $page,
                 'pageParameterName' => $this->pageParameterName,
                 'route' => 'employee_ongoing_orders_page' ) );
+    }
+
+    /**
+     * @Route("/changepassword", name="employee_changepassword")
+     */
+    public function changepasswordTabAction(Request $request, UserPasswordEncoderInterface $passwordEncoder){
+        $user = $this->getUser();
+        $changePasswordModel = new ChangePassword();
+        $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $passwordEncoder->encodePassword($this->getUser(), $changePasswordModel->getNewPassword());
+            $user->setPassword($password);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('notice', 'Password changed[PH]');
+        }
+
+        return $this->render('Employee/ChangePassword/employee_change_password.html.twig', array(
+            'user' => $this->getUser(),
+            'form' => $form->createView()
+        ));
     }
     private function saveFinalPaginationPage(int $page_count){
         if(!$this->get('session')->has('last_page')) {
