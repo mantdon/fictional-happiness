@@ -7,15 +7,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UnavailableDaysFinder
 {
-    private $em;
     private $availableTimesFetcher;
 
     private $registrationBoundsInMonths = 3; //all dates after this interval will be unavailable.
 
-    public function __construct(EntityManagerInterface $em,
-                                AvailableTimesFetcher $availableTimesFetcher)
+    public function __construct(AvailableTimesFetcher $availableTimesFetcher)
     {
-        $this->em = $em;
         $this->availableTimesFetcher = $availableTimesFetcher;
     }
 
@@ -23,7 +20,7 @@ class UnavailableDaysFinder
     {
         $unavailableDays = [];
 
-        $now = new \DateTime();
+        $now = new \DateTime(date('Y-m-d', time()));
 
         for($month = 0; $month < $this->registrationBoundsInMonths; $month++)
         {
@@ -38,19 +35,17 @@ class UnavailableDaysFinder
      * Not the most efficient solution, but works. Should be done in one query.
      * @param $date \DateTime
      */
-    public function findDaysInMonth($date)
+    private function findDaysInMonth($date)
     {
         $unavailableDays = [];
         $daysInMonth = $this->getDaysInMonth($date);
         $dateTemplate = $date->format('Y-m-');
 
-        for($day = 1; $day <= $daysInMonth; $day++)
-        {
+        for ($day = $this->getStartDay($date); $day <= $daysInMonth; $day++) {
             $dateToCheck = $dateTemplate . $this->formatDayString($day);
-            $orders = $this->availableTimesFetcher->fetchDay($dateToCheck);
-
-            if(count($orders) === 0)
+            if ($this->availableTimesFetcher->isDayUnavailable($dateToCheck)) {
                 $unavailableDays[] = $dateToCheck;
+            }
         }
 
         return $unavailableDays;
@@ -59,6 +54,20 @@ class UnavailableDaysFinder
     private function getDaysInMonth($date)
     {
         return $date->format('t');
+    }
+
+    /**
+     * Checks if month of given date is current month.
+     * If it is - returns a day of given date (Which is today).
+     * @param $date \DateTime
+     * @return int
+     */
+    private function getStartDay($date)
+    {
+        if(strcmp($date->format('Y-m'), date('Y-m', time())) === 0) {
+            return $date->format('j');
+        }
+        return 1;
     }
 
     private function formatDayString($day)
