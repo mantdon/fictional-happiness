@@ -76,10 +76,10 @@ class OrderRepository extends ServiceEntityRepository
 	}
 
 	/**
-	 * @param $date \DateTime
+	 * @param $date string
 	 * @return mixed
 	 */
-    public function findAllOnDate(\DateTime $date)
+    public function findAllOnDate(string $date)
     {
         return $this->createQueryBuilder('a')
             ->where('YEAR(a.visitDate) = YEAR(:date) AND
@@ -92,10 +92,10 @@ class OrderRepository extends ServiceEntityRepository
     }
 
 	/**
-	 * @param $date \DateTime
+	 * @param $date string
 	 * @return mixed
 	 */
-    public function findAllOnMonth(\DateTime $date)
+    public function findAllOnMonth(string $date)
     {
         return $this->createQueryBuilder('a')
             ->where('YEAR(a.visitDate) = YEAR(:date) AND
