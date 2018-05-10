@@ -35,10 +35,10 @@ class Vehicle
 	 * @Assert\NotBlank(message="Įveskite automobilio modelį.")
 	 * @Assert\Type(type="alnum", message="Modelio pavadinime leidžiamos tik raidės ir skaičiai.")
 	 * @Assert\Length(
-	 *      min = 3,
+	 *      min = 2,
 	 *      max = 12,
-	 *      minMessage = "Leistinas modelio ilgis 3-12 simbolių.",
-	 *      maxMessage = "Leistinas modelio ilgis 3-12 simbolių."
+	 *      minMessage = "Leistinas modelio ilgis 2-12 simbolių.",
+	 *      maxMessage = "Leistinas modelio ilgis 2-12 simbolių."
 	 * )
 	 */
     private $model;
