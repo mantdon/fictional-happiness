@@ -17,7 +17,7 @@ class NewPasswordType extends AbstractType
         $builder
             ->add('newPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Slaptažodžiai turi sutapti.',
                 'required' => true,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
