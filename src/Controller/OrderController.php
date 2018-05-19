@@ -97,7 +97,8 @@ class OrderController extends Controller
     public function fetchAvailableTimes(Request $request, AvailableTimesFetcher $fetcher): Response
     {
         $content = json_decode($request->getContent(), true);
-        $times = $fetcher->fetchDay($content['date']);
+        $date = new \DateTime($content['date']);
+        $times = $fetcher->fetchDay($date->format('Y-m-d'));
         return new JsonResponse($times);
     }
 
