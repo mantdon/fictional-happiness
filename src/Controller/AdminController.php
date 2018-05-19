@@ -324,7 +324,7 @@ class AdminController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
-            $this->userManager->createUser($user);
+            $this->userManager->saveUser($user);
 
             $this->addFlash(
                 'notice',

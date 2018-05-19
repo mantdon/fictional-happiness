@@ -23,7 +23,7 @@ class UserManager
     /**
      * @param User $user
      */
-    public function createUser(User $user)
+    public function saveUser(User $user)
     {
         $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
 

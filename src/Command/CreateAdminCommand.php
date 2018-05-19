@@ -47,7 +47,7 @@ class CreateAdminCommand extends Command
             ->setRole('ROLE_ADMIN')
         ;
 
-        $this->userManager->createUser($user);
+        $this->userManager->saveUser($user);
 
         $output->writeln(
             ['Admin has been successfully created',
