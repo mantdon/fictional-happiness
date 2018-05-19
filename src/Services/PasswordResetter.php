@@ -87,6 +87,7 @@ class PasswordResetter
         $message = $this->mailer->fetchOrCreateMessage($messageTitle, $messageContent);
 
         $this->mailer->sendMessageToProfile($message, $user);
+        $this->mailer->sendMessageToEmail($message, $user);
     }
 
     /**
