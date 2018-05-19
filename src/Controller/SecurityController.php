@@ -42,6 +42,8 @@ class SecurityController extends Controller
             $user = $userManager->findUser($request->get('username'));
             if ($user !== null) {
                 $passwordResetter->resetPassword($user);
+                $this->addFlash('notice', 'Naujo slaptažodžio nustatymo formos adresas sėkmingai išsiųstas į ' . $email);
+                return $this->redirectToRoute('homepage');
             } else {
                 $error = 'Vartotojas nerastas';
             }
