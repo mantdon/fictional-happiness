@@ -1,7 +1,9 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\NewPassword;
 use App\Entity\PasswordReset;
+use App\Form\NewPasswordType;
 use App\Services\PasswordResetter;
 use App\Services\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,8 +56,22 @@ class SecurityController extends Controller
     /**
      * @Route("reset/set/{token}", name="reset_set_new_password")
      */
-    public function newPassword(PasswordReset $reset)
-    {
+    public function newPassword(Request $request,
+                                PasswordReset $passwordResetModel,
+                                UserManager $userManager
+    ){
+        $changePasswordModel = new NewPassword();
+        $form = $this->createForm(NewPasswordType::class, $changePasswordModel);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $passwordResetModel->getUser();
+            $user->setPlainPassword($changePasswordModel->getNewPassword());
+            $userManager->saveUser($user);
+        }
+
+        return $this->render('Security/new_password.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 }
