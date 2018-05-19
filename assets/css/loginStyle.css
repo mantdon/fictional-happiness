@@ -89,6 +89,11 @@
     font-size: small;
     margin-bottom: 15px;
 }
+
+.reset-password-link:hover {
+    text-decoration: none;
+    color: #c69c72;
+}
 /*</edit-fold>*/
 
 /*<editor-fold desc="Checkbox">*/
