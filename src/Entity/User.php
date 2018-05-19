@@ -17,12 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements AdvancedUserInterface, \Serializable
 {
-    public function __construct(){
-    	$this->vehicles = new ArrayCollection();
-    	$this->messages = new ArrayCollection();
-    	$this->orders = new ArrayCollection();
-    }
-
 	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -106,6 +100,18 @@ class User implements AdvancedUserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
 	 */
     private $orders;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PasswordReset", mappedBy="user")
+     */
+    private $passwordResets;
+
+    public function __construct(){
+        $this->vehicles = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->passwordResets = new ArrayCollection();
+    }
 
     public function getUsername()
     {
