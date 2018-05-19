@@ -16,7 +16,7 @@ class PasswordReset
     private $token;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="passwordResets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
