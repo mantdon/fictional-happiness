@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -21,6 +20,9 @@ class UserManager
         $this->em = $em;
     }
 
+    /**
+     * @param User $user
+     */
     public function createUser(User $user)
     {
         $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
@@ -31,7 +33,8 @@ class UserManager
         $this->em->flush();
     }
 
-    public static function createAuthenticationTokenFor(User $user){
+    public static function createAuthenticationTokenFor(User $user): UsernamePasswordToken
+    {
     	return $token = new UsernamePasswordToken(
     		$user,
 		    $user->getPassword(),
@@ -40,12 +43,26 @@ class UserManager
 	    );
     }
 
+    public function findUser(?string $email): ?User
+    {
+        if ($email === null) {
+            return null;
+        }
+
+        $repository = $this->em->getRepository(User::class);
+        $user = $repository->findOneBy(['email' => $email]);
+        if ($user === null) {
+            return null;
+        }
+        return $user;
+    }
+
     /**
      * Checks whether user has completed registration by filling his personal information fields.
      * @param $user User
      * @return bool
      */
-    public function hasUserFilledPersonalInformation($user)
+    public function hasUserFilledPersonalInformation(User $user): bool
     {
         return !(empty($user->getFirstName()) ||
             empty($user->getLastName()) ||
