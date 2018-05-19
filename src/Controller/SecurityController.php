@@ -40,7 +40,7 @@ class SecurityController extends Controller
         $error = '';
         if (isset($email)) {
             $user = $userManager->findUser($request->get('username'));
-            if ($user !== null) {
+            if ($user !== null && preg_match('/^.+@*.\..+$/', $email)) {
                 $passwordResetter->resetPassword($user);
                 $this->addFlash('notice', 'Naujo slaptažodžio nustatymo formos adresas sėkmingai išsiųstas į ' . $email);
                 return $this->redirectToRoute('homepage');
