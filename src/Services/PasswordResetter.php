@@ -11,14 +11,20 @@ class PasswordResetter
     private $mailer;
     private $entityManager;
     private $templating;
+    private $repository;
 
     public function __construct(MessageManager $mailer, EntityManagerInterface $entityManager, \Twig_Environment $templating)
     {
         $this->mailer = $mailer;
         $this->entityManager = $entityManager;
         $this->templating = $templating;
+        $this->repository = $this->entityManager->getRepository(PasswordReset::class);
     }
 
+    /**
+     * Send an user message containing a link to password reset form.
+     * @param User $user
+     */
     public function resetPassword(User $user)
     {
         $reset = $this->getActiveReset($user);
@@ -27,8 +33,7 @@ class PasswordResetter
 
     private function getActiveReset(User $user): PasswordReset
     {
-        $repository = $this->entityManager->getRepository(PasswordReset::class);
-        $lastReset = $repository->findOneBy(['user' => $user, 'isActive' => true]);
+        $lastReset = $this->repository->findOneBy(['user' => $user, 'isActive' => true]);
         if ($this->isExpired($lastReset)) {
             if ($lastReset !== null) {
                 $lastReset->setIsActive(false);
@@ -82,5 +87,14 @@ class PasswordResetter
         $message = $this->mailer->fetchOrCreateMessage($messageTitle, $messageContent);
 
         $this->mailer->sendMessageToProfile($message, $user);
+    }
+
+    /**
+     * @param string $token
+     * @return PasswordReset
+     */
+    public function findByToken(string $token): PasswordReset
+    {
+        return $this->repository->findOneBy(['token' => $token]);
     }
 }

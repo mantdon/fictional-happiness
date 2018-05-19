@@ -57,9 +57,25 @@ class SecurityController extends Controller
      * @Route("reset/set/{token}", name="reset_set_new_password")
      */
     public function newPassword(Request $request,
-                                PasswordReset $passwordResetModel,
+                                string $token,
+                                PasswordResetter $passwordResetter,
                                 UserManager $userManager
     ){
+        $passwordResetModel = $passwordResetter->findByToken($token);
+
+        $failureMessage = '';
+
+        if ($passwordResetModel === null) {
+            $failureMessage = 'Blogas adresas';
+        }
+        else if (!$passwordResetModel->isActive()) {
+            $failureMessage = 'Šis adresas nebegalioja';
+        }
+        if (strlen($failureMessage) > 0) {
+            $this->addFlash('notice', $failureMessage);
+            return $this->redirectToRoute('homepage');
+        }
+
         $changePasswordModel = new NewPassword();
         $form = $this->createForm(NewPasswordType::class, $changePasswordModel);
         $form->handleRequest($request);
@@ -68,6 +84,7 @@ class SecurityController extends Controller
             $user = $passwordResetModel->getUser();
             $user->setPlainPassword($changePasswordModel->getNewPassword());
             $userManager->saveUser($user);
+            $passwordResetModel->setIsActive(false);
         }
 
         return $this->render('Security/new_password.html.twig', array(
