@@ -85,6 +85,8 @@ class SecurityController extends Controller
             $user->setPlainPassword($changePasswordModel->getNewPassword());
             $userManager->saveUser($user);
             $passwordResetModel->setIsActive(false);
+
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('Security/new_password.html.twig', array(
