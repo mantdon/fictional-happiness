@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paslaugos{% endblock %}
+
+{% set services_active = 'true' %}
+
+{% block content %}
+    <a href="{{ path('services_page') }}"><button class="btn back-button custom-button w-100">Atgal</button></a>
+    {% if services.count > 0 %}
+        <div>
+            <p>
+                Paieškos rezultatai su fraze <b>{{ key }}</b>:
+            </p>
+        </div>
+        <div class="list-group services-list">
+            {% for service in services %}
+                <div class="list-group-item">
+                    <div class="service-name">
+                        {{ service.name }}
+                    </div>
+                    <hr>
+                    <p class="mb-1">
+                        {{ service.description }}
+                    </p>
+                    <hr>
+                    {{ service.price }} €
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'Util/search_pagination.html.twig' with {
+            pageOffset: 2
+        }%}
+    {% else %}
+        <div>
+            <strong>
+                Jūsų ieškoma frazė neatitiko jokių rezultatų. Bandykite dar kartą.
+            </strong>
+        </div>
+    {% endif %}
+{% endblock %}
