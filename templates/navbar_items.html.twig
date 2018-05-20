@@ -4,7 +4,7 @@
 {% set login_label = "PRISIJUNGTI" %}
 {% set about_label = "APIE MUS" %}
 
-<ul class="navbar-nav col-sm-11">
+<ul class="navbar-nav">
     {% if home_active is defined and home_active == "true" %}
     <li class="nav-item active">
         <span class="nav-link">{{ home_label }}</span>
@@ -34,7 +34,7 @@
         </li>
     {% endif %}
 </ul>
-<ul class="navbar-nav col-sm-1 user-nav">
+<ul class="navbar-nav user-nav">
     {% if not app.user %}
         {% if registration_active is defined and registration_active == "true" %}
             <li class="nav-item active">
