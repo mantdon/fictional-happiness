@@ -17,9 +17,9 @@ class UserList
         $this->entityManager = $entityManager;
     }
 
-    public function getPaginatedList(string $method, int $page, int $itemsLimit, string $arg = null): PaginationHandler
+    public function getPaginatedList(string $method, int $page, int $itemsLimit, ...$args): PaginationHandler
     {
-         $this->paginationHandler->setQuery('App:User', $method, $arg)
+         $this->paginationHandler->setQuery('App:User', $method, ...$args)
             ->setPage($page)
             ->setItemLimit($itemsLimit)
             ->addLastUsedPageUseCase('/users/ban')
