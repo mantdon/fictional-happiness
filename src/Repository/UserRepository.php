@@ -15,6 +15,10 @@ class UserRepository extends EntityRepository
         return $this->createQueryBuilder('u')->getQuery();
     }
 
+    /**
+     * @param string $pattern
+     * @return Query
+     */
     public function findByPattern(string $pattern): Query
     {
         return $this->createQueryBuilder('u')
@@ -27,5 +31,16 @@ class UserRepository extends EntityRepository
             ->orWhere('u.city LIKE :pattern')
             ->setParameter('pattern', '%' . $pattern . '%')
             ->getQuery();
+    }
+
+    /**
+     * @return int Total count of users registered.
+     */
+    public function getCount(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
