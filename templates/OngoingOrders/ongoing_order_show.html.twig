@@ -63,6 +63,11 @@
             </ul>
             <hr>
         </div>
+        {% if order in app.user.watchedOrders %}
+            <a type="button" class="btn custom-button w-100" href="{{ path('ongoing_order_unwatch', {'id':order.id}) }}">Unwatch</a>
+        {% else %}
+            <a type="button" class="btn custom-button w-100" href="{{ path('ongoing_order_watch', {'id':order.id}) }}">Watch</a>
+        {% endif %}
         {% if order.status == "Placed" %}
             <div class="w-100">
                 <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('approveOrder')">Approve order</a>
