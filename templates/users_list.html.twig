@@ -1,6 +1,6 @@
 {% block panel_content %}
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-2">
             <div class="row">
                 <h5 class="text-left m-3"> {{ userCount }} Registruoti vartojojai</h5>
             </div>
@@ -10,11 +10,16 @@
                 {% endif %}
             </div>
         </div>
-        <div class="col-lg-2">
-            <form method="post">
-                <label for="pattern">Elektroninis paštas:</label>
-                <input class= "form-control" type="text" id="pattern" name="pattern" value="{{ pattern }}">
-                <input type="submit" name="submit" value="Ieškoti">
+        <div class="col-lg-4">
+            <form class="users-search-form" method="post">
+                <div class="row">
+                    <div class="input-group">
+                        <input class= "form-control service-search" type="text" id="pattern" name="pattern" value="{{ pattern }}">
+                        <button class="users-search-button" type="submit" name="submit">
+                            <i class="fas fa-search service-search-icon"></i>
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
