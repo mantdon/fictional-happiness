@@ -1,0 +1,64 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        visitors_mail_active: 'true'
+    }%}
+{% endblock %}
+
+{% block panel_content %}
+    {% if visitors_mail.count > 0 %}
+        {%  if visitors_mail.count == 1 %}
+            <h5 class="text-left m-3">{{ visitors_mail.count }} Lankytojo laiškas</h5>
+        {% else %}
+            <h5 class="text-left m-3">{{ visitors_mail.count }} Lankytojų laiškai</h5>
+        {% endif %}
+        <div class="list-group visitors-mail-list">
+            {% for letter in visitors_mail  %}
+                <div class="list-group-item">
+                    <div class="info">
+                        <div class="name">
+                            {{ letter.name }}
+                        </div>
+                        <div class="delete">
+                            <a href="{{ path('visitors_mail_delete', {('id'):letter.id }) }}">
+                                <button class="btn custom-button">Ištrinti laišką</button>
+                            </a>
+                        </div>
+                        <div class="reply">
+                            {% if letter.isAnswered == 1 %}
+                                <div class="answered-letter">Atsakytas</div>
+                            {% else %}
+                                <a href="{{ path('visitors_mail_reply', {('id'):letter.id }) }}">
+                                    <button class="btn custom-button">Atsakyti</button>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="date">
+                            {{ letter.creationDate|date('Y/m/d - H:i') }}
+                        </div>
+                        <div class="subject">
+                            {{ letter.subject }}
+                        </div>
+                        <hr>
+                        <div class="comment">
+                            {{ letter.comment }}
+                        </div>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'Util/pagination.html.twig' with{
+            pageOffset: 2
+        }%}
+    {% else %}
+        <div style="padding-bottom: 10px">
+            <strong>
+                Šiuo metu lankytojų laiškų nėra.
+            </strong>
+        </div>
+        <br>
+    {% endif %}
+{% endblock %}

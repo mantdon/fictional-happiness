@@ -19,6 +19,7 @@ class User implements AdvancedUserInterface, \Serializable
 {
     public function __construct(){
     	$this->vehicles = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     	$this->messages = new ArrayCollection();
     	$this->orders = new ArrayCollection();
     }
@@ -96,6 +97,11 @@ class User implements AdvancedUserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Vehicle", mappedBy="user")
 	 */
     private $vehicles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
@@ -332,6 +338,10 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function getVehicles(){
     	return $this->vehicles;
+    }
+
+    public function getReviews(){
+        return $this->reviews;
     }
 
     public function getMessages(){
