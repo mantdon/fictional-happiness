@@ -29,8 +29,12 @@ class UserList
          return $this->paginationHandler;
     }
 
-    public function getRegisteredUsersCount(): int
+    /**
+     * @param null|array $criteria [field => value, ...]
+     * @return int how many users are meeting given criteria.
+     */
+    public function getUsersCount(array $criteria = []): int
     {
-        return $this->entityManager->getRepository(User::class)->getCount();
+        return $this->entityManager->getRepository(User::class)->getCount($criteria);
     }
 }

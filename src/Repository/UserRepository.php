@@ -68,13 +68,16 @@ class UserRepository extends EntityRepository
     }
 
     /**
-     * @return int Total count of users registered.
+     * @param null|array [field => value, ...]
+     * @return int Total count of users registered and meeting criteria.
      */
-    public function getCount(): int
+    public function getCount(array $criteria = []): int
     {
-        return $this->createQueryBuilder('u')
-            ->select('count(u.id)')
-            ->getQuery()
+        $query = $this->createQueryBuilder('u')
+            ->select('count(u.id)');
+        $query = $this->addCriteria($query, $criteria);
+
+        return $query->getQuery()
             ->getSingleScalarResult();
     }
 }

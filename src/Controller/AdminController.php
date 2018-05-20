@@ -50,7 +50,7 @@ class AdminController extends Controller
 
         if (isset($searchPattern)) {
             $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 5, $searchPattern);
-            $totalUserCount = $userList->getRegisteredUsersCount();
+            $totalUserCount = $userList->getUsersCount();
         }
         else {
             $paginationHandler = $userList->getPaginatedList('getAll', $page, 5);
