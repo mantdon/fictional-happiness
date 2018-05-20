@@ -27,6 +27,7 @@ class UserFixtures extends Fixture
             $user->setRegistrationDate($faker->dateTimeBetween('-1 year'));
             $user->setAddress($faker->address);
             $user->setEmail($faker->unique()->email);
+            $this->addReference('user' . $i, $user);
             $manager->persist($user);
         }
 
