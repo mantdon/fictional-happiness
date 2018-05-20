@@ -1,3 +1,5 @@
+{% set highlight_color = '#ffe066' %}
+
 {% block panel_content %}
     <div class="row">
         <div class="col-lg-2">
@@ -40,12 +42,12 @@
         <tbody>
         {% for user in users %}
             <tr class="table-fixed">
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.firstName ~ ' ' ~ user.lastName }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.city }}</td>
-                <td>{{ user.address }}</td>
+                <td>{{ user.id | highlight_pattern(pattern, highlight_color)}}</td>
+                <td>{{ user.email | highlight_pattern(pattern, highlight_color)}}</td>
+                <td>{{ (user.firstName ~ ' ' ~ user.lastName ) | highlight_pattern(pattern, highlight_color)}}</td>
+                <td>{{ user.phone | highlight_pattern(pattern, highlight_color) }}</td>
+                <td>{{ user.city | highlight_pattern(pattern, highlight_color) }}</td>
+                <td>{{ user.address | highlight_pattern(pattern, highlight_color)}}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>
                     {% if 'ROLE_USER' in user.roles %}
