@@ -17,6 +17,7 @@ class ServiceFixtures extends Fixture
 			else
 				$service->setDescription("Description" . $i);
 			$service->setPrice(mt_rand(10, 10000));
+            $this->addReference('service' . $i, $service);
 			$objectManager->persist($service);
 		}
 

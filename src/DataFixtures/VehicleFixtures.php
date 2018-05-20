@@ -47,7 +47,7 @@ class VehicleFixtures extends Fixture
         $faker = Factory::create();
         $id = 0;
 
-        for ($i = 0; $i < 10000; $i++) {
+        for ($i = 0; $i < 3000; $i++) {
 
             for ($x = random_int(1, 2); $x > 0; $x--) {
                 /**
@@ -58,7 +58,7 @@ class VehicleFixtures extends Fixture
                 $vehicle->setMake($makeIndex);
                 $modelIndex = array_rand($this->carData[$makeIndex]);
                 $vehicle->setModel($this->carData[$makeIndex][$modelIndex]);
-                $vehicle->setPlateNumber($faker->randomLetters . $faker->randomLetter . $faker->randomLetter . $faker->randomNumber(3, true));
+                $vehicle->setPlateNumber($faker->randomLetter . $faker->randomLetter . $faker->randomLetter . $faker->randomNumber(3, true));
                 $vehicle->setYearOfProduction($faker->dateTimeBetween('-20 years')->format('Y'));
                 $vehicle->setUser($this->getReference('user'.$i));
                 $manager->persist($vehicle);
