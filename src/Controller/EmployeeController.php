@@ -10,6 +10,7 @@ use App\Form\EditUserType;
 use App\Services\MessageManager;
 use App\Services\OrderCreator;
 use App\Services\PaginationHandler;
+use App\Services\UserList;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,29 +38,36 @@ class EmployeeController extends Controller
 
     /**
      * @Route ("/users/{page}", name="employee_users", defaults={"page"=1}, requirements={"page"="\d+"})
-     * @param PaginationHandler $paginationHandler
+     * @param Request $request
+     * @param UserList $userList
      * @param                   $page
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \BadMethodCallException
      * @throws \InvalidArgumentException
      */
-    public function usersPageAction(PaginationHandler $paginationHandler, $page): Response
+    public function usersPageAction(Request $request, UserList $userList, $page): Response
     {
-        $paginationHandler->setQuery('App:User', 'getAll')
-            ->setPage($page)
-            ->setItemLimit(5)
-            ->addLastUsedPageUseCase('/users/ban')
-            ->addLastUsedPageUseCase('/users/unban')
-            ->paginate();
+        $searchPattern = $request->get('pattern');
+
+        if (isset($searchPattern)) {
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 5, $searchPattern, ['role' => 'ROLE_USER']);
+            $totalUserCount = $userList->getRegisteredUsersCount();
+        }
+        else {
+            $paginationHandler = $userList->getPaginatedList('getAllBy', $page, 5, ['role' => 'ROLE_USER']);
+            $totalUserCount = $paginationHandler->getResult()->getTotalCount();
+        }
 
         return $this->render( 'Employee/Users/list.html.twig',
             [
                 'users' => $paginationHandler->getResult(),
                 'pageCount' => $paginationHandler->getPageCount(),
-                'userCount' => $paginationHandler->getResult()->getTotalCount(),
+                'resultCount' => $paginationHandler->getResult()->getTotalCount(),
+                'userCount' => $totalUserCount,
                 'currentPage' => $paginationHandler->getCurrentPage(),
                 'pageParameterName' => $this->pageParameterName,
-                'route' => 'employee_users'
+                'route' => 'admin_users',
+                'pattern' => $searchPattern
             ]
         );
     }
