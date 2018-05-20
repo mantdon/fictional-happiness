@@ -279,115 +279,6 @@ class AdminController extends Controller
 		                     ]
 		);
 	}
-
-	/**
-	 * @Route("/ongoingorders/terminate/{id}", name="admin_order_terminate", requirements={"id"="\d+"})
-	 * @param Order          $order
-	 * @param OrderCreator   $oc
-	 * @param MessageManager $mm
-	 * @return RedirectResponse
-	 * @throws \LogicException
-	 */
-	public function adminOrderTerminateAction(Order $order, OrderCreator $oc, MessageManager $mm): RedirectResponse
-	{
-		$statusChangeMessage = $oc->terminateOrder($order);
-		$this->addFlash('notice', $statusChangeMessage);
-
-		$messageTitle = "Užsakymas nutrauktas";
-		$messageBody = $this->renderView('Email/order_terminated.html.twig',
-		                                 [
-			                                 'order' => $order
-		                                 ]
-		);
-
-		$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
-		$mm->sendMessageToProfile($message, $order->getUser());
-
-		return $this->redirectToRoute('admin_ongoing_orders');
-	}
-
-	/**
-	 * @Route("/ongoingorders/approve/{id}", name="admin_order_approve", requirements={"id"="\d+"})
-	 * @param Order          $order
-	 * @param OrderCreator   $oc
-	 * @param MessageManager $mm
-	 * @return RedirectResponse
-	 * @throws \LogicException
-	 */
-	public function adminOrderApproveAction(Order $order, OrderCreator $oc, MessageManager $mm): RedirectResponse
-	{
-		$statusChangeMessage = $oc->approveOrder($order);
-		$this->addFlash('notice', $statusChangeMessage);
-
-		$messageTitle = "Užsakymo vykdymas pradėtas";
-		$messageBody = $this->renderView('Email/order_approved.html.twig',
-		                                 [
-			                                 'order' => $order
-		                                 ]
-		);
-
-		$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
-		$mm->sendMessageToProfile($message, $order->getUser());
-
-		return $this->redirectToRoute('admin_ongoing_orders');
-	}
-
-	/**
-	 * @Route("/ongoingorder/completeservice/{id}", name="admin_ongoing_order_complete_service", requirements={"id": "\d+"})
-	 * @param OrderProgressLine $orderProgressLine
-	 * @param OrderCreator      $oc
-	 * @return RedirectResponse
-	 */
-	public function orderServiceCompleteAction(OrderProgressLine $orderProgressLine, OrderCreator $oc): RedirectResponse
-	{
-		$oc->completeLine($orderProgressLine);
-		return $this->redirectToRoute('admin_ongoing_order_show',
-		                              [
-			                              'id' => $orderProgressLine->getProgress()->getOrder()->getId()
-		                              ]
-		);
-	}
-
-	/**
-	 * @Route("/ongoingorder/undoservice/{id}", name="admin_ongoing_order_undo_service", requirements={"id": "\d+"})
-	 * @param OrderProgressLine $orderProgressLine
-	 * @param OrderCreator      $oc
-	 * @return RedirectResponse
-	 */
-	public function orderServiceUndoAction(OrderProgressLine $orderProgressLine, OrderCreator $oc): RedirectResponse
-	{
-		$oc->undoLine($orderProgressLine);
-		return $this->redirectToRoute('admin_ongoing_order_show',
-		                              [
-			                              'id' => $orderProgressLine->getProgress()->getOrder()->getId()
-		                              ]
-		);
-	}
-
-	/**
-	 * @Route("/ongoingorder/finalize/{id}", name="admin_ongoing_order_finalize", requirements={"id": "\d+"})
-	 * @param Order          $order
-	 * @param MessageManager $mm
-	 * @param OrderCreator   $oc
-	 * @return RedirectResponse
-	 */
-	public function finalizeOrderAction(Order $order, MessageManager $mm, OrderCreator $oc): RedirectResponse
-	{
-		$oc->finalizeOrder($order);
-
-		$messageTitle = "Užsakymas įvykdytas";
-		$messageBody = $this->renderView('Email/order_complete.html.twig',
-		                                 [
-			                                 'order' => $order
-		                                 ]
-		);
-
-		$message = $mm->fetchOrCreateMessage($messageTitle, $messageBody);
-		$mm->sendMessageToProfile($message, $order->getUser());
-		$mm->sendMessageToEmail($message, $order->getUser());
-
-		return $this->redirectToRoute('admin_ongoing_orders');
-	}
 	//</editor-fold>
 
 	//<editor-fold desc="Completed Orders">
@@ -439,7 +330,7 @@ class AdminController extends Controller
 
             $this->addFlash(
                 'notice',
-                'Registration successful, welcome ' . $user->getEmailName() . '!');
+                'Employee successfully created!');
 
             return $this->redirectToRoute( 'admin_create_employee' );
         }

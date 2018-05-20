@@ -35,7 +35,6 @@ class Version20180421161602 extends AbstractMigration
         $this->addSql('ALTER TABLE order_progress_line ADD CONSTRAINT FK_7CFED3EDED5CA9E6 FOREIGN KEY (service_id) REFERENCES service (id)');
         $this->addSql('ALTER TABLE vehicle ADD CONSTRAINT FK_1B80E486A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE order_progress ADD CONSTRAINT FK_C3F910F78D9F6D38 FOREIGN KEY (order_id) REFERENCES `order` (id) ON DELETE CASCADE');
-        $this->addSql('DROP TABLE change_password');
     }
 
     public function down(Schema $schema)
@@ -54,7 +53,6 @@ class Version20180421161602 extends AbstractMigration
         $this->addSql('ALTER TABLE message_meta_data DROP FOREIGN KEY FK_54EC8616537A1329');
         $this->addSql('ALTER TABLE `order` DROP FOREIGN KEY FK_F529939843DB87C9');
         $this->addSql('ALTER TABLE order_progress_line DROP FOREIGN KEY FK_7CFED3ED43DB87C9');
-        $this->addSql('CREATE TABLE change_password (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('DROP TABLE message_meta_data');
         $this->addSql('DROP TABLE `order`');
         $this->addSql('DROP TABLE order_service');
