@@ -14,4 +14,18 @@ class UserRepository extends EntityRepository
     {
         return $this->createQueryBuilder('u')->getQuery();
     }
+
+    public function findByPattern(string $pattern): Query
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.id LIKE :pattern')
+            ->orWhere('u.email LIKE :pattern')
+            ->orWhere('u.first_name LIKE :pattern')
+            ->orWhere('u.last_name LIKE :pattern')
+            ->orWhere('u.phone LIKE :pattern')
+            ->orWhere('u.address LIKE :pattern')
+            ->orWhere('u.city LIKE :pattern')
+            ->setParameter('pattern', '%' . $pattern . '%')
+            ->getQuery();
+    }
 }
