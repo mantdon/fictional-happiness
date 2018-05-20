@@ -17,8 +17,8 @@ class HighlightPatternExtension extends AbstractExtension
 
     public function highlight(?string $value, ?string $pattern, string $color = '')
     {
-        if ($value === null) {
-            return '';
+        if ($value === null || $pattern === null || strlen($pattern) === 0) {
+            return $value;
         }
 
         $replaceWith = '<mark style="padding: 0 0 0 0; background-color: ' . $color . '">$0</mark>';
