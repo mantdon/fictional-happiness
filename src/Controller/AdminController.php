@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Order;
+use App\Form\ReplyType;
 use App\Services\UserManager;
 use App\Entity\OrderProgressLine;
 use App\Entity\Service;
@@ -462,4 +464,99 @@ class AdminController extends Controller
 		);
 	}
 	//</editor-fold>
+
+
+    /**
+     * @Route ("/visitorsmail/{page}", name="admin_visitors_mail", defaults={"page"=1}, requirements={"page"="\d+"})
+     * @param PaginationHandler $paginationHandler
+     * @param                   $page
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \BadMethodCallException
+     * @throws \InvalidArgumentException
+     */
+    public function visitorsMailAction(PaginationHandler $paginationHandler, $page): Response
+    {
+        $paginationHandler->setQuery('App:Contact', 'getAll')
+            ->setPage($page)
+            ->setItemLimit(5)
+            ->paginate();
+
+        return $this->render('Admin/VisitorsMail/visitors_mail.html.twig',
+            [
+                'visitors_mail' => $paginationHandler->getResult(),
+                'pageCount' => $paginationHandler->getPageCount(),
+                'currentPage' => $paginationHandler->getCurrentPage(),
+                'pageParameterName' => 'page'
+            ]);
+    }
+
+    /**
+     * @Route("/visitorsmail/delete/{id}", name="visitors_mail_delete", methods="GET")
+     * @param Contact $letter
+     * @return Response
+     * @throws \LogicException
+     */
+    public function visitorsMailDelete(Contact $letter): Response
+    {
+        return $this->render('Admin/VisitorsMail/visitors_mail_delete.html.twig',
+            array('letter' => $letter));
+    }
+
+    /**
+     * @Route("/visitorsmail/delete/{id}", name="visitors_mail_delete_confirm", methods="DELETE")
+     * @param Request $request
+     * @param Contact    $letter
+     * @return RedirectResponse
+     * @throws \LogicException
+     */
+    public function visitorsMailDeleteConfirmAction(Request $request, Contact $letter): RedirectResponse
+    {
+        if ($this->isCsrfTokenValid('delete'.$letter->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($letter);
+            $em->flush();
+            $this->addFlash('notice', 'Letter deleted[PH]');
+        }
+        return $this->redirectToRoute('admin_visitors_mail');
+    }
+
+    /**
+     * @Route("/visitorsmail/reply/{id}", name="visitors_mail_reply")
+     * @param Request $request
+     * @param Contact $contact
+     * @param \Swift_Mailer $mailer
+     * @return Response
+     * @throws \LogicException
+     */
+    public function visitorsMailReply(Request $request, Contact $contact, \Swift_Mailer $mailer): Response
+    {
+        $form = $this->createForm(ReplyType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $message = (new \Swift_Message($contact->getSubject()))
+                ->setFrom('administracija@servisas.com')
+                ->setTo($contact->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Admin/VisitorsMail/visitors_mail_reply_template.html.twig',
+                        array('recipient_name' => $contact->getName(),
+                            'sender_name' => $formData['name'],
+                            'text' => $formData['comment']
+                            )
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+            $contact->setIsAnswered(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($contact);
+            $em->flush();
+            $this->addFlash('notice', 'Form submitted[PH]');
+            return $this->redirectToRoute('admin_visitors_mail');
+        }
+        return $this->render('Admin/VisitorsMail/visitors_mail_reply.html.twig',
+            array('form' => $form->createView()));
+    }
+
 }

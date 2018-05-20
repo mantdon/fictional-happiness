@@ -1,0 +1,40 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block panels %}
+{% include 'Admin/admin_panels.html.twig' with {
+    visitors_mail_active: 'true'
+} %}
+{% endblock %}
+
+{% block panel_content %}
+<h1>Šis lankytojo laiškas bus ištrintas, ar jūs visiškai įsitikinęs?</h1>
+<table class="table table-fixed">
+    <tbody>
+    <tr>
+        <th>ID</th>
+        <td>{{ letter.id }}</td>
+    </tr>
+    <tr>
+        <th>Vardas</th>
+        <td>{{ letter.name }}</td>
+    </tr>
+    <tr>
+        <th>El. paštas</th>
+        <td>{{ letter.email }}</td>
+    </tr>
+    <tr>
+        <th>Tema</th>
+        <td>{{ letter.subject }}</td>
+    </tr>
+    <tr>
+        <th>Komentaras</th>
+        <td>{{ letter.comment }}</td>
+    </tr>
+    </tbody>
+</table>
+
+{{ include('Admin/VisitorsMail/_delete_form.html.twig') }}
+<a class="btn custom-button w-100" href="{{ path('admin_visitors_mail') }}">Atšaukti</a>
+{% endblock %}
