@@ -9,11 +9,15 @@ class UserRepository extends EntityRepository
 {
     /**
 	 * Intended to be called by PaginationHandler to paginate the query
+     * @param null|array $orderBy Array containing key value pairs where key = column, value = order
 	 * @return Query a query for all users.
 	 */
-    public function getAll(): Query
+    public function getAll(?array $orderBy = []): Query
     {
-        return $this->createQueryBuilder('u')->getQuery();
+        $query = $this->createQueryBuilder('u');
+        $query = $this->addOrders($query, $orderBy);
+
+        return $query->getQuery();
     }
 
     /**
@@ -21,10 +25,11 @@ class UserRepository extends EntityRepository
      * @param array $criteria [field => value, ...]
      * @return Query with users that meets defined criteria.
      */
-    public function getAllBy(array $criteria)
+    public function getAllBy(array $criteria, ?array $orderBy = [])
     {
         $query = $this->createQueryBuilder('u');
         $query = $this->addCriteria($query, $criteria);
+        $query = $this->addOrders($query, $orderBy);
 
         return $query->getQuery();
     }
@@ -45,12 +50,31 @@ class UserRepository extends EntityRepository
     }
 
     /**
+     * @param QueryBuilder $query
+     * @param array $orders Array containing key value pairs where key = column, value = order
+     * @return QueryBuilder
+     */
+    private function addOrders(QueryBuilder $query, ?array $orders)
+    {
+        if ($orders === null) {
+            return $query;
+        }
+
+        foreach ($orders as $orderBy => $order) {
+            $query->addorderBy('u.' . $orderBy, $order);
+        }
+
+        return $query;
+    }
+
+    /**
      * Intended to be called by PaginationHandler to paginate the query
      * @param string $pattern
      * @param null|array [field => value, ...]
+     * @param null|array [field => order, ...]
      * @return Query with users that has at least one field matched given pattern and meeting criteria.
      */
-    public function findByPattern(string $pattern, array $criteria = []): Query
+    public function findByPattern(string $pattern, array $criteria = [], ?array $orderBy = []): Query
     {
         $query =  $this->createQueryBuilder('u')
             ->where('u.id LIKE :pattern')
@@ -63,6 +87,7 @@ class UserRepository extends EntityRepository
             ->setParameter('pattern', '%' . $pattern . '%');
 
         $query = $this->addCriteria($query, $criteria);
+        $query = $this->addOrders($query, $orderBy);
 
         return $query->getQuery();
     }

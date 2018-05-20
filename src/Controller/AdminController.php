@@ -47,13 +47,14 @@ class AdminController extends Controller
 	public function usersPageAction(Request $request, UserList $userList, $page): Response
 	{
         $searchPattern = $request->get('pattern');
+        $orderBy = ['role' => 'ASC', 'id' => 'ASC'];
 
         if (isset($searchPattern)) {
-            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 5, $searchPattern);
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 20, $searchPattern, $orderBy);
             $totalUserCount = $userList->getUsersCount();
         }
         else {
-            $paginationHandler = $userList->getPaginatedList('getAll', $page, 5);
+            $paginationHandler = $userList->getPaginatedList('getAll', $page, 20, $orderBy);
             $totalUserCount = $paginationHandler->getResult()->getTotalCount();
         }
 

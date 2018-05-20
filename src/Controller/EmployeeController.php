@@ -48,13 +48,14 @@ class EmployeeController extends Controller
     public function usersPageAction(Request $request, UserList $userList, $page): Response
     {
         $searchPattern = $request->get('pattern');
+        $orderBy = ['role' => 'ASC', 'id' => 'ASC'];
 
         if (isset($searchPattern)) {
-            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 5, $searchPattern, ['role' => 'ROLE_USER']);
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 5, $searchPattern, ['role' => 'ROLE_USER'], $orderBy);
             $totalUserCount = $userList->getUsersCount(['role' => 'ROLE_USER']);
         }
         else {
-            $paginationHandler = $userList->getPaginatedList('getAllBy', $page, 5, ['role' => 'ROLE_USER']);
+            $paginationHandler = $userList->getPaginatedList('getAllBy', $page, 5, ['role' => 'ROLE_USER'], $orderBy);
             $totalUserCount = $paginationHandler->getResult()->getTotalCount();
         }
 
