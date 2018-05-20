@@ -6,7 +6,7 @@ use App\Entity\Service;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AppFixtures extends Fixture
+class ServiceFixtures extends Fixture
 {
 	public function load(ObjectManager $objectManager){
 		for($i = 0; $i < 50; $i++){
