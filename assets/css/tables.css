@@ -23,8 +23,8 @@
 }
 
 .orders-table .list-group-item:hover{
-    color: #c69c72 !important;
-    border-color: #c69c72;
+    color: #c0b7b1 !important;
+    border-color: #c0b7b1;
 }
 
 .services-table, .date-table {
@@ -37,8 +37,13 @@
 }
 
 .services-table tbody tr:hover, .date-table tbody tr:hover{
-    background: #c69c72;
-    color: #433E3F;
+    background: #c0b7b1;
+    color: #433E3F !important;
+}
+
+.services-table tbody tr:hover span{
+    background: #c0b7b1;
+    color: #433E3F !important;
 }
 
 .services-table tbody tr:hover td, .date-table tbody tr:hover td{
@@ -103,5 +108,26 @@
 }
 .service-name {
     font-weight: bold;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.watched-order-indicator{
+    padding: 0 !important;
+    width: 0;
+}
+.watched-order-indicator:after {
+    content: '';
+    display: inline-block;
+
+    width: 13px;
+    height: 13px;
+    background: #a0cc63;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+
 }
 

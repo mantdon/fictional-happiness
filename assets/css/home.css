@@ -14,3 +14,34 @@
 .portfolio-item {
     margin-bottom: 30px;
 }
+.custom-splitter {
+    background: #433e3f;
+    color: #e8edf3;
+    border-radius: 0;
+    border: 4px double #b07156;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 90px;
+}
+.text-middle{
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.card{
+    background: #433e3f;
+    margin-bottom: 74px;
+}
+.card-title{
+    color: #e8edf3;
+}
+.card-text{
+    color: #e8edf3;
+}
+
+.carousel-bordered {
+    border: 1px solid #433e3f;
+    border-radius: 3px;
+}

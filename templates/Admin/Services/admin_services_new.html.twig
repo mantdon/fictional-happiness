@@ -1,6 +1,6 @@
 {% extends 'Admin/base.html.twig' %}
 
-{% block title %}New Service{% endblock %}
+{% block title %}Nauja paslauga{% endblock %}
 
 {% block panels %}
     {% include 'Admin/admin_panels.html.twig' with {
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block panel_content %}
-    <h1>Create new Service</h1>
+    <h1>Nauja paslauga</h1>
 
     {{ form_start(form) }}
     {{ form_row(form.name, {'attr': {'class' : 'form-control'}, 'label': 'Pavadinimas'}) }}

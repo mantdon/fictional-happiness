@@ -155,7 +155,6 @@ export default class ServicesSelection extends React.Component {
 
     render(){
         return <div className={'row'}>
-            <h1 className={'orderDialogLabel d-flex justify-content-center w-100'}>Paslaugų pasirinkimas</h1>
             <div className={'col-sm-12'}>
             { this.state.isLoaded ?
                     <div className={'row serviceSelectionContainer'}>

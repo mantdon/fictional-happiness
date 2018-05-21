@@ -22,11 +22,11 @@
     {% endif %}
 
     {% if previousPageLabel is not defined %}
-        {% set previousPageLabel = "Previous" %}
+        {% set previousPageLabel = "Praeitas" %}
     {% endif %}
 
     {% if nextPageLabel is not defined %}
-        {% set nextPageLabel = "Next" %}
+        {% set nextPageLabel = "Sekantis" %}
     {% endif %}
 
     <ul class="pagination justify-content-center pagination-bar">
@@ -37,7 +37,7 @@
             </li>
         {% else %}
             <li class="page-item disabled">
-                <span class="page-link">Previous</span>
+                <span class="page-link">{{ previousPageLabel }}</span>
             </li>
         {% endif %}
 
@@ -97,7 +97,7 @@
             </li>
         {% else %}
             <li class="page-item disabled">
-                <span class="page-link">Next</span>
+                <span class="page-link">{{ nextPageLabel }}</span>
             </li>
         {% endif %}
     </ul>

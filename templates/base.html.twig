@@ -5,13 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        {# Icons #}
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         {# Bootstrap CSS #}
         <link rel="stylesheet" href="{{ asset('build/css/bootstrap.css') }}">
         {# Custom styles #}
         <link rel="stylesheet" href="{{ asset('build/css/main.css') }}">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Servisas{% endblock %}</title>
     </head>
     <body>
     <header>
@@ -45,11 +43,6 @@
         {% block content %}
         {% endblock %}
     </div>
-
-    <footer>
-        {% block footer %}
-        {% endblock %}
-    </footer>
 
     {# At the moment, bootstrap javascript #}
     <script src="{{ asset("build/js/app.js") }}"></script>

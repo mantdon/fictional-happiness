@@ -1,61 +1,63 @@
 {% block panel_content %}
     <div class="panel" style="width:100%;">
         <div class="d-flex justify-content-between w-100">
-            <h5>Order #{{ order.id }}</h5>
+            <h5>Užsakymas #{{ order.id }}{{ order in app.user.watchedOrders ? ":<span style='color: #a0cc63'> Stebimas</span>" : '' }}</h5>
             <h5>{{ order.visitDate|date('Y/m/d') }}</h5>
         </div>
-        <table class="table">
-            <tr>
-                <th class="text-center" colspan="2" style="border: none; border-right: 1px solid white">User</th>
-                <th class="text-center" colspan="2" style="border: none;">Vehicle</th>
-            </tr>
-            <tr>
-                <td>Name:</td>
-                <td style="border-right: 1px solid white">{{ order.user.firstName }} {{ order.user.lastName }}</td>
-                <td>Make</td>
-                <td>{{ order.vehicle.make }}</td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td style="border-right: 1px solid white">{{ order.user.email }}</td>
-                <td>Model:</td>
-                <td>{{ order.vehicle.model }}</td>
-            </tr>
-            <tr>
-                <td>Address:</td>
-                <td style="border-right: 1px solid white">{{ order.user.city }} {{ order.user.address }}</td>
-                <td>Year of production:</td>
-                <td>{{ order.vehicle.yearOfProduction }}</td>
-            </tr>
-            <tr>
-                <td>Phone:</td>
-                <td style="border-right: 1px solid white">{{ order.user.phone }}</td>
-                <td>Plate number:</td>
-                <td>{{ order.vehicle.plateNumber }}</td>
-            </tr>
-        </table>
+        <div class="scrollable-horizontal">
+            <table class="table">
+                <tr>
+                    <th class="text-center" colspan="2" style="border: none; border-right: 1px solid white">Klientas</th>
+                    <th class="text-center" colspan="2" style="border: none;">Automobilis</th>
+                </tr>
+                <tr>
+                    <td>Vardas:</td>
+                    <td style="border-right: 1px solid white">{{ order.user.firstName }} {{ order.user.lastName }}</td>
+                    <td>Markė</td>
+                    <td>{{ order.vehicle.make }}</td>
+                </tr>
+                <tr>
+                    <td>El. paštas:</td>
+                    <td style="border-right: 1px solid white">{{ order.user.email }}</td>
+                    <td>Modelis:</td>
+                    <td>{{ order.vehicle.model }}</td>
+                </tr>
+                <tr>
+                    <td>Adresas:</td>
+                    <td style="border-right: 1px solid white">{{ order.user.address }}, {{ order.user.city }} </td>
+                    <td>Numeriai:</td>
+                    <td>{{ order.vehicle.plateNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Telefono nr.:</td>
+                    <td style="border-right: 1px solid white">{{ order.user.phone }}</td>
+                    <td>Gamybos metai:</td>
+                    <td>{{ order.vehicle.yearOfProduction }}</td>
+                </tr>
+            </table>
+        </div>
         <hr>
         {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
-        <div class="progress">
+        <div class="progress position-relative">
             <div class="progress-bar" role="progressbar" style="background: #b07156; width: {{ progressPercentage }}%;"></div>
-            <small class="align-self-center justify-content-center d-flex position-absolute" style="width: 95%; font-size: 14px; color:black">{{ order.progress.numberOfServicesCompleted }} / {{ order.services.count }}</small>
+            <small class="align-self-center justify-content-center d-flex position-absolute w-100" style="font-size: 14px; color:black">{{ order.progress.numberOfServicesCompleted }} / {{ order.services.count }}</small>
         </div>
         <hr>
         {% if order.progress.numberOfServicesCompleted == order.services.count%}
-            <a type="button" class="btn custom-button w-100" onclick="showModal('finalizeOrder')">Finalize</a>
+            <a class="btn custom-button w-100" onclick="showModal('finalizeOrder')">Finalize</a>
             {% include 'OngoingOrders/ongoing_orders_finalize.html.twig' %}
             <hr>
         {% endif %}
         <div>
-            <h6>Servisai:</h6>
+            <h6>Užsakytos paslaugos:</h6>
             <ul class="list-group">
                 {% for line in order.progress.lines %}
                     <li style="background: {{ line.isDone ? '#a0cc63' : '#433e3f'}}; color:{{ line.isDone ? '#433e3f' : 'white' }}; border:none" class="list-group-item d-flex justify-content-between w-100">{{ line.service.name }}
                     {% if order.status == "Ongoing" %}
                         {% if line.isDone %}
-                            <a class="btn custom-button" href="{{ path('ongoing_order_undo_service', {'id':line.id}) }}">Unmark as done</a>
+                            <a class="custom-button" href="{{ path('ongoing_order_undo_service', {'id':line.id}) }}">Atšaukti</a>
                         {% else %}
-                            <a class="btn custom-button" href="{{ path('ongoing_order_complete_service', {'id':line.id}) }}">Mark as done</a>
+                            <a class="custom-button" href="{{ path('ongoing_order_complete_service', {'id':line.id}) }}">Užbaigti</a>
                         {% endif %}
                     {% endif %}
                     </li>
@@ -63,14 +65,21 @@
             </ul>
             <hr>
         </div>
-        {% if order.status == "Placed" %}
-            <div class="w-100">
-                <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('approveOrder')">Approve order</a>
-                <a type="button" class="btn custom-button w-50 float-left" onclick="showModal('terminateOrder')">Terminate order</a>
-            </div>
-            {% include 'Util/order_approve_modal.html.twig' with {route_name: 'ongoing_order_approve'}%}
-            {% include 'Util/order_terminate_modal.html.twig' with {route_name: 'ongoing_order_terminate'} %}
-        {% endif %}
-        <a type="button" class="btn custom-button w-100" href="{{ path(back_path) }}">Back</a>
+        <div>
+            {% if order in app.user.watchedOrders %}
+                <a class="custom-button w-100" href="{{ path('ongoing_order_unwatch', {'id':order.id}) }}">Nustoti stebėti</a>
+            {% else %}
+                <a class="custom-button w-100" href="{{ path('ongoing_order_watch', {'id':order.id}) }}">Stebėti</a>
+            {% endif %}
+            {% if order.status == "Placed" %}
+                <div class="w-100">
+                    <a class="custom-button w-50 float-left" onclick="showModal('approveOrder')">Patvirtinti užsakymą</a>
+                    <a class="custom-button w-50 float-left" onclick="showModal('terminateOrder')">Nutraukti užsakymą</a>
+                </div>
+                {% include 'Util/order_approve_modal.html.twig' with {route_name: 'ongoing_order_approve'}%}
+                {% include 'Util/order_terminate_modal.html.twig' with {route_name: 'ongoing_order_terminate'} %}
+            {% endif %}
+            <a  class="custom-button w-100" href="{{ path(back_path) }}">Atgal</a>
+        </div>
     </div>
 {% endblock %}

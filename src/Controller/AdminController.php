@@ -31,7 +31,7 @@ class AdminController extends Controller
 	 */
 	public function home()
 	{
-		return $this->render( 'Admin/Home/admin_home.html.twig' );
+		return $this->redirectToRoute('admin_users');
 	}
 
 	//<editor-fold desc="Users">
@@ -255,9 +255,9 @@ class AdminController extends Controller
 	 */
 	public function ongoingOrdersPageAction(PaginationHandler $paginationHandler, $page): Response
 	{
-		$paginationHandler->setQuery('App:Order','getValidOrdersForAdmin')
+		$paginationHandler->setQuery('App:Order','getPlacedAndOngoingOrders', $this->getUser())
 						  ->setPage($page)
-						  ->setItemLimit(4)
+						  ->setItemLimit(8)
 						  ->addLastUsedPageUseCase('/ongoingorders/view')
 						  ->addLastUsedPageUseCase('/ongoingorders/finalize')
 						  ->paginate();
@@ -333,10 +333,11 @@ class AdminController extends Controller
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
             $userManager->createUser($user);
+            $this->userManager->saveUser($user);
 
             $this->addFlash(
                 'notice',
-                'Employee successfully created!');
+                'Darbuotojas sėkmingai sukurtas!');
 
             return $this->redirectToRoute( 'admin_create_employee' );
         }
@@ -412,7 +413,7 @@ class AdminController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($contact);
             $em->flush();
-            $this->addFlash('notice', 'Contact deleted[PH]');
+            $this->addFlash('notice', 'Ištrinta');
         }
         return $this->redirectToRoute('admin_visitors_mail');
     }
@@ -447,7 +448,7 @@ class AdminController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($contact);
                 $em->flush();
-                $this->addFlash('notice', 'Form submitted[PH]');
+                $this->addFlash('notice', 'Atsakymas išsiųstas.');
                 return $this->redirectToRoute('admin_visitors_mail');
             }
             return $this->render('Admin/VisitorsMail/visitors_mail_reply.html.twig',

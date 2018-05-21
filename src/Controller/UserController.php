@@ -68,7 +68,7 @@ class UserController extends Controller
 			$vehicle->setUser($this->getUser());
 			$entityManager->persist( $vehicle );
 			$entityManager->flush();
-			$this->addFlash('notice', 'Vehicle added[PH]');
+			$this->addFlash('notice', 'Automobilis pridėtas.');
 			return $this->redirectToRoute( 'user_vehicles' );
 		}
 
@@ -99,7 +99,7 @@ class UserController extends Controller
 				$entityManager = $this->getDoctrine()->getManager();
 				$entityManager->persist( $vehicle );
 				$entityManager->flush();
-				$this->addFlash('notice', 'Vehicle updated[PH]');
+				$this->addFlash('notice', 'Automobilis atnaujintas.');
 
 				return $this->redirectToRoute( 'user_vehicles' );
 			}
@@ -153,7 +153,7 @@ class UserController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$em->remove($vehicle);
 			$em->flush();
-			$this->addFlash('notice', 'Vehicle deleted[PH]');
+			$this->addFlash('notice', 'Automobilis pašalintas.');
 		}
 
 		return $this->redirectToRoute('user_vehicles');
@@ -298,7 +298,7 @@ class UserController extends Controller
 		)
 		{
 			$mm->markMessageAsDeletedIfNotDeleted($messageMetaData);
-			$this->addFlash('notice', 'Message deleted[PH]');
+			$this->addFlash('notice', 'Žinutė ištrinta.');
 		}
 
 		return $this->redirectToRoute('user_messages');
@@ -325,7 +325,7 @@ class UserController extends Controller
 		{
 			$entityManager->persist($user);
 			$entityManager->flush();
-			$this->addFlash('notice', 'User updated[PH]');
+			$this->addFlash('notice', 'Duomenys atnaujinti.');
 
 			if($redirect)
 			{
@@ -365,7 +365,7 @@ class UserController extends Controller
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($user);
 			$entityManager->flush();
-			$this->addFlash('notice', 'Password changed[PH]');
+			$this->addFlash('notice', 'Slaptažodis pakeistas.');
 		}
 
 		return $this->render('Profile/ChangePassword/profile_changepassword.html.twig',

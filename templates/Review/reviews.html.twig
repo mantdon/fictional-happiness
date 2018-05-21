@@ -34,7 +34,7 @@
                         {% if 'ROLE_ADMIN' in user.roles or review.user.id == user.id %}
                             <div class="delete">
                                 <a href="{{ path('review_delete', {('id'):review.id }) }}">
-                                    <button class="btn">Ištrinti atsiliepimą</button>
+                                    <button class="custom-button">Ištrinti atsiliepimą</button>
                                 </a>
                             </div>
                         {% endif %}

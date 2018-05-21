@@ -83,9 +83,9 @@ class EmployeeController extends Controller
      */
     public function ongoingOrdersPageAction(PaginationHandler $paginationHandler, $page): Response
     {
-        $paginationHandler->setQuery('App:Order','getValidOrdersForAdmin')
+        $paginationHandler->setQuery('App:Order','getPlacedAndOngoingOrders', $this->getUser())
             ->setPage($page)
-            ->setItemLimit(4)
+            ->setItemLimit(8)
             ->addLastUsedPageUseCase('/ongoingorders/view')
             ->addLastUsedPageUseCase('/ongoingorders/finalize')
             ->paginate();
@@ -134,7 +134,7 @@ class EmployeeController extends Controller
         {
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('notice', 'User updated[PH]');
+            $this->addFlash('notice', 'Duomenys atnaujinti.');
 
             if($redirect)
             {
@@ -165,7 +165,7 @@ class EmployeeController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('notice', 'Password changed[PH]');
+            $this->addFlash('notice', 'Slaptažodis pakeistas.');
         }
 
         return $this->render('Employee/ChangePassword/employee_change_password.html.twig', array(
