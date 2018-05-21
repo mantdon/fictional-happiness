@@ -1,0 +1,22 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block panels %}
+    {% include 'Admin/admin_panels.html.twig' with {
+        visitors_mail_active: 'true'
+    } %}
+{% endblock %}
+
+{% block panel_content %}
+    {{ form_start(form) }}
+    {{ form_errors(form.name) }}
+    {{ form_label(form.name, null, {'label': 'Vardas'}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'textField'}} ) }}
+    {{ form_errors(form.comment) }}
+    {{ form_label(form.comment, null, {'label': 'Atsakymas'}) }}
+    {{ form_widget(form.comment, {'attr': {'class': 'textField reply-comment'}} ) }}
+    {{ form_widget(form.submit, {'attr': {'class': 'btn custom-button reply-button w-100'}, 'label': 'Išsiųsti'}) }}
+    {{ form_end(form) }}
+    <a class="btn custom-button w-100" href="{{ path('admin_visitors_mail') }}">Atšaukti</a>
+{% endblock %}

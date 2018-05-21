@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Order;
+use App\Form\ReplyType;
 use App\Services\UserList;
 use App\Services\UserManager;
 use App\Entity\OrderProgressLine;
@@ -362,4 +364,99 @@ class AdminController extends Controller
 		);
 	}
 	//</editor-fold>
+
+
+    /**
+     * @Route ("/visitorsmail/{page}", name="admin_visitors_mail", defaults={"page"=1}, requirements={"page"="\d+"})
+     * @param PaginationHandler $paginationHandler
+     * @param                   $page
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \BadMethodCallException
+     * @throws \InvalidArgumentException
+     */
+    public function visitorsMailAction(PaginationHandler $paginationHandler, $page): Response
+    {
+        $paginationHandler->setQuery('App:Contact', 'getAll')
+            ->setPage($page)
+            ->setItemLimit(5)
+            ->paginate();
+
+        return $this->render('Admin/VisitorsMail/visitors_mail.html.twig',
+            [
+                'visitors_mail' => $paginationHandler->getResult(),
+                'pageCount' => $paginationHandler->getPageCount(),
+                'currentPage' => $paginationHandler->getCurrentPage(),
+                'pageParameterName' => 'page'
+            ]);
+    }
+
+    /**
+     * @Route("/visitorsmail/delete/{id}", name="visitors_mail_delete", methods="GET")
+     * @param Contact $contact
+     * @return Response
+     * @throws \LogicException
+     */
+    public function visitorsMailDelete(Contact $contact): Response
+    {
+        return $this->render('Admin/VisitorsMail/visitors_mail_delete.html.twig',
+            array('contact' => $contact));
+    }
+
+    /**
+     * @Route("/visitorsmail/delete/{id}", name="visitors_mail_delete_confirm", methods="DELETE")
+     * @param Request $request
+     * @param Contact $contact
+     * @return RedirectResponse
+     * @throws \LogicException
+     */
+    public function visitorsMailDeleteConfirmAction(Request $request, Contact $contact): RedirectResponse
+    {
+        if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($contact);
+            $em->flush();
+            $this->addFlash('notice', 'Contact deleted[PH]');
+        }
+        return $this->redirectToRoute('admin_visitors_mail');
+    }
+
+    /**
+     * @Route("/visitorsmail/reply/{id}", name="visitors_mail_reply")
+     * @param Request $request
+     * @param Contact $contact
+     * @param MessageManager $messageManager
+     * @return Response
+     * @throws \LogicException
+     */
+    public function visitorsMailReply(Request $request, Contact $contact, MessageManager $messageManager): Response
+    {
+        if($contact->getIsAnswered() === false) {
+            $form = $this->createForm(ReplyType::class);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $formData = $form->getData();
+                $messageTitle = $contact->getSubject();
+                $messageContent = $this->renderView(
+                    'Admin/VisitorsMail/visitors_mail_reply_template.html.twig',
+                    array('recipient_name' => $contact->getName(),
+                        'sender_name' => $formData['name'],
+                        'text' => $formData['comment']
+                    )
+                );
+                $recipient = $contact->getEmail();
+                $message = $messageManager->fetchOrCreateMessage($messageTitle, $messageContent);
+                $messageManager->sendMessageDirectlyToEmail($message, $recipient);
+                $contact->setIsAnswered(true);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($contact);
+                $em->flush();
+                $this->addFlash('notice', 'Form submitted[PH]');
+                return $this->redirectToRoute('admin_visitors_mail');
+            }
+            return $this->render('Admin/VisitorsMail/visitors_mail_reply.html.twig',
+                array('form' => $form->createView()));
+        }
+        return $this->redirectToRoute('admin_visitors_mail');
+    }
+
 }

@@ -8,14 +8,6 @@ header .logo {
     overflow: auto;
 }
 
-.about-panel{
-    color: #e8edf3;
-    background: #433e3f;
-    border: 4px double #b0a18e;
-    padding-top: 15px;
-    padding-left: 10%
-}
-
 .custom-modal {
     background: #433e3f;
     color: #e8edf3;
