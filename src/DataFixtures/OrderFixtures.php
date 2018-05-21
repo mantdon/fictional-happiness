@@ -83,7 +83,7 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
         $serviceIds = [];
         $services = [];
         for ($s = random_int(1, 6); $s > 0; $s--) {
-            $service = $this->getReference('service' . random_int(0, 49));
+            $service = $this->getReference('service' . random_int(0, 69));
             if (in_array($service->getId(), $serviceIds)) {
                 $s--;
                 continue;
