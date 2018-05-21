@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Order;
-use App\Entity\User;
 use App\Services\OrderCreator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -13,6 +12,39 @@ use Faker\Factory;
 class OrderFixtures extends Fixture implements DependentFixtureInterface
 {
     private $orderCreator;
+    private $orderTimes = [
+        ['15:00'],
+        ['9:00', '13:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00', '13:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['13:00', '15:00'],
+        ['9:00', '11:00', '13:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '15:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00', '13:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00', '13:00'],
+        ['9:00', '11:00'],
+        ['9:00', '11:00', '13:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['11:00', '13:00'],
+        ['9:00', '15:00'],
+        ['9:00', '11:00', '13:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['11:00', '13:00', '15:00'],
+        ['9:00', '11:00'],
+        ['9:00', '11:00', '13:00', '15:00'],
+        ['9:00', '11:00'],
+        ['13:00', '15:00'],
+        ['9:00', '11:00', '15:00'],
+    ];
 
     public function __construct(OrderCreator $orderCreator)
     {
@@ -21,29 +53,82 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
+        for ($i = 0; $i < 100; $i++) {
+            $this->createOrder($i);
+        }
+
+        $this->createOrdersThatActuallyOccupyTimes();
+    }
+
+    private function createOrder(int $userId): Order
+    {
         $faker = Factory::create();
+        $user = $this->getReference('user'.$userId);
+        $vehicleCount = $user->getVehicles()->count();
 
-        for($i = 0; $i < 100; $i++){
-            /**
-             * @var User $user
-             */
-            $user = $this->getReference('user'.$i);
-            $vehicleCount = $user->getVehicles()->count();
+        $vehicle = $user->getVehicles()->get(random_int(0, $vehicleCount - 1));
+        $serviceIds = $this->getRandomServices();
 
-            $vehicle = $user->getVehicles()->get(random_int(0, $vehicleCount - 1));
-            $serviceIds = [];
+        $vehicle = ['id' => $vehicle->getId()];
+        $visitDate = $faker->dateTimeInInterval('-3 months', '+5 months');
 
-            for ($s = random_int(1, 6); $s > 0; $s--) {
-                $service = $this->getReference('service' . random_int(0, 49));
-                if (in_array($service->getId(), $serviceIds)) {
-                    $s--;
-                    continue;
-                }
-                $serviceIds[] = ['id' => $service->getId()];
+        $order = $this->orderCreator->createOrder($vehicle, $serviceIds, $visitDate->format('Y-m-d H:i'), $user);
+
+        $this->setOrderCompletion($order);
+
+        return $order;
+    }
+
+    private function setOrderCompletion(Order $order)
+    {
+        $progress = $order->getProgress();
+        $lines = $progress->getLines();
+        $visitDate = $order->getVisitDate();
+        $this->orderCreator->approveOrder($order);
+
+        if ($visitDate < new \DateTime('-1 week')) {
+            foreach ($lines as $line) {
+                $this->orderCreator->completeLine($line);
             }
+        }
+        else if ($visitDate < new \DateTime()) {
+            foreach ($lines as $line) {
+                if (random_int(1, 3) > 1) {
+                    $this->orderCreator->completeLine($line);
+                }
+            }
+        }
+        $this->orderCreator->finalizeOrder($order);
+    }
 
-            $vehicle = ['id' => $vehicle->getId()];
-            $this->orderCreator->createOrder($vehicle, $serviceIds, $faker->dateTime('-1 year', '+5 months')->format('Y-m-d H:i'), $user);
+    private function getRandomServices(): array
+    {
+        $serviceIds = [];
+        $services = [];
+        for ($s = random_int(1, 6); $s > 0; $s--) {
+            $service = $this->getReference('service' . random_int(0, 49));
+            if (in_array($service->getId(), $serviceIds)) {
+                $s--;
+                continue;
+            }
+            $serviceIds[] = $service->getId();
+            $services[] = ['id' => $service->getId()];
+        }
+
+        return $services;
+
+    }
+
+    private function createOrdersThatActuallyOccupyTimes()
+    {
+        $count = 0;
+        foreach ($this->orderTimes as $daysOffset => $times) {
+            foreach ($times as $time) {
+                $order = $this->createOrder($count);
+                $date = new \DateTime('+' . $daysOffset . ' days');
+                $order->setVisitDate(new \DateTime($date->format('Y-m-d') . ' ' . $time));
+                $count++;
+            }
         }
     }
 
