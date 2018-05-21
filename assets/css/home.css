@@ -40,3 +40,8 @@
 .card-text{
     color: #e8edf3;
 }
+
+.carousel-bordered {
+    border: 1px solid #433e3f;
+    border-radius: 3px;
+}
