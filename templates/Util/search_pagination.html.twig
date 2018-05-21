@@ -1,0 +1,104 @@
+{% if pageCount > 1 %}
+    {# Determine ranges of page buttons to display #}
+    {% if pageOffset is not defined or pageOffset < 1 or 2*pageOffset > pageCount %}
+        {% set pageOffset = 1 %}
+    {% endif %}
+
+    {% set startPage = currentPage - pageOffset%}
+    {% set endPage = currentPage + pageOffset %}
+
+    {% if startPage < 1 %}
+        {% set startPage = 1 %}
+        {% set endPage = 2*pageOffset %}
+    {% endif %}
+
+    {% if endPage > pageCount %}
+        {% set endPage = pageCount %}
+        {% set startPage = pageCount - 2*pageOffset + 1%}
+
+        {% if startPage < 1 %}
+            {% set startPage = 1 %}
+        {% endif %}
+    {% endif %}
+
+    {% if previousPageLabel is not defined %}
+        {% set previousPageLabel = "Previous" %}
+    {% endif %}
+
+    {% if nextPageLabel is not defined %}
+        {% set nextPageLabel = "Next" %}
+    {% endif %}
+
+    <ul class="pagination justify-content-center pagination-bar">
+        {# Previous page button - disabled at first page #}
+        {% if  currentPage > 1 %}
+            <li class="page-item">
+                <a rel="prev" href="{{ path(route, {('key'):key, (pageParameterName): currentPage - 1}) }}" class="page-link">{{ previousPageLabel }}</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+        {% endif %}
+
+        {# Page 1 button - displayed always.
+           Page 2 button - hidden when outside of offset range
+        #}
+        {% if startPage > 1 %}
+            <li class="page-item">
+                <a href="{{ path(route, {('key'):key, (pageParameterName): 1}) }}" class="page-link">1</a>
+            </li>
+            {% if currentPage - pageOffset == 1%}
+                <li class="page-item">
+                    <a href="{{ path(route, {('key'):key, (pageParameterName): 2}) }}" class="page-link">2</a>
+                </li>
+            {% elseif currentPage != 2 and startPage != 2 %}
+                <li class="page-item disabled">
+                    <span class="page-link">&hellip;</span>
+                </li>
+            {% endif %}
+        {% endif %}
+
+        {# Displaying page buttons from currentPage - pageOffset to currentPage + pageOffset#}
+        {% for page in startPage..endPage %}
+            {% if page != currentPage %}
+                <li class="page-item">
+                    <a href="{{ path(route, {('key'):key, (pageParameterName): page}) }}" class="page-link">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="active page-item">
+                    <span class="page-link">{{ page }}</span>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {# Last page button - displayed always
+           Second to last page button - hidden when outside of offset range
+        #}
+        {% if endPage < pageCount %}
+            {% if currentPage + pageOffset == pageCount%}
+                <li class="page-item">
+                    <a href="{{ path(route, {('key'):key, (pageParameterName): pageCount-1}) }}" class="page-link">{{ pageCount - 1 }}</a>
+                </li>
+            {% elseif currentPage != pageCount-1 and endPage != pageCount-1%}
+                <li class="page-item disabled">
+                    <span class="page-link">&hellip;</span>
+                </li>
+            {% endif %}
+            <li>
+                <a href="{{ path(route, {('key'):key, (pageParameterName): pageCount}) }}" class="page-link">{{ pageCount }}</a>
+            </li>
+        {% endif %}
+
+        {# Next page button - disable at last page #}
+        {% if currentPage != pageCount %}
+            <li class="page-item">
+                <a rel="next" class="page-link" href="{{ path(route, {('key'):key, (pageParameterName): currentPage + 1}) }}">{{ nextPageLabel }}</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

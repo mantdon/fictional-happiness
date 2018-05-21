@@ -1,8 +1,17 @@
 {% if services.count > 0%}
-    <div class="list-group vehicles-list">
+    {{ form_start(form) }}
+    {{ form_errors(form.key) }}
+    <div class="form-inline">
+        {{ form_widget(form.key, {'attr': {'class': 'textField search-input', 'placeholder': 'Ieškoti paslaugų'}} ) }}
+        {{ form_widget(form.submit, {'attr': {'class': 'btn search-button fa fa-search'}, 'label': ' '}) }}
+    </div>
+    {{ form_end(form) }}
+    <div class="list-group services-list">
         {% for service in services %}
             <div class="list-group-item">
-                {{ service.name }}
+                <div class="service-name">
+                    {{ service.name }}
+                </div>
                 <hr>
                 <p class="mb-1">
                     {{ service.description }}
@@ -18,7 +27,7 @@
     {% else %}
         <div>
             <strong>
-                Šiuo metu neteikiama jokių paslaugų.
+                Šiuo metu neteikiame jokių paslaugų.
             </strong>
         </div>
 {% endif %}

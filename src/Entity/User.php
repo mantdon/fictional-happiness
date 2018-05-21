@@ -24,7 +24,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank(message="Įveskite Email")
      * @Assert\Email(message="Neteisingas Email formatas")
      */
@@ -90,6 +90,11 @@ class User implements AdvancedUserInterface, \Serializable
 	 */
     private $vehicles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
 	 */
@@ -111,6 +116,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->messages = new ArrayCollection();
         $this->orders = new ArrayCollection();
         $this->watchedOrders = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getUsername()
@@ -338,6 +344,10 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function getVehicles(){
     	return $this->vehicles;
+    }
+
+    public function getReviews(){
+        return $this->reviews;
     }
 
     public function getMessages(){
