@@ -246,9 +246,9 @@ class AdminController extends Controller
 	 */
 	public function ongoingOrdersPageAction(PaginationHandler $paginationHandler, $page): Response
 	{
-		$paginationHandler->setQuery('App:Order','getValidOrdersForAdmin')
+		$paginationHandler->setQuery('App:Order','getPlacedAndOngoingOrders', $this->getUser())
 						  ->setPage($page)
-						  ->setItemLimit(4)
+						  ->setItemLimit(8)
 						  ->addLastUsedPageUseCase('/ongoingorders/view')
 						  ->addLastUsedPageUseCase('/ongoingorders/finalize')
 						  ->paginate();
