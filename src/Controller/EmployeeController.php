@@ -134,7 +134,7 @@ class EmployeeController extends Controller
         {
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('notice', 'User updated[PH]');
+            $this->addFlash('notice', 'Duomenys atnaujinti.');
 
             if($redirect)
             {
@@ -165,7 +165,7 @@ class EmployeeController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('notice', 'Password changed[PH]');
+            $this->addFlash('notice', 'Slaptažodis pakeistas.');
         }
 
         return $this->render('Employee/ChangePassword/employee_change_password.html.twig', array(

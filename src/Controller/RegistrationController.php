@@ -33,7 +33,7 @@ class RegistrationController extends Controller
 
 	        $this->addFlash(
 		        'notice',
-		        'Registration successful, welcome ' . $user->getEmailName() . '!');
+		        'Registracija sėkminga, sveiki ' . $user->getEmailName() . '!');
 
 	        return $this->redirectToRoute( 'homepage' );
         }

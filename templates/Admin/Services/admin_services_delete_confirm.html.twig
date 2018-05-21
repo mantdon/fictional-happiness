@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block panel_content %}
-    <h1>The following service will be deleted, are you sure?</h1>
+    <h1>Pasirinkta paslauga bus pašalinta iš sąrašo. Tęsti?</h1>
 
     <table class="table table-fixed">
         <tbody>
@@ -18,15 +18,11 @@
                 <td>{{ service.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Pavadinimas</th>
                 <td>{{ service.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
-                <td>{{ service.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
+                <th>Kaina</th>
                 <td>{{ service.price }}</td>
             </tr>
         </tbody>
