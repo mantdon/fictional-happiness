@@ -12,3 +12,12 @@
 
     padding-top: 10px;
 }
+.reply-button {
+    margin-bottom: 10px;
+}
+.textField.reply-comment {
+    height: 150px;
+}
+.answered-letter {
+    line-height: 36px;
+}

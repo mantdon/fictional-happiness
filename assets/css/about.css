@@ -1,0 +1,46 @@
+.last-icon {
+    margin-bottom: 30px;
+}
+.contact-input {
+    display: block;
+    width: 75%;
+}
+.contact-us-title {
+    margin-bottom: 20px;
+}
+.contact-us-submit {
+    margin-bottom: 30px;
+}
+.contact-us-comment {
+    height: 80px;
+}
+.about-panel{
+    color: #e8edf3;
+    background: #433e3f;
+    border: 4px double #b0a18e;
+    padding-top: 15px;
+    padding-left: 8%;
+    padding-right: 8%;
+    margin-bottom: 40px;
+}
+.visitors-mail-list .name, .visitors-mail-list .comment, .visitors-mail-list .subject {
+    font-size: 1.2rem;
+}
+.visitors-mail-list .subject {
+    margin-bottom: 10px;
+}
+.visitors-mail-list .name {
+    float: left;
+}
+.visitors-mail-list .reply, .visitors-mail-list .delete {
+    float: right;
+}
+.visitors-mail-list .reply {
+    margin-right: 20px;
+}
+.visitors-mail-list .date {
+    clear: both;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+}
+

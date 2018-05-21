@@ -1,20 +1,25 @@
 /*<editor-fold desc="General button">*/
-.custom-button{
-    background-color: #b07156;
-    border: 1px solid #433e3f;
-    border-radius: 1px;
-    color: #e8edf3;
-
-    box-shadow: none !important;
+.custom-button {
+    box-shadow:inset 0 1px 0 0 #c69c72;
+    background:linear-gradient(to bottom, #c69c72 5%, #b07156 100%);
+    border-radius:2px;
+    border:1px solid #433e3f;
+    display:inline-block;
+    cursor:pointer;
+    color:#e8edf3;
+    padding:6px 6px;
+    text-decoration:none;
+    text-shadow:1px 1px 0 #433e3f;
+    text-align: center;
 }
-
-.custom-button:hover{
-    background-color: #c69c72;
-    color: #433e3f;
+.custom-button:hover {
+    background:linear-gradient(to bottom, #b07156 5%, #c69c72 100%);
+    color:#e8edf3;
+    text-shadow:1px 1px 0 #433e3f;
+    text-decoration: none;
+}
+.custom-button:active {
+    position:relative;
+    top:1px;
 }
 /*</editor-fold>*/
-
-.button-full-width{
-    width: 100%;
-    margin-bottom: 10px;
-}

@@ -22,23 +22,30 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-	/**
-	 * Intended to be called by PaginationHandler to paginate the query
-	 * @return Query a query for all orders flagged as placed or ongoing
-	 * sorted by status and visit date.
-	 */
-	public function getValidOrdersForAdmin(): Query
+    /**
+     * Intended to be called by PaginationHandler to paginate the query
+     * @param User $user orders watched by this user will be brought
+     * to the top
+     * @return Query a query for all orders flagged as placed or ongoing
+     * sorted by status and visit date.
+     */
+	public function getPlacedAndOngoingOrders(User $user): Query
 	{
 		return $this->createQueryBuilder('o')
 					->leftJoin('o.progress', 'p')
 					->leftJoin('o.user', 'u')
+                    ->leftJoin('o.watchingUsers', 'wo')
 					->where('o.status = ?1')
 					->orWhere('o.status = ?2')
+                    ->orWhere('wo.id = ?3')
 					->andWhere('u.isEnabled = 1')
-					->orderBy('o.status', 'ASC')
+                    ->orderBy('SUM(CASE WHEN wo.id = ?3 THEN 1 ELSE 0 END)', 'DESC')
+					->addOrderBy('o.status', 'ASC')
 					->addOrderBy('o.visitDate', 'ASC')
+                    ->groupBy('o')
 					->setParameter(1, EnumOrderStatusType::Placed)
 					->setParameter(2, EnumOrderStatusType::Ongoing)
+                    ->setParameter(3, $user->getId())
 					->getQuery();
 	}
 

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Atsiliepimai{% endblock %}
+
+{% set reviews_active = 'true' %}
+{% block content %}
+    <h1>Atsiliepimas bus ištrintas, ar jūs visiškai įsitikinę?</h1>
+
+    <table class="table table-fixed">
+        <tbody>
+        <tr>
+            <th>ID</th>
+            <td>{{ review.id }}</td>
+        </tr>
+        <tr>
+            <th>Reitingas</th>
+            <td>{{ review.rating }}</td>
+        </tr>
+        <tr>
+            <th>Atsiliepimo tekstas</th>
+            <td>{{ review.content }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {{ include('Review/_delete_form.html.twig') }}
+    <a class="btn custom-button w-100" href="{{ path('reviews') }}">Atšaukti</a>
+{% endblock %}
+

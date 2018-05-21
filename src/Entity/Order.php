@@ -58,8 +58,15 @@ class Order
      */
     private $status;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="watchedOrders")
+     * @ORM\JoinTable(name="watched_orders")
+     */
+    private $watchingUsers;
+
     public function __construct() {
         $this->services = new ArrayCollection();
+        $this->watchingUsers = new ArrayCollection();
     }
 
     public function getId()
@@ -188,4 +195,28 @@ class Order
 
 		return $this;
 	}
+
+    public function addWatchingUser(User $user): self
+    {
+        if (!$this->watchingUsers->contains($user)) {
+            $this->watchingUsers[] = $user;
+            $user->addWatchedOrder($this);
+        }
+        return $this;
+    }
+
+    public function removeWatchingUser(User $user): self
+    {
+        if ($this->watchingUsers->contains($user)) {
+            $this->watchingUsers->removeElement($user);
+            $user->removeWatchedOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function getWatchingUsers()
+    {
+        return $this->watchingUsers;
+    }
 }
