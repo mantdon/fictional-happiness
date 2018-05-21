@@ -163,4 +163,36 @@ class OngoingOrdersController extends Controller
             ]
         );
     }
+
+    /**
+     * @Route("/watch/{id}", name="ongoing_order_watch", requirements={"id"="\d+"})
+     * @param                   $order
+     * @param RouteNameAppender $nameAppender
+     * @return RedirectResponse
+     */
+    public function ongoingOrderWatchAction(Order $order, RouteNameAppender $nameAppender): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $order->addWatchingUser($this->getUser());
+        $em->persist($order);
+        $em->flush();
+        $route = $nameAppender->appendRoleToBeginning($this->getUser(), 'ongoing_order_show');
+        return $this->redirectToRoute($route, ['id' => $order->getId()]);
+    }
+
+    /**
+     * @Route("/unwatch/{id}", name="ongoing_order_unwatch", requirements={"id"="\d+"})
+     * @param                   $order
+     * @param RouteNameAppender $nameAppender
+     * @return RedirectResponse
+     */
+    public function ongoingOrderUnwatchAction(Order $order, RouteNameAppender $nameAppender): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $order->removeWatchingUser($this->getUser());
+        $em->persist($order);
+        $em->flush();
+        $route = $nameAppender->appendRoleToBeginning($this->getUser(), 'ongoing_order_show');
+        return $this->redirectToRoute($route, ['id' => $order->getId()]);
+    }
 }
