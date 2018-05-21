@@ -6,30 +6,48 @@
 
 {% block content %}
     <h1 class="text-center">Apie mus</h1>
-        <div class="row justify-content-center">
-
-        </div>
-        <div class="row h-100">
+        <div class="row">
             <div class="col-sm-6">
                 <div class="h-100 about-panel">
-                <h2>Kompanija ProjectX</h2>
-                <p>Moderni kompanija pasižymi:</p>
-                <ul>
-                    <li>Įsipareigojimų laikymusi</li>
-                    <li>Gerais specialistais</li>
-                    <li>Kruopščiu darbu</li>
-                    <li>Sąžiningomis kainomis</li>
-                </ul>
-                <p>Autoservisas nori plėstis ir visuomet ieško naujų darbuotojų.</p>
-                    </div>
+                    <h2>Kompanija ProjectX</h2>
+                    <p>Moderni kompanija pasižymi:</p>
+                    <ul>
+                        <li>Įsipareigojimų laikymusi</li>
+                        <li>Gerais specialistais</li>
+                        <li>Kruopščiu darbu</li>
+                        <li>Sąžiningomis kainomis</li>
+                    </ul>
+                    <p>Autoservisas nori plėstis ir visuomet ieško naujų darbuotojų.</p>
+                    <hr>
+                    <h5 class="contact-us-title">
+                        Turite klausimų ar pageidavimų? Visa tai galite pateikti žemiau esančioje formoje.
+                    </h5>
+                    {{ form_start(form) }}
+                    {{ form_errors(form.name) }}
+                    {{ form_label(form.name, null, {'label': 'Vardas'}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'textField contact-input'}} ) }}
+                    {{ form_errors(form.email) }}
+                    {{ form_label(form.email, null, {'label': 'El. paštas'}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'textField contact-input'}} ) }}
+                    {{ form_errors(form.subject) }}
+                    {{ form_label(form.subject, null, {'label': 'Tema'}) }}
+                    {{ form_widget(form.subject, {'attr': {'class': 'textField contact-input'}} ) }}
+                    {{ form_errors(form.comment) }}
+                    {{ form_label(form.comment, null, {'label': 'Komentaras'}) }}
+                    {{ form_widget(form.comment, {'attr': {'class': 'textField contact-us-comment contact-input'}} ) }}
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn custom-button contact-us-submit w-75'}, 'label': 'Patvirtinti'}) }}
+                    {{ form_end(form) }}
+                </div>
             </div>
             <div class="col-sm-6">
                 <div class="h-100 about-panel">
-                <h2 class="text-left">Kontaktai</h2>
-                <h5><i class="fas fa-wrench"></i> Dirbame darbo dienomis <strong>09</strong><sup>00</sup> - <strong>17</strong><sup>00</sup></h5>
-                <h6><i class="fas fa-home"></i> Studentų gatvė 100, Kaunas</h6>
-                <h6><i class="fas fa-phone"></i> +370600000</h6>
-                <h6><i class="fas fa-envelope"></i> spaminator9001@outlook.com</h6>
+                    <h2 class="text-left">Kontaktai</h2>
+                    <h5><i class="fas fa-wrench"></i> Dirbame darbo dienomis <strong>09</strong><sup>00</sup> - <strong>17</strong><sup>00</sup></h5>
+                    <h6><i class="fas fa-phone"></i> +370600000</h6>
+                    <h6><i class="fas fa-envelope"></i> spaminator9001@outlook.com</h6>
+                    <h6 class="last-icon"><i class="fas fa-home"></i> Studentų gatvė 100, Kaunas</h6>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2293.760295300303!2d23.952975816038066!3d54.90712936436001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46e718881086371b%3A0x1f29e86f32a58e1f!2sStudent%C5%B3+g.%2C+Kaunas!5e0!3m2!1slt!2slt!4v1526573523940"
+                            width="70%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>

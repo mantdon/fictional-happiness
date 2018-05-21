@@ -3,6 +3,7 @@
 {% set register_label = "REGISTRUOTIS" %}
 {% set login_label = "PRISIJUNGTI" %}
 {% set about_label = "APIE MUS" %}
+{% set reviews_label = "ATSILIEPIMAI" %}
 
 <ul class="navbar-nav col-sm-11">
     {% if home_active is defined and home_active == "true" %}
@@ -24,6 +25,17 @@
             <a class="nav-link" href="{{ path('services_page') }}">{{ services_label }}</a>
         </li>
     {% endif %}
+
+    {% if reviews_active is defined and reviews_active == "true" %}
+        <li class="nav-item active">
+            <span class="nav-link">{{ reviews_label }}</span>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('reviews') }}">{{ reviews_label }}</a>
+        </li>
+    {% endif %}
+
     {% if about_active is defined and about_active == "true" %}
         <li class="nav-item active">
             <span class="nav-link">{{ about_label }}</span>

@@ -153,4 +153,20 @@ class MessageManager{
 			->setBody($message->getContent(), 'text/html');
 		$this->mailer->send($message);
 	}
+
+    /**
+     * Sends the Message directly to the email. MessageMetaData creation
+     * is skipped for emails.
+     * @param Message $message
+     * @param         $recipient
+     */
+    public function sendMessageDirectlyToEmail(Message $message, $recipient)
+    {
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom($this->fromEmailAddress)
+            ->setTo($recipient)
+            ->setSubject($message->getTitle())
+            ->setBody($message->getContent(), 'text/html');
+        $this->mailer->send($message);
+    }
 }
