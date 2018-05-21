@@ -7,12 +7,10 @@ use App\Entity\Order;
 use App\Form\ReplyType;
 use App\Services\UserList;
 use App\Services\UserManager;
-use App\Entity\OrderProgressLine;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\ServiceType;
 use App\Services\MessageManager;
-use App\Services\OrderCreator;
 use App\Services\PaginationHandler;
 use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -326,7 +324,6 @@ class AdminController extends Controller
     public function createEmployeeAction(Request $request,
                                          UserManager $userManager): Response
     {
-        $this->userManager = $userManager;
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
 
@@ -335,7 +332,7 @@ class AdminController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
-            $this->userManager->createUser($user);
+            $userManager->createUser($user);
 
             $this->addFlash(
                 'notice',
