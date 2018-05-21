@@ -59,18 +59,14 @@
         <li class="nav-item">
             <div class="dropdown">
                 {% if hasUnreadMessages() %}
-                    <div class="notification_dot">!</div>
+                    <div class="notification_dot">{{ unreadMessagesCount() > 0 ? unreadMessagesCount() : ''}}</div>
                 {% endif %}
                 <button class="btn btn-nav-dropdown dropdown-toggle" type="button" id="userMenuDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ app.user.email }}
                 </button>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="userMenuDropdown">
                     {% if is_granted('ROLE_USER') %}
-                        <a class="dropdown-item
-                        {% if hasUnreadMessages() %}
-                            message-unread message-unread-glow
-                            {% endif %}
-                            " href="{{ path('user_home') }}">Profile</a>
+                        <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
                         <a class="dropdown-item" href="{{ path('order') }}">Register for service</a>
                     {% elseif is_granted('ROLE_ADMIN') %}
                         <a class="dropdown-item" href="{{ path('admin_home') }}">Admin panel</a>
