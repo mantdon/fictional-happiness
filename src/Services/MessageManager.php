@@ -155,6 +155,23 @@ class MessageManager{
 	}
 
     /**
+     * @param User $user
+     * @return int count of unread messages in user's inbox.
+     */
+    public function getUsersUnreadMessagesCount($user)
+    {
+        return $user->getMessages()->filter(
+            function($entry) {
+                if (!$entry->getIsRead()) {
+                    return true;
+                }
+
+                return false;
+            }
+        )->count();
+    }
+
+    /**
      * Sends the Message directly to the email. MessageMetaData creation
      * is skipped for emails.
      * @param Message $message
