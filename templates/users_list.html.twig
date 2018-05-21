@@ -50,7 +50,7 @@
                 <td>{{ user.address | highlight_pattern(pattern, highlight_color)}}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>
-                    {% if 'ROLE_USER' in user.roles %}
+                    {% if 'ROLE_USER' or 'ROLE_EMPLOYEE' in user.roles %}
                         {% if user.isEnabled is same as(true) %}
                             <a href="{{ path('user_ban', {id: user.id}) }}"><button type="button" class="btn custom-button">Blokuoti</button></a>
                         {% else %}
@@ -67,8 +67,6 @@
        currently active one.
     #}
     {% include 'Util/pagination.html.twig' with {
-        pageOffset: 2,
-        previousPageLabel: "Previous",
-        nextPageLabel: "Next"
+        pageOffset: 2
     } %}
 {% endblock %}

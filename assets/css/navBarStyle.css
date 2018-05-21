@@ -88,11 +88,13 @@
  */
 .navbar .navbar-nav{
     justify-content: center;
+    width: 85%;
 }
 
 .navbar .user-nav{
-    justify-content: right;
-
+    justify-content: flex-end;
+    width: 15%;
+    
     padding-right: 0;
 }
 /*</editor-fold>*/

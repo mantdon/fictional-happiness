@@ -14,8 +14,8 @@
                     {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
                     <a class="list-group-item" href="{{ path('user_order_show', {'id': order.id}) }}">
                         <div class="d-flex w-100 justify-content-between">
-                            <h6>Order #{{ order.id }}</h6>
-                            <h6>Visit date: {{ order.visitDate|date('Y/m/d') }}</h6>
+                            <h6>Užsakymas #{{ order.id }}</h6>
+                            <h6>Apsilankymo data: {{ order.visitDate|date('Y/m/d') }}</h6>
                         </div>
                         <div class="d-flex w-100 justify-content-between">
                         <h6>
@@ -24,19 +24,19 @@
                         } %}
                         </h6>
                         {% if order.progress.isDone %}
-                            <h6>Completion date: {{ order.progress.completionDate|date('Y/m/d') }}</h6>
+                            <h6>Baigta: {{ order.progress.completionDate|date('Y/m/d') }}</h6>
                         {% endif %}
                         </div>
                         <hr>
-                        <h6>Vehicle: {{ order.vehicle.make }} {{ order.vehicle.model }}</h6>
+                        <h6>Automobilis: {{ order.vehicle.make }} {{ order.vehicle.model }}</h6>
                         <hr>
                         <p class="mb-1">
-                            <h6>Services ordered: {{ order.services.count }}</h6>
+                            <h6>Užsakyta paslaugų: {{ order.services.count }}</h6>
                         </p>
-                        <h6>Total cost: ${{ order.cost }}</h6>
+                        <h6>Bendra suma: {{ order.cost }}€</h6>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="background: #b07156; width: {{ progressPercentage }}%;"></div>
-                            <small class="align-self-center justify-content-center d-flex position-absolute" style="width: 95%; font-size: 14px; color:black">Services done: {{ order.progress.numberOfServicesCompleted }} / {{ order.services.count }}</small>
+                            <small class="align-self-center justify-content-center d-flex position-absolute" style="width: 95%; font-size: 14px; color:black">Įvykdytos paslaugos: {{ order.progress.numberOfServicesCompleted }} / {{ order.services.count }}</small>
                         </div>
                     </a>
                 {% endfor %}
@@ -45,7 +45,7 @@
                 pageOffset: 2
             }%}
         {% else %}
-            <h1>Currently there are no ongoing orders.</h1>
+            <h1>Šiuo metu nėra pateiktų užsakymų.</h1>
         {% endif %}
     </div>
 {% endblock %}

@@ -9,11 +9,11 @@
 {% block tab_content %}
     <div class="panel" style="width: 100%; height: 100%; margin-top: 0;">
         <div class="d-flex w-100 justify-content-between">
-            <h6>From: {{ messageData.sender }}</h6>
-            <h6>Sent: {{ messageData.dateSent|date('Y/m/d') }}</h6>
+            <h6>Nuo: {{ messageData.sender }}</h6>
+            <h6>Išsiųsta: {{ messageData.dateSent|date('Y/m/d') }}</h6>
         </div>
         <h6>
-            To: {{
+            Kam: {{
                     messageData.recipient.firstName ~
                     ' ' ~
                     messageData.recipient.lastName
@@ -24,8 +24,8 @@
         <p class="mb-1">{{ messageData.message.content | raw }}</p>
         <hr style="background: #c0b7b1">
         <div>
-            <a type="button" class="btn custom-button" href="{{ path('user_messages') }}">Back</a>
-            <a type="button" class="btn custom-button" onclick="showModal('deleteMessage')">Delete</a>
+            <a class="custom-button" href="{{ path('user_messages') }}">Atgal</a>
+            <a class="custom-button" onclick="showModal('deleteMessage')">Ištrinti</a>
         </div>
     </div>
     {% include 'Profile/Messages/profile_messages_delete_confirm.html.twig' %}
