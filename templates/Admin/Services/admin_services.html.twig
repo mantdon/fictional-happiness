@@ -25,17 +25,16 @@
                         <td>{{ service.id }}</td>
                         <td>{{ service.name }}</td>
                         {# Wrapping should be enabled for descriptions #}
-                        <td class="column-word-wrap">{{ service.description }}</td>
                         <td>${{ service.price }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn custom-button dropdown-toggle" type="button" id="serviceActionDropdown" data-toggle="dropdown" aria-haspopup="true" ara-expanded="false">
-                                    Actions
+                                    Veiksmai
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="serviceActionDropdown">
-                                    <a class="dropdown-item" href="{{ path('service_edit', {('id'):service.id }) }}">Edit</a>
+                                    <a class="dropdown-item" href="{{ path('service_edit', {('id'):service.id }) }}">Redaguoti</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ path('service_show', {('id'):service.id }) }}">Delete</a>
+                                    <a class="dropdown-item" href="{{ path('service_show', {('id'):service.id }) }}">Pašalinti</a>
                                 </div>
                             </div>
                         </td>
@@ -50,7 +49,7 @@
             pageOffset: 2,
         } %}
     {% else %}
-        <h1>No services found. Use the button below to add a new service.</h1>
+        <h1>Paslaugų sąrašas tusčias. Spauskite mygtuką žemiau, kad sukurtumėt.</h1>
     {% endif %}
-    <a class="btn custom-button" href="{{ path('service_new') }}">Add new service</a>
+    <a class="btn custom-button" href="{{ path('service_new') }}">Sukurti naują paslaugą</a>
 {% endblock %}

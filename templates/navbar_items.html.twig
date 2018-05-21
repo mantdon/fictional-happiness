@@ -70,9 +70,7 @@
     {% elseif app.user %}
         <li class="nav-item">
             <div class="dropdown">
-                {% if hasUnreadMessages() %}
                     <div class="notification_dot">{{ unreadMessagesCount() > 0 ? unreadMessagesCount() : ''}}</div>
-                {% endif %}
                 <button class="btn btn-nav-dropdown dropdown-toggle" type="button" id="userMenuDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ app.user.email }}
                 </button>

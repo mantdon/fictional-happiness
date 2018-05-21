@@ -9,7 +9,6 @@
 {% block panel_content %}
     {{ form_start(form) }}
     {{ form_row(form.name, {'attr': {'class' : 'form-control'}, 'label': 'Pavadinimas'}) }}
-    {{ form_row(form.description, {'attr': {'class' : 'form-control'}, 'label': 'Aprašymas'}) }}
     {{ form_row(form.price, {'attr': {'class' : 'form-control'}, 'label': 'Kaina'}) }}
     <hr>
     {{ form_row(form.submit, {'attr': {'class' : 'btn custom-button button-full-width'}, 'label': 'Atnaujinti'}) }}
@@ -18,11 +17,11 @@
 {% endblock %}
 
 {% block b %}
-    <h1>Edit Service</h1>
+    <h1>Redaguoti</h1>
 
     {{ include('service/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('service_index') }}">back to list</a>
+    <a href="{{ path('service_index') }}">Grįžti</a>
 
     {{ include('service/_delete_form.html.twig') }}
 {% endblock %}

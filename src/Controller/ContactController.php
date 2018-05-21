@@ -27,7 +27,7 @@ class ContactController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
             $em->flush();
-            $this->addFlash('notice', 'Form submitted[PH]');
+            $this->addFlash('notice', 'Laiškas išsiųstas.');
             unset($contact);
             unset($form);
             $contact = new Contact();

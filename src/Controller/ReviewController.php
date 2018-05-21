@@ -54,7 +54,7 @@ class ReviewController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
             $em->flush();
-            $this->addFlash('notice', 'Review added[PH]');
+            $this->addFlash('notice', 'Atsiliepimas nusiųstas.');
             return $this->redirectToRoute('reviews');
         }
         return $this->render('Review/review_write.html.twig',
@@ -80,7 +80,7 @@ class ReviewController extends Controller
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist( $review );
                 $entityManager->flush();
-                $this->addFlash('notice', 'Review updated[PH]');
+                $this->addFlash('notice', 'Atsiliepimas paredaguotas.');
                 return $this->redirectToRoute( 'reviews' );
             }
             $newReview->setContent($review->getContent());
@@ -120,7 +120,7 @@ class ReviewController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($review);
             $em->flush();
-            $this->addFlash('notice', 'Review deleted[PH]');
+            $this->addFlash('notice', 'Atsiliepimas ištrintas.');
         }
         return $this->redirectToRoute('reviews');
     }
