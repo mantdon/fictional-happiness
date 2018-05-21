@@ -50,7 +50,7 @@ class AdminController extends Controller
         $orderBy = ['role' => 'ASC', 'id' => 'ASC'];
 
         if (isset($searchPattern)) {
-            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 20, $searchPattern, $orderBy);
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 20, $searchPattern, null, $orderBy);
             $totalUserCount = $userList->getUsersCount();
         }
         else {

@@ -51,11 +51,11 @@ class EmployeeController extends Controller
         $orderBy = ['role' => 'ASC', 'id' => 'ASC'];
 
         if (isset($searchPattern)) {
-            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 5, $searchPattern, ['role' => 'ROLE_USER'], $orderBy);
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 20, $searchPattern, ['role' => 'ROLE_USER'], $orderBy);
             $totalUserCount = $userList->getUsersCount(['role' => 'ROLE_USER']);
         }
         else {
-            $paginationHandler = $userList->getPaginatedList('getAllBy', $page, 5, ['role' => 'ROLE_USER'], $orderBy);
+            $paginationHandler = $userList->getPaginatedList('getAllBy', $page, 20, ['role' => 'ROLE_USER'], $orderBy);
             $totalUserCount = $paginationHandler->getResult()->getTotalCount();
         }
 

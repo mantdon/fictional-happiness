@@ -39,8 +39,12 @@ class UserRepository extends EntityRepository
      * @param array $criteria
      * @return QueryBuilder
      */
-    private function addCriteria(QueryBuilder $builder, array $criteria): QueryBuilder
+    private function addCriteria(QueryBuilder $builder, ?array $criteria): QueryBuilder
     {
+        if ($criteria === null) {
+           return $builder;
+        }
+        
         foreach ($criteria as $criterion => $value) {
             $builder->andWhere('u.' . $criterion . '=' . ':' . $criterion)
                 ->setParameter($criterion, $value);
@@ -74,7 +78,7 @@ class UserRepository extends EntityRepository
      * @param null|array [field => order, ...]
      * @return Query with users that has at least one field matched given pattern and meeting criteria.
      */
-    public function findByPattern(string $pattern, array $criteria = [], ?array $orderBy = []): Query
+    public function findByPattern(string $pattern, ?array $criteria = [], ?array $orderBy = []): Query
     {
         $query =  $this->createQueryBuilder('u')
             ->where('u.id LIKE :pattern')
