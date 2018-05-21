@@ -1,0 +1,83 @@
+.review-form .review-content {
+    height: 200px;
+}
+.review-form .cancel-button-wrapper {
+    padding-left: 16px;
+    padding-right: 20px;
+}
+
+div.stars {
+    width: 270px;
+    display: inline-block;
+}
+input.star { display: none; }
+label.star, div.star {
+    float: right;
+    padding: 0 10px;
+    font-size: 36px;
+    color: #444;
+    transition: all .2s;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+div.star {
+    font-size: 26px;
+    cursor: auto;
+}
+input.star-1:checked ~ label.star:before, div.star{ color: #B07156; }
+label.star:hover { transform: rotate(-15deg) scale(1.3); }
+label.star:before, div.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+}
+input.star:checked ~ label.star:before, div.rated-star:before  {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+}
+input.star-5:checked ~ label.star:before, div.rated-star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+}
+.stars-title {
+    margin-bottom: 8px;
+}
+.stars ul {
+    margin-bottom: 0;
+}
+.reviews-title {
+    margin-bottom: 20px;
+}
+.reviews-list .stars {
+    margin-bottom: 30px;
+}
+.reviews-list .content, button.submit-delete  {
+    margin-bottom: 10px;
+}
+.reviews-list .name, .reviews-list .content {
+    font-size: 20px;
+}
+.reviews-list .stars, .reviews-list .info {
+    float: left;
+}
+.reviews-list .delete {
+    float: right;
+}
+.reviews-list .content {
+    clear: both;
+}
+@media only screen and (max-width: 600px) {
+    .reviews-list .stars, .reviews-list .info, .reviews-list .delete {
+        float: none;
+    }
+    .reviews-list .stars .star {
+        float: left;
+    }
+    .reviews-list .stars .star:first-child {
+        padding-left: 0;
+    }
+    .reviews-list .stars, .reviews-list .delete, .reviews-list .content {
+        margin-bottom: 10px;
+    }
+
+}

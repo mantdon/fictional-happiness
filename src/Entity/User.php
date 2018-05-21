@@ -16,14 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity("email", message="Pasirinktas elektroninis paštas jau užregistruotas")
  */
 class User implements AdvancedUserInterface, \Serializable
-{
-    public function __construct(){
-    	$this->vehicles = new ArrayCollection();
-    	$this->messages = new ArrayCollection();
-    	$this->orders = new ArrayCollection();
-    }
-
-	/**
+{	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -31,7 +24,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank(message="Įveskite Email")
      * @Assert\Email(message="Neteisingas Email formatas")
      */
@@ -97,6 +90,11 @@ class User implements AdvancedUserInterface, \Serializable
 	 */
     private $vehicles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="user")
+     */
+    private $reviews;
+
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\MessageMetaData", mappedBy="recipient");
 	 */
@@ -106,6 +104,20 @@ class User implements AdvancedUserInterface, \Serializable
 	 * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
 	 */
     private $orders;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Order", mappedBy="watchingUsers")
+     * @ORM\OrderBy({"status" = "ASC"})
+     */
+    private $watchedOrders;
+
+    public function __construct(){
+        $this->vehicles = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->watchedOrders = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+    }
 
     public function getUsername()
     {
@@ -334,6 +346,10 @@ class User implements AdvancedUserInterface, \Serializable
     	return $this->vehicles;
     }
 
+    public function getReviews(){
+        return $this->reviews;
+    }
+
     public function getMessages(){
     	return $this->messages;
     }
@@ -391,5 +407,29 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function isEnabled() {
         return $this->isEnabled;
+    }
+
+    public function addWatchedOrder(Order $order): self
+    {
+        if (!$this->watchedOrders->contains($order)) {
+            $this->watchedOrders[] = $order;
+            $order->addWatchingUser($this);
+        }
+        return $this;
+    }
+
+    public function removeWatchedOrder(Order $order): self
+    {
+        if ($this->watchedOrders->contains($order)) {
+           $this->watchedOrders->removeElement($order);
+           $order->removeWatchingUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getWatchedOrders()
+    {
+        return $this->watchedOrders;
     }
 }

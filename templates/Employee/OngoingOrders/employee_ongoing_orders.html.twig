@@ -1,0 +1,11 @@
+{% extends 'Employee/base.html.twig' %}
+
+{% block panels %}
+    {% include 'Employee/employee_panels.html.twig' with {
+        ongoing_orders_active: 'true'
+    }%}
+{% endblock %}
+
+{% block panel_content %}
+    {% include 'OngoingOrders/ongoing_orders.html.twig' %}
+{% endblock %}

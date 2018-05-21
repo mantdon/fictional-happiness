@@ -24,7 +24,6 @@ class OrderCreator
     {
         $order = new Order();
         $visitDate = new \DateTime($date);
-       // $services = $this->getReferenceCollection('App:Service', $this->getIds($services));
         $services = $this->em->getRepository('App:Service')->findBy(['id' => $this->getIds($services)]);
         $order
             ->setVehicle($this->getReference('App:Vehicle', $vehicle['id']))
@@ -123,7 +122,7 @@ class OrderCreator
     {
 	    $message = "Order cancelled";
 	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
-		    return $message = "Only recently placed and not ongoing orders may be cancelled.";
+		    $message = "Only recently placed and not ongoing orders may be cancelled.";
 	    else
 	    	$this->changeStatus($order, EnumOrderStatusType::Canceled);
 	    return $message;
@@ -133,7 +132,7 @@ class OrderCreator
     {
 	    $message = "Order terminated";
 	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
-		    return $message = "Only recently placed and not ongoing orders may be terminated.";
+		    $message = "Only recently placed and not ongoing orders may be terminated.";
 	    else
 	    	$this->changeStatus($order, EnumOrderStatusType::Terminated);
 	    return $message;
@@ -143,7 +142,7 @@ class OrderCreator
     {
     	$message = "Užsakymo #".$order->getId()." vykdymas pradėtas.";
 	    if($order->getStatus() !== EnumOrderStatusType::getValue(EnumOrderStatusType::Placed))
-	    	return $message = "Tik naujai pateiktų ir vykdyti nepradėtų užsakymų vykdymas gali būti pradėtas.";
+	    	$message = "Tik naujai pateiktų ir vykdyti nepradėtų užsakymų vykdymas gali būti pradėtas.";
 	    else
 	    	$this->changeStatus($order, EnumOrderStatusType::Ongoing);
 	    return $message;
@@ -172,24 +171,6 @@ class OrderCreator
         }
 
         return $cost;
-    }
-
-    /**
-     * May be used in the future
-     * @param $entityName String
-     * @param $ids array
-     * @return ArrayCollection used for setting multiple relationships.
-     */
-    private function getReferenceCollection($entityName, $ids)
-    {
-        $result = new ArrayCollection();
-
-        foreach ($ids as $id)
-        {
-            $result->add($this->getReference($entityName, $id));
-        }
-
-        return $result;
     }
 
     /**

@@ -3,9 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\User;
 use App\Helpers\EnumOrderStatusType;
-use App\Helpers\Pagination;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -21,52 +22,71 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-	// Used by PaginatedListFetcher. Due for cleanup.
-	public function getAll($currentPage = 1, $limit = 5){
-		$qb = $this->createQueryBuilder('o')
+    /**
+     * Intended to be called by PaginationHandler to paginate the query
+     * @param User $user orders watched by this user will be brought
+     * to the top
+     * @return Query a query for all orders flagged as placed or ongoing
+     * sorted by status and visit date.
+     */
+	public function getPlacedAndOngoingOrders(User $user): Query
+	{
+		return $this->createQueryBuilder('o')
 					->leftJoin('o.progress', 'p')
 					->leftJoin('o.user', 'u')
+                    ->leftJoin('o.watchingUsers', 'wo')
 					->where('o.status = ?1')
 					->orWhere('o.status = ?2')
+                    ->orWhere('wo.id = ?3')
 					->andWhere('u.isEnabled = 1')
-					->orderBy('o.status', 'ASC')
+                    ->orderBy('SUM(CASE WHEN wo.id = ?3 THEN 1 ELSE 0 END)', 'DESC')
+					->addOrderBy('o.status', 'ASC')
 					->addOrderBy('o.visitDate', 'ASC')
+                    ->groupBy('o')
 					->setParameter(1, EnumOrderStatusType::Placed)
 					->setParameter(2, EnumOrderStatusType::Ongoing)
+                    ->setParameter(3, $user->getId())
 					->getQuery();
-		$paginator = Pagination::paginate($qb, $currentPage, $limit);
-		return $paginator;
 	}
 
-	public function getCompleted($currentPage = 1, $limit = 5)
+	/**
+	 * Intended to be called by PaginationHandler to paginate the query
+	 * @return Query a query for all orders flagged as complete sorted
+	 * by completion date in descending order.
+	 */
+	public function getCompletedOrdersForAdmin(): Query
 	{
-		$qb = $this->createQueryBuilder('o')
+		return $this->createQueryBuilder('o')
 					->leftJoin('o.progress', 'progress')
-					->where('progress.isDone = 1')
+					->where('o.status = ?1')
 					->orderBy('progress.completionDate', 'DESC')
+					->setParameter(1, EnumOrderStatusType::Complete)
 					->getQuery();
-		$paginator = Pagination::paginate($qb, $currentPage, $limit);
-		return $paginator;
 	}
 
-	public function getForUser(\App\Entity\User $user, $currentPage = 1, $limit = 5)
+	/**
+	 * Intended to be called by PaginationHandler to paginate the query
+	 * @param User $user
+	 * @return Query a query for all orders placed by the $user sorted by status,
+	 * visit and completion dates.
+	 */
+	public function getUserOrders(User $user): Query
 	{
-		$qb = $this->createQueryBuilder('o')
-			->where('o.user = ?1')
-			->leftJoin('o.progress', 'p')
-			->orderBy('o.status', 'ASC')
-			->addOrderBy('p.completionDate', 'DESC')
-			->addOrderBy('o.visitDate', 'ASC')
-			->setParameter(1, $user)
-			->getQuery();
-		$paginator = Pagination::paginate($qb, $currentPage, $limit);
-		return $paginator;
+		return $this->createQueryBuilder('o')
+					->where('o.user = ?1')
+					->leftJoin('o.progress', 'p')
+					->orderBy('o.status', 'ASC')
+					->addOrderBy('p.completionDate', 'DESC')
+					->addOrderBy('o.visitDate', 'ASC')
+					->setParameter(1, $user)
+					->getQuery();
 	}
 
-    /**
-     * @param $date \DateTime
-     */
-    public function findAllOnDate($date)
+	/**
+	 * @param $date string
+	 * @return mixed
+	 */
+    public function findAllOnDate(string $date)
     {
         return $this->createQueryBuilder('a')
             ->where('YEAR(a.visitDate) = YEAR(:date) AND
@@ -78,7 +98,11 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllOnMonth($date)
+	/**
+	 * @param $date string
+	 * @return mixed
+	 */
+    public function findAllOnMonth(string $date)
     {
         return $this->createQueryBuilder('a')
             ->where('YEAR(a.visitDate) = YEAR(:date) AND

@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('user_ban_confirm', {'id': user.id}) }}">
     <input type="hidden" name="_method" value="POST">
     <input type="hidden" name="_token" value="{{ csrf_token('ban' ~ user.id) }}">
-    <button class="btn btn-danger button-full-width">Užblokuoti</button>
+    <button class="btn custom-button w-100">Užblokuoti</button>
 </form>

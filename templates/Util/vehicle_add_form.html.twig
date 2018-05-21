@@ -1,11 +1,14 @@
+{% if submitLabel is not defined %}
+   {% set submitLabel = 'Pridėti automobilį' %}
+{% endif %}
 <div class="modal-body">
     {{ form_start(form) }}
-    {{ form_row(form.make, {'attr': {'class': 'form-control'}, 'label': 'Markė'}) }}
-    {{ form_row(form.model, {'attr': {'class': 'form-control'}, 'label': 'Modelis'}) }}
-    {{ form_row(form.year_of_production, {'attr': {'class': 'form-control'}, 'label': 'Pagaminimo metai'}) }}
-    {{ form_row(form.plate_number, {'attr': {'class': 'form-control'}, 'label': 'Numeriai'}) }}
+    {{ form_row(form.make, {'attr': {'class': 'textField'}, 'label': 'Markė'}) }}
+    {{ form_row(form.model, {'attr': {'class': 'textField'}, 'label': 'Modelis'}) }}
+    {{ form_row(form.year_of_production, {'attr': {'class': 'textField'}, 'label': 'Pagaminimo metai', 'oninvalid': "setCustomValidity('s')"}) }}
+    {{ form_row(form.plate_number, {'attr': {'class': 'textField'}, 'label': 'Numeriai'}) }}
 </div>
 <div class="modal-footer">
-    {{ form_row(form.submit, {'attr': {'class': 'btn custom-button'}, 'label': 'Pridėti automobilį'}) }}
+    {{ form_widget(form.submit, {'attr': {'class': 'btn custom-button w-100'}, 'label': submitLabel}) }}
     {{ form_end(form) }}
 </div>

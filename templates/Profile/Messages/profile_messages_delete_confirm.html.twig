@@ -1,13 +1,11 @@
 <div class="modal fade" id="deleteMessage" tabindex="-1" role="dialog" aria-labelledby="deleteMessageLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content custom-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteMessageLabel">Ištrinti žinutę?</h5>
                 <a  onclick="showModal('deleteMessage')" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
-            </div>
-            <div class="modal-body">
             </div>
             <div class="modal-footer">
                 {{ include('Profile/Messages/_delete_form.html.twig') }}

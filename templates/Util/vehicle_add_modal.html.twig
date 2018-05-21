@@ -2,11 +2,11 @@
 
 <div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="addVehicleLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content custom-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="addVehicleLabel">Pridėti naują automobilį</h5>
                 <a  href="{{ path('user_vehicles') }}" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times</span>
+                    <i class="fas fa-times fa-sm"></i>
                 </a>
             </div>
             {% block modal_contents %}

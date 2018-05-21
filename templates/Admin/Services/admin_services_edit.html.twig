@@ -13,7 +13,7 @@
     {{ form_row(form.price, {'attr': {'class' : 'form-control'}, 'label': 'Kaina'}) }}
     <hr>
     {{ form_row(form.submit, {'attr': {'class' : 'btn custom-button button-full-width'}, 'label': 'Atnaujinti'}) }}
-    <a class="btn btn-warning button-full-width" href="{{ path('admin_services') }}">Atšaukti</a>
+    <a class="btn custom-button w-100" href="{{ path('admin_services') }}">Atšaukti</a>
     {{ form_end(form) }}
 {% endblock %}
 

@@ -1,0 +1,5 @@
+<form class="w-100" method="post" action="{{ path('review_delete_confirm', {'id': review.id}) }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ review.id) }}">
+    <button class="btn btn-danger w-100 submit-delete">Ištrinti</button>
+</form>

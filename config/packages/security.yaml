@@ -44,4 +44,5 @@ security:
         - { path: ^/user, roles: ROLE_USER }
         - { path: ^/order, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/employee, roles: ROLE_EMPLOYEE}
         # - { path: ^/profile, roles: ROLE_USER }

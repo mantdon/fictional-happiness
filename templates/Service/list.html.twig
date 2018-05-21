@@ -1,34 +1,33 @@
 {% if services.count > 0%}
-    <table class="table services-table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Pavadinimas</th>
-            <th>Aprašymas</th>
-            <th>Kaina</th>
-        </tr>
-        </thead>
-        <tbody>
+    {{ form_start(form) }}
+    {{ form_errors(form.key) }}
+    <div class="form-inline">
+        {{ form_widget(form.key, {'attr': {'class': 'textField search-input', 'placeholder': 'Ieškoti paslaugų'}} ) }}
+        {{ form_widget(form.submit, {'attr': {'class': 'btn search-button fa fa-search'}, 'label': ' '}) }}
+    </div>
+    {{ form_end(form) }}
+    <div class="list-group services-list">
         {% for service in services %}
-            <tr class="table-fixed">
-                {# For testing purposes only, should not be displayed otherwise #}
-                <td>{{ service.id }}</td>
-                <td>{{ service.name }}</td>
-                {# Wrapping should be enabled for descriptions #}
-                <td class="column-word-wrap">{{ service.description }}</td>
-                <td>${{ service.price }}</td>
-            </tr>
+            <div class="list-group-item">
+                <div class="service-name">
+                    {{ service.name }}
+                </div>
+                <hr>
+                <p class="mb-1">
+                    {{ service.description }}
+                </p>
+                <hr>
+                {{ service.price }} €
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-    {# pageOffset - number of page buttons to display on either side of
-       currently active one.
-    #}
+    </div>
     {% include 'Util/pagination.html.twig' with {
-        pageOffset: 2,
-        previousPageLabel: "Previous",
-        nextPageLabel: "Next"
-    } %}
-{% else %}
-    <h1>There are currently no services provided.</h1>
+        pageOffset: 2
+    }%}
+    {% else %}
+        <div>
+            <strong>
+                Šiuo metu neteikiame jokių paslaugų.
+            </strong>
+        </div>
 {% endif %}

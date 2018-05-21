@@ -3,6 +3,7 @@
 {% set register_label = "REGISTRUOTIS" %}
 {% set login_label = "PRISIJUNGTI" %}
 {% set about_label = "APIE MUS" %}
+{% set reviews_label = "ATSILIEPIMAI" %}
 
 <ul class="navbar-nav col-sm-11">
     {% if home_active is defined and home_active == "true" %}
@@ -21,9 +22,20 @@
     </li>
     {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('service_index') }}">{{ services_label }}</a>
+            <a class="nav-link" href="{{ path('services_page') }}">{{ services_label }}</a>
         </li>
     {% endif %}
+
+    {% if reviews_active is defined and reviews_active == "true" %}
+        <li class="nav-item active">
+            <span class="nav-link">{{ reviews_label }}</span>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('reviews') }}">{{ reviews_label }}</a>
+        </li>
+    {% endif %}
+
     {% if about_active is defined and about_active == "true" %}
         <li class="nav-item active">
             <span class="nav-link">{{ about_label }}</span>
@@ -70,6 +82,8 @@
                         <a class="dropdown-item" href="{{ path('order') }}">Register for service</a>
                     {% elseif is_granted('ROLE_ADMIN') %}
                         <a class="dropdown-item" href="{{ path('admin_home') }}">Admin panel</a>
+                    {% elseif is_granted('ROLE_EMPLOYEE') %}
+                        <a class="dropdown-item" href="{{ path('employee_home') }}">Employee panel</a>
                     {% endif %}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>

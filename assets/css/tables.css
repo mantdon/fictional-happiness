@@ -37,8 +37,13 @@
 }
 
 .services-table tbody tr:hover, .date-table tbody tr:hover{
-    background: #c69c72;
-    color: #433E3F;
+    background: #c0b7b1;
+    color: #433E3F !important;
+}
+
+.services-table tbody tr:hover span{
+    background: #c0b7b1;
+    color: #433E3F !important;
 }
 
 .services-table tbody tr:hover td, .date-table tbody tr:hover td{
@@ -74,5 +79,55 @@
     margin-top: 35px;
     grid-template-columns: auto auto;
     grid-column-gap: 45px;
+}
+
+.vehicles-list .list-group-item,
+.reviews-list .list-group-item,
+.visitors-mail-list .list-group-item,
+.services-list .list-group-item {
+    border: 4px double #B07156;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background: #433E3F;
+    color: #e8edf3;
+}
+.search-input {
+    width: 250px;
+}
+.back-button {
+    margin-bottom: 20px;
+}
+.form-inline {
+    position: relative;
+}
+.search-button {
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 260px;
+}
+.service-name {
+    font-weight: bold;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.watched-order-indicator{
+    padding: 0 !important;
+    width: 0;
+}
+.watched-order-indicator:after {
+    content: '';
+    display: inline-block;
+
+    width: 13px;
+    height: 13px;
+    background: #a0cc63;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+
 }
 

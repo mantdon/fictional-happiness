@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Atsiliepimai{% endblock %}
+
+{% set reviews_active = 'true' %}
+
+{% block content %}
+    <div class="review-form">
+        <div class="modal-body">
+            <div class="stars-title">Reitingas</div>
+            <div class="stars">
+                {{ form_start(form) }}
+                {{ form_errors(form.rating) }}
+                {% for rating in form.rating %}
+                    {{ form_widget(rating, {'attr': {'class': 'star star-' ~ loop.index }}, {'value' : loop.index}) }}
+                    {{ form_label(rating, ' ', {'label_attr': {'class': 'star star-'  ~ loop.index}}) }}
+                {% endfor %}
+            </div>
+            {{ form_row(form.content, {'attr': {'class': 'review-content textField'}, 'label': 'Atsiliepimas'}) }}
+        </div>
+        <div class="modal-footer">
+            {{ form_widget(form.submit, {'attr': {'class': 'btn custom-button w-100'}, 'label': 'Patvirtinti'}) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="cancel-button-wrapper">
+            <a href="{{ path('reviews') }}"><button class="btn custom-button cancel-button w-100">Atšaukti</button></a>
+        </div>
+    </div>
+{% endblock %}

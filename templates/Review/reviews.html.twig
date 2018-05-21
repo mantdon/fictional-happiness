@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Atsiliepimai{% endblock %}
+
+{% set reviews_active = 'true' %}
+
+{% block content %}
+    <h1 class="text-center">Atsiliepimai</h1>
+    {% if user is not null %}
+        <a href="{{ path('review_add') }}"><button class="btn reviews-title custom-button w-100">Rašyti atsiliepimą</button></a>
+    {% endif %}
+    {% if reviews.count > 0 %}
+        <div class="list-group reviews-list">
+            {% for review in reviews  %}
+                <div class="list-group-item">
+                    <div class="info">
+                        <div class="name">
+                            {{ review.user.email }}
+                        </div>
+                        <div class="date">
+                            {{ review.creationDate|date('Y/m/d - H:i') }}
+                        </div>
+                    </div>
+                    <div class="stars">
+                        {% for i in 5..1 %}
+                            {% if i <= review.rating %}
+                                <div class="star rated-star"></div>
+                            {% else %}
+                                <div class="star"></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% if user != null %}
+                        {% if 'ROLE_ADMIN' in user.roles or review.user.id == user.id %}
+                            <div class="delete">
+                                <a href="{{ path('review_delete', {('id'):review.id }) }}">
+                                    <button class="btn">Ištrinti atsiliepimą</button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="content">
+                        {{ review.content }}
+                    </div>
+                    {% if user != null %}
+                        {% if review.user.id == user.id %}
+                            <a href="{{ path('review_edit', {('id'):review.id }) }}">
+                                <button class="w-100 btn custom-button" type="button">
+                                    Modifikuoti
+                                </button>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'Util/pagination.html.twig' with{
+            pageOffset: 2
+        }%}
+    {% else %}
+        <div style="padding-bottom: 10px">
+            <strong>
+                Šiuo metu atsiliepimų nėra.
+            </strong>
+        </div>
+        <br>
+    {% endif %}
+
+{% endblock %}

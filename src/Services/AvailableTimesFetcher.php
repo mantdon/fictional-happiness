@@ -41,9 +41,10 @@ class AvailableTimesFetcher
     private function formAvailableVisitTimes($date, $orders)
     {
         $availableTimes = [];
-        $orderIndex = $this->findIndexOfFirstOrderInWorkday($orders);
+        $startTime = $this->getStartTime($date);
+        $orderIndex = $this->findNextIndexAfterStartTime($orders, $startTime);
 
-        for ($i = $this->getStartTime($date); $i < $this->workDayEndsAt; $i += $this->hoursInterval)
+        for ($i = $startTime; $i < $this->workDayEndsAt; $i += $this->hoursInterval)
         {
             $formattedTime = $this->floatToTime($i);
 
@@ -58,16 +59,17 @@ class AvailableTimesFetcher
 
     /**
      * Is used for skipping orders that were registered for a time out of working hours range.
-     * @param $orders
+     * @param $orders array
+     * @param $startTime float
      * @return int
      */
-    private function findIndexOfFirstOrderInWorkday($orders)
+    private function findNextIndexAfterStartTime($orders, $startTime)
     {
         $index = 0;
 
         foreach($orders as $order)
         {
-            if($order->getVisitDate()->format('H:i') < $this->floatToTime($this->workDayBeginsAt))
+            if($order->getVisitDate()->format('H:i') < $this->floatToTime($startTime))
                 $index++;
         }
 
@@ -90,8 +92,12 @@ class AvailableTimesFetcher
     private function getStartTime($date)
     {
         if($this->isToday($date)) {
-            $now = $this->timeToFloat(date('H:i'));
-            $offset = ceil(($now - $this->workDayBeginsAt) / $this->hoursInterval) * $this->hoursInterval;
+            $now = $this->timeToFloat(date('H:i', time()));
+            $registrationTimesPassed = ($now - $this->workDayBeginsAt) / $this->hoursInterval;
+            if (abs($registrationTimesPassed - round($registrationTimesPassed)) < 0.0001)
+                $registrationTimesPassed += 1;
+
+            $offset = ceil($registrationTimesPassed) * $this->hoursInterval;
             if($offset > 0)
                 return $this->workDayBeginsAt + $offset;
         }
@@ -106,7 +112,7 @@ class AvailableTimesFetcher
      */
     private function isToday($date)
     {
-        if(strcmp(date('Y-m-d'), $date) === 0)
+        if(strcmp(date('Y-m-d', time()), $date) === 0)
             return true;
         return false;
     }
@@ -145,6 +151,19 @@ class AvailableTimesFetcher
         if (strcmp($orderTime, $checkTime) === 0)
                 return true;
 
+        return false;
+    }
+
+    /**
+     * Checks if day has any available times.
+     * This shouldn't be in this class, but I have no idea where to put it and it make ease to test UnavailableDaysFinder.
+     * @param $date string 'Y-m-d'
+     * @return bool
+     */
+    public function isDayUnavailable($date)
+    {
+        if (count($this->fetchDay($date)) === 0)
+            return true;
         return false;
     }
 }

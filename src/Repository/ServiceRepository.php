@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Service;
-use App\Helpers\Pagination;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -20,22 +20,20 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
-    public function getAll($currentPage = 1, $limit = 5){
-    	$qb = $this->createQueryBuilder('s')->getQuery();
-    	$paginator = Pagination::paginate($qb, $currentPage, $limit);
-    	return $paginator;
-    }
-
-    public function findByPattern($pattern)
+	/**
+	 * Intended to be called by PaginationHandler to paginate the query.
+	 * @return Query a query for all services.
+	 */
+    public function getAll(): Query
     {
-        if(strlen($pattern) == 0)
-            return $this->findBy([]);
-
-        $qb = $this->createQueryBuilder('a')
-            ->where('a.name LIKE :name')
-            ->setParameter('name', '%'. $pattern .'%')
-            ->getQuery();
-
-        return $qb->getResult();
+	    return $this->createQueryBuilder('s')->getQuery();
     }
+
+	public function findByPattern($pattern)
+	{
+        return $this->createQueryBuilder('a')
+			->where('a.name LIKE :name')
+			->setParameter('name', '%'. $pattern .'%')
+			->getQuery();
+	}
 }
