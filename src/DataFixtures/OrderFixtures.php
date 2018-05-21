@@ -53,8 +53,9 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 100; $i++) {
-            $this->createOrder($i);
+        for ($i = 0; $i < 200; $i++) {
+            $order = $this->createOrder($i);
+            $this->addReference('order' . $i, $order);
         }
 
         $this->createOrdersThatActuallyOccupyTimes();
@@ -74,31 +75,7 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
 
         $order = $this->orderCreator->createOrder($vehicle, $serviceIds, $visitDate->format('Y-m-d H:i'), $user);
 
-        $this->setOrderCompletion($order);
-
         return $order;
-    }
-
-    private function setOrderCompletion(Order $order)
-    {
-        $progress = $order->getProgress();
-        $lines = $progress->getLines();
-        $visitDate = $order->getVisitDate();
-        $this->orderCreator->approveOrder($order);
-
-        if ($visitDate < new \DateTime('-1 week')) {
-            foreach ($lines as $line) {
-                $this->orderCreator->completeLine($line);
-            }
-        }
-        else if ($visitDate < new \DateTime()) {
-            foreach ($lines as $line) {
-                if (random_int(1, 3) > 1) {
-                    $this->orderCreator->completeLine($line);
-                }
-            }
-        }
-        $this->orderCreator->finalizeOrder($order);
     }
 
     private function getRandomServices(): array
