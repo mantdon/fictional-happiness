@@ -1,0 +1,14 @@
+.page-footer {
+    flex: 0 0 auto;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #433e3f;
+    color: white;
+    text-align: center;
+
+    border-radius: 0;
+    border-top: 4px double #b07156;
+    border-bottom: 4px double #b07156;
+}

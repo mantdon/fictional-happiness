@@ -8,6 +8,11 @@ header .logo {
     overflow: auto;
 }
 
+.scrollable-horizontal {
+    max-width: 100vw;
+    overflow-x: auto;
+}
+
 .about-panel{
     color: #e8edf3;
     background: #433e3f;

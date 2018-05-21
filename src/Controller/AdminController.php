@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Order;
+use App\Form\ReplyType;
+use App\Services\UserList;
 use App\Services\UserManager;
-use App\Entity\OrderProgressLine;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\ServiceType;
 use App\Services\MessageManager;
-use App\Services\OrderCreator;
 use App\Services\PaginationHandler;
 use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,29 +37,37 @@ class AdminController extends Controller
 	//<editor-fold desc="Users">
 	/**
 	 * @Route ("/users/{page}", name="admin_users", defaults={"page"=1}, requirements={"page"="\d+"})
-	 * @param PaginationHandler $paginationHandler
+     * @param Request $request
+	 * @param UserList $userList
 	 * @param                   $page
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 * @throws \BadMethodCallException
 	 * @throws \InvalidArgumentException
 	 */
-	public function usersPageAction(PaginationHandler $paginationHandler, $page): Response
+	public function usersPageAction(Request $request, UserList $userList, $page): Response
 	{
-		$paginationHandler->setQuery('App:User', 'getAll')
-						  ->setPage($page)
-						  ->setItemLimit(5)
-						  ->addLastUsedPageUseCase('/users/ban')
-						  ->addLastUsedPageUseCase('/users/unban')
-						  ->paginate();
+        $searchPattern = $request->get('pattern');
+        $orderBy = ['role' => 'ASC', 'id' => 'ASC'];
+
+        if (isset($searchPattern)) {
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 20, $searchPattern, null, $orderBy);
+            $totalUserCount = $userList->getUsersCount();
+        }
+        else {
+            $paginationHandler = $userList->getPaginatedList('getAll', $page, 20, $orderBy);
+            $totalUserCount = $paginationHandler->getResult()->getTotalCount();
+        }
 
 		return $this->render( 'Admin/Users/list.html.twig',
 		                      [
-								'users' => $paginationHandler->getResult(),
-								'pageCount' => $paginationHandler->getPageCount(),
-								'userCount' => $paginationHandler->getResult()->getTotalCount(),
-								'currentPage' => $paginationHandler->getCurrentPage(),
-								'pageParameterName' => $this->pageParameterName,
-								'route' => 'admin_users'
+		                          'users' => $paginationHandler->getResult(),
+                                  'pageCount' => $paginationHandler->getPageCount(),
+                                  'resultCount' => $paginationHandler->getResult()->getTotalCount(),
+                                  'userCount' => $totalUserCount,
+                                  'currentPage' => $paginationHandler->getCurrentPage(),
+                                  'pageParameterName' => $this->pageParameterName,
+                                  'route' => 'admin_users',
+                                  'pattern' => $searchPattern
 		                      ]
 		);
 	}
@@ -246,9 +255,9 @@ class AdminController extends Controller
 	 */
 	public function ongoingOrdersPageAction(PaginationHandler $paginationHandler, $page): Response
 	{
-		$paginationHandler->setQuery('App:Order','getValidOrdersForAdmin')
+		$paginationHandler->setQuery('App:Order','getPlacedAndOngoingOrders', $this->getUser())
 						  ->setPage($page)
-						  ->setItemLimit(4)
+						  ->setItemLimit(8)
 						  ->addLastUsedPageUseCase('/ongoingorders/view')
 						  ->addLastUsedPageUseCase('/ongoingorders/finalize')
 						  ->paginate();
@@ -315,7 +324,6 @@ class AdminController extends Controller
     public function createEmployeeAction(Request $request,
                                          UserManager $userManager): Response
     {
-        $this->userManager = $userManager;
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
 
@@ -324,7 +332,7 @@ class AdminController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
-            $this->userManager->createUser($user);
+            $userManager->createUser($user);
 
             $this->addFlash(
                 'notice',
@@ -353,4 +361,99 @@ class AdminController extends Controller
 		);
 	}
 	//</editor-fold>
+
+
+    /**
+     * @Route ("/visitorsmail/{page}", name="admin_visitors_mail", defaults={"page"=1}, requirements={"page"="\d+"})
+     * @param PaginationHandler $paginationHandler
+     * @param                   $page
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \BadMethodCallException
+     * @throws \InvalidArgumentException
+     */
+    public function visitorsMailAction(PaginationHandler $paginationHandler, $page): Response
+    {
+        $paginationHandler->setQuery('App:Contact', 'getAll')
+            ->setPage($page)
+            ->setItemLimit(5)
+            ->paginate();
+
+        return $this->render('Admin/VisitorsMail/visitors_mail.html.twig',
+            [
+                'visitors_mail' => $paginationHandler->getResult(),
+                'pageCount' => $paginationHandler->getPageCount(),
+                'currentPage' => $paginationHandler->getCurrentPage(),
+                'pageParameterName' => 'page'
+            ]);
+    }
+
+    /**
+     * @Route("/visitorsmail/delete/{id}", name="visitors_mail_delete", methods="GET")
+     * @param Contact $contact
+     * @return Response
+     * @throws \LogicException
+     */
+    public function visitorsMailDelete(Contact $contact): Response
+    {
+        return $this->render('Admin/VisitorsMail/visitors_mail_delete.html.twig',
+            array('contact' => $contact));
+    }
+
+    /**
+     * @Route("/visitorsmail/delete/{id}", name="visitors_mail_delete_confirm", methods="DELETE")
+     * @param Request $request
+     * @param Contact $contact
+     * @return RedirectResponse
+     * @throws \LogicException
+     */
+    public function visitorsMailDeleteConfirmAction(Request $request, Contact $contact): RedirectResponse
+    {
+        if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($contact);
+            $em->flush();
+            $this->addFlash('notice', 'Contact deleted[PH]');
+        }
+        return $this->redirectToRoute('admin_visitors_mail');
+    }
+
+    /**
+     * @Route("/visitorsmail/reply/{id}", name="visitors_mail_reply")
+     * @param Request $request
+     * @param Contact $contact
+     * @param MessageManager $messageManager
+     * @return Response
+     * @throws \LogicException
+     */
+    public function visitorsMailReply(Request $request, Contact $contact, MessageManager $messageManager): Response
+    {
+        if($contact->getIsAnswered() === false) {
+            $form = $this->createForm(ReplyType::class);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $formData = $form->getData();
+                $messageTitle = $contact->getSubject();
+                $messageContent = $this->renderView(
+                    'Admin/VisitorsMail/visitors_mail_reply_template.html.twig',
+                    array('recipient_name' => $contact->getName(),
+                        'sender_name' => $formData['name'],
+                        'text' => $formData['comment']
+                    )
+                );
+                $recipient = $contact->getEmail();
+                $message = $messageManager->fetchOrCreateMessage($messageTitle, $messageContent);
+                $messageManager->sendMessageDirectlyToEmail($message, $recipient);
+                $contact->setIsAnswered(true);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($contact);
+                $em->flush();
+                $this->addFlash('notice', 'Form submitted[PH]');
+                return $this->redirectToRoute('admin_visitors_mail');
+            }
+            return $this->render('Admin/VisitorsMail/visitors_mail_reply.html.twig',
+                array('form' => $form->createView()));
+        }
+        return $this->redirectToRoute('admin_visitors_mail');
+    }
+
 }

@@ -1,0 +1,13 @@
+{% if order is defined %}
+    {% set progressPercentage = (order.progress.numberOfServicesCompleted * 100) / order.services.count%}
+    <tr class="clickable-row" data-href="{{ path('ongoing_order_show', {'id':order.id}) }}">
+        <td>{{ order.id }}</td>
+        <td>{% include 'Util/order_status.html.twig' with {order_status: order.status} %}</td>
+        <td>{{ order.user.firstName }} {{ order.user.lastName }}</td>
+        <td>{{ order.vehicle.make }} {{ order.vehicle.model }} {{ order.vehicle.plateNumber }}</td>
+        <td>{{ order.visitDate|date('Y/m/d') }}</td>
+        <td>{{ order.cost }}€</td>
+        <td>{{ order.progress.numberOfServicesCompleted }}/{{ order.services.count }}</td>
+        <td class="{{ order in app.user.watchedOrders ? 'watched-order-indicator' : '' }}"></td>
+    </tr>
+{% endif %}
