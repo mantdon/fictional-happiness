@@ -44,7 +44,7 @@
         </div>
         <hr>
         {% if order.progress.numberOfServicesCompleted == order.services.count%}
-            <a type="button" class="btn custom-button w-100" onclick="showModal('finalizeOrder')">Finalize</a>
+            <a class="btn custom-button w-100" onclick="showModal('finalizeOrder')">Finalize</a>
             {% include 'OngoingOrders/ongoing_orders_finalize.html.twig' %}
             <hr>
         {% endif %}
