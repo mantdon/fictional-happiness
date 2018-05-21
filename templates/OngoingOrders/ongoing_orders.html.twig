@@ -1,12 +1,24 @@
-<div class="orders-table scrollable-div" id="orders">
 {% if orders.count > 0 %}
-    <div class="list-group">
-        {% for order in orders %}
-            {% include "OngoingOrders/order_element.html.twig" with {
-                order: order
-            }%}
-        {% endfor %}
-    </div>
+    <div class="scrollable-horizontal">
+        <table class="table services-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>User</th>
+                    <th>Vehicle</th>
+                    <th>Date</th>
+                    <th>Cost</th>
+                    <th>Progress</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    {% include 'OngoingOrders/order_element.html.twig' with { order: order } %}
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     {% include 'Util/pagination.html.twig' with{
         pageOffset: 2
