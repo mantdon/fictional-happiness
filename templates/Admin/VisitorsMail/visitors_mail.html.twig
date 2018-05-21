@@ -14,35 +14,35 @@
             <h5 class="text-left m-3">{{ visitors_mail.count }} Lankytojų laiškai</h5>
         {% endif %}
         <div class="list-group visitors-mail-list">
-            {% for letter in visitors_mail  %}
+            {% for contact in visitors_mail  %}
                 <div class="list-group-item">
                     <div class="info">
                         <div class="name">
-                            {{ letter.name }}
+                            {{ contact.name }}
                         </div>
                         <div class="delete">
-                            <a href="{{ path('visitors_mail_delete', {('id'):letter.id }) }}">
+                            <a href="{{ path('visitors_mail_delete', {('id'):contact.id }) }}">
                                 <button class="btn custom-button">Ištrinti laišką</button>
                             </a>
                         </div>
                         <div class="reply">
-                            {% if letter.isAnswered == 1 %}
+                            {% if contact.isAnswered == 1 %}
                                 <div class="answered-letter">Atsakytas</div>
                             {% else %}
-                                <a href="{{ path('visitors_mail_reply', {('id'):letter.id }) }}">
+                                <a href="{{ path('visitors_mail_reply', {('id'):contact.id }) }}">
                                     <button class="btn custom-button">Atsakyti</button>
                                 </a>
                             {% endif %}
                         </div>
                         <div class="date">
-                            {{ letter.creationDate|date('Y/m/d - H:i') }}
+                            {{ contact.creationDate|date('Y/m/d - H:i') }}
                         </div>
                         <div class="subject">
-                            {{ letter.subject }}
+                            {{ contact.subject }}
                         </div>
                         <hr>
                         <div class="comment">
-                            {{ letter.comment }}
+                            {{ contact.comment }}
                         </div>
 
                     </div>

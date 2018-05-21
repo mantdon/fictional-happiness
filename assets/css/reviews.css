@@ -66,3 +66,18 @@ input.star-5:checked ~ label.star:before, div.rated-star:before {
 .reviews-list .content {
     clear: both;
 }
+@media only screen and (max-width: 600px) {
+    .reviews-list .stars, .reviews-list .info, .reviews-list .delete {
+        float: none;
+    }
+    .reviews-list .stars .star {
+        float: left;
+    }
+    .reviews-list .stars .star:first-child {
+        padding-left: 0;
+    }
+    .reviews-list .stars, .reviews-list .delete, .reviews-list .content {
+        margin-bottom: 10px;
+    }
+
+}
