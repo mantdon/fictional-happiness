@@ -5,13 +5,12 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Entity\Order;
 use App\Form\ReplyType;
+use App\Services\UserList;
 use App\Services\UserManager;
-use App\Entity\OrderProgressLine;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\ServiceType;
 use App\Services\MessageManager;
-use App\Services\OrderCreator;
 use App\Services\PaginationHandler;
 use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,29 +37,37 @@ class AdminController extends Controller
 	//<editor-fold desc="Users">
 	/**
 	 * @Route ("/users/{page}", name="admin_users", defaults={"page"=1}, requirements={"page"="\d+"})
-	 * @param PaginationHandler $paginationHandler
+     * @param Request $request
+	 * @param UserList $userList
 	 * @param                   $page
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 * @throws \BadMethodCallException
 	 * @throws \InvalidArgumentException
 	 */
-	public function usersPageAction(PaginationHandler $paginationHandler, $page): Response
+	public function usersPageAction(Request $request, UserList $userList, $page): Response
 	{
-		$paginationHandler->setQuery('App:User', 'getAll')
-						  ->setPage($page)
-						  ->setItemLimit(5)
-						  ->addLastUsedPageUseCase('/users/ban')
-						  ->addLastUsedPageUseCase('/users/unban')
-						  ->paginate();
+        $searchPattern = $request->get('pattern');
+        $orderBy = ['role' => 'ASC', 'id' => 'ASC'];
+
+        if (isset($searchPattern)) {
+            $paginationHandler = $userList->getPaginatedList('findByPattern', $page, 20, $searchPattern, null, $orderBy);
+            $totalUserCount = $userList->getUsersCount();
+        }
+        else {
+            $paginationHandler = $userList->getPaginatedList('getAll', $page, 20, $orderBy);
+            $totalUserCount = $paginationHandler->getResult()->getTotalCount();
+        }
 
 		return $this->render( 'Admin/Users/list.html.twig',
 		                      [
-								'users' => $paginationHandler->getResult(),
-								'pageCount' => $paginationHandler->getPageCount(),
-								'userCount' => $paginationHandler->getResult()->getTotalCount(),
-								'currentPage' => $paginationHandler->getCurrentPage(),
-								'pageParameterName' => $this->pageParameterName,
-								'route' => 'admin_users'
+		                          'users' => $paginationHandler->getResult(),
+                                  'pageCount' => $paginationHandler->getPageCount(),
+                                  'resultCount' => $paginationHandler->getResult()->getTotalCount(),
+                                  'userCount' => $totalUserCount,
+                                  'currentPage' => $paginationHandler->getCurrentPage(),
+                                  'pageParameterName' => $this->pageParameterName,
+                                  'route' => 'admin_users',
+                                  'pattern' => $searchPattern
 		                      ]
 		);
 	}
@@ -317,7 +324,6 @@ class AdminController extends Controller
     public function createEmployeeAction(Request $request,
                                          UserManager $userManager): Response
     {
-        $this->userManager = $userManager;
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
 
@@ -326,7 +332,7 @@ class AdminController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
-            $this->userManager->createUser($user);
+            $userManager->createUser($user);
 
             $this->addFlash(
                 'notice',
