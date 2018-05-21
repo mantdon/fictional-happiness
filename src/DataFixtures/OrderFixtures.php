@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Order;
+use App\Entity\User;
+use App\Services\MessageManager;
 use App\Services\OrderCreator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -12,6 +14,8 @@ use Faker\Factory;
 class OrderFixtures extends Fixture implements DependentFixtureInterface
 {
     private $orderCreator;
+    private $templating;
+    private $messageManager;
     private $orderTimes = [
         ['15:00'],
         ['9:00', '13:00'],
@@ -46,9 +50,11 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
         ['9:00', '11:00', '15:00'],
     ];
 
-    public function __construct(OrderCreator $orderCreator)
+    public function __construct(OrderCreator $orderCreator, \Twig_Environment $templating, MessageManager $messageManager)
     {
         $this->orderCreator = $orderCreator;
+        $this->templating = $templating;
+        $this->messageManager = $messageManager;
     }
 
     public function load(ObjectManager $manager)
@@ -74,6 +80,7 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
         $visitDate = $faker->dateTimeInInterval('-3 months', '+5 months');
 
         $order = $this->orderCreator->createOrder($vehicle, $serviceIds, $visitDate->format('Y-m-d H:i'), $user);
+        $this->sendOrderCreationMessage($order);
 
         return $order;
     }
@@ -107,6 +114,20 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
                 $count++;
             }
         }
+    }
+
+    private function sendOrderCreationMessage(Order $order)
+    {
+        $messageTitle = 'Užsakymas pateiktas';
+        $messageBody = $this->templating->render('Email/order_placed.html.twig', ['order' => $order]);
+
+        $this->sendMessage($messageTitle, $messageBody, $order->getUser());
+    }
+
+    private function sendMessage(string $messageTitle, $messageBody, User $user)
+    {
+        $message = $this->messageManager->fetchOrCreateMessage($messageTitle, $messageBody);
+        $this->messageManager->sendMessageToProfile($message, $user);
     }
 
     public function getDependencies()
