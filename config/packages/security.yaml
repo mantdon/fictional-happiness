@@ -39,6 +39,7 @@ security:
         # pages via URL.
         - { path: ^/login, allow_if: "!is_fully_authenticated()"}
         - { path: ^/register,  allow_if: "!is_fully_authenticated()" }
+        - { path: ^/reset,  allow_if: "!is_fully_authenticated()" }
 
         # Prevent unauthenticated users from accessing certain pages
         - { path: ^/user, roles: ROLE_USER }

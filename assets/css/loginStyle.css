@@ -76,7 +76,25 @@
 
     box-shadow: none !important;
 }
+
+.no-bottom-margin {
+    margin-bottom: 0 !important;
+}
 /*</editor-fold>*/
+
+/*<editor-fold desc="reset-password">*/
+.reset-password-link {
+    color: white;
+    float: right;
+    font-size: small;
+    margin-bottom: 15px;
+}
+
+.reset-password-link:hover {
+    text-decoration: none;
+    color: #c69c72;
+}
+/*</edit-fold>*/
 
 /*<editor-fold desc="Checkbox">*/
 .login-box input[type="checkbox"]{

@@ -14,7 +14,8 @@
             <label for="username">Elektroninis paštas:</label>
             <input class= "form-control" type="text" id="username" name="_username" value="{{ last_username }}">
             <label for="password">Slaptažodis:</label>
-            <input class= "form-control" type="password" id="password" name="_password">
+            <input class= "form-control no-bottom-margin" type="password" id="password" name="_password">
+            <a class="reset-password-link" href="{{ path('reset_password') }}">Pamiršau slaptažodį</a>
             <label for="remember_me">Atsiminti mane:</label>
             <input type="checkbox" id="remember_me" name="_remember_me" checked>
             <br>

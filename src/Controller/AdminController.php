@@ -333,6 +333,7 @@ class AdminController extends Controller
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
             $userManager->createUser($user);
+            $this->userManager->saveUser($user);
 
             $this->addFlash(
                 'notice',

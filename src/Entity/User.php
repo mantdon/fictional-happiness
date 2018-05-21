@@ -16,7 +16,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity("email", message="Pasirinktas elektroninis paštas jau užregistruotas")
  */
 class User implements AdvancedUserInterface, \Serializable
-{	/**
+{
+	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -106,6 +107,11 @@ class User implements AdvancedUserInterface, \Serializable
     private $orders;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PasswordReset", mappedBy="user")
+     */
+    private $passwordResets;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Order", mappedBy="watchingUsers")
      * @ORM\OrderBy({"status" = "ASC"})
      */
@@ -115,6 +121,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->vehicles = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->passwordResets = new ArrayCollection();
         $this->watchedOrders = new ArrayCollection();
         $this->reviews = new ArrayCollection();
     }
