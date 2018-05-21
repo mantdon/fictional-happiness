@@ -79,15 +79,15 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-custom" aria-labelledby="userMenuDropdown">
                     {% if is_granted('ROLE_USER') %}
-                        <a class="dropdown-item" href="{{ path('user_home') }}">Profile</a>
-                        <a class="dropdown-item" href="{{ path('order') }}">Register for service</a>
+                        <a class="dropdown-item" href="{{ path('user_home') }}">Profilis</a>
+                        <a class="dropdown-item" href="{{ path('order') }}">Užsiregistruoti servisui</a>
                     {% elseif is_granted('ROLE_ADMIN') %}
-                        <a class="dropdown-item" href="{{ path('admin_home') }}">Admin panel</a>
+                        <a class="dropdown-item" href="{{ path('admin_home') }}">Administratoriaus zona</a>
                     {% elseif is_granted('ROLE_EMPLOYEE') %}
-                        <a class="dropdown-item" href="{{ path('employee_home') }}">Employee panel</a>
+                        <a class="dropdown-item" href="{{ path('employee_home') }}">Darbuotojo zona</a>
                     {% endif %}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}">Atsijungti</a>
                 </div>
             </div>
         </li>
