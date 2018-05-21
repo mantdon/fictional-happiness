@@ -31,14 +31,9 @@ class ServiceRepository extends ServiceEntityRepository
 
 	public function findByPattern($pattern)
 	{
-		if('' === $pattern)
-		{
-			return $this->findBy([]);
-		}
-		$qb = $this->createQueryBuilder('a')
+        return $this->createQueryBuilder('a')
 			->where('a.name LIKE :name')
 			->setParameter('name', '%'. $pattern .'%')
 			->getQuery();
-		return $qb->getResult();
 	}
 }
