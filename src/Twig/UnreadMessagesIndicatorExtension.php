@@ -23,15 +23,13 @@ class UnreadMessagesIndicatorExtension extends AbstractExtension
     public function getFunctions()
     {
         return array(
-            new TwigFunction('hasUnreadMessages', array($this, 'hasUnreadMessages')),
+            new TwigFunction('unreadMessagesCount', array($this, 'unreadMessagesCount')),
         );
     }
 
-    public function hasUnreadMessages()
+    public function unreadMessagesCount()
     {
         $user = $this->tokenStorage->getToken()->getUser();
-        $unreadMessagesCount = $this->messageManager->getUsersUnreadMessagesCount($user);
-
-        return $unreadMessagesCount > 0;
+        return $this->messageManager->getUsersUnreadMessagesCount($user);
     }
 }
