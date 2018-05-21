@@ -140,7 +140,7 @@
 .notification_dot{
     color: #433e3f;
     top: -6px;
-    left: 80px;
+    right: -6px;
     position: absolute;
     z-index: 1000;
     display: block;
