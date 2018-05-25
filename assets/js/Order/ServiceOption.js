@@ -17,7 +17,7 @@ export default class ServiceOption extends React.Component {
     render(){
        return <div className={'Option'} onClick={this.clickHandle}>
                     <div className={'serviceName'}> {this.props.service.name} </div>
-                    <div className={'servicePrice'}>{this.props.service.price}</div>
+                    <div className={'servicePrice'}>{this.props.service.price} €</div>
                 </div>;
     }
 }
