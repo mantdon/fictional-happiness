@@ -144,7 +144,7 @@ class AdminController extends Controller
 	{
 		$paginationHandler->setQuery('App:Service', 'getAll')
 						  ->setPage($page)
-						  ->setItemLimit(3)
+						  ->setItemLimit(15)
 						  ->addLastUsedPageUseCase('services/edit')
 						  ->addLastUsedPageUseCase('services/delete')
 						  ->paginate();
@@ -332,8 +332,7 @@ class AdminController extends Controller
         if($form->isSubmitted() && $form->isValid()) {
             $user->setRole('ROLE_EMPLOYEE');
             $user->setRegistrationDate(new \DateTime());
-            $userManager->createUser($user);
-            $this->userManager->saveUser($user);
+            $userManager->saveUser($user);
 
             $this->addFlash(
                 'notice',
