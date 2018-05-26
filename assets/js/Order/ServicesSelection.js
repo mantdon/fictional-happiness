@@ -29,7 +29,7 @@ export default class ServicesSelection extends React.Component {
 
     fetchServiceList(pattern)
     {
-        fetch("/services/search", {
+        fetch("/services/get", {
             method: "POST",
             body: JSON.stringify({
                 pattern: pattern

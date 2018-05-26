@@ -16,9 +16,9 @@ class ServiceFetcher
         $this->em = $em;
     }
 
-    public function findByPattern($pattern)
+    public function findAll(): array
     {
-        $services= $this->em->getRepository($this->repositoryName)->findByPattern($pattern);
+        $services= $this->em->getRepository($this->repositoryName)->findAll();
         return $this->toSerializableArray($services);
     }
 

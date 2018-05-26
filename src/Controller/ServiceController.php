@@ -76,4 +76,16 @@ class ServiceController extends Controller
             'key' => $key
         ));
 	}
+
+	/**
+     * @Route("/get", name = "order_get_services")
+     * @param ServiceFetcher $serviceFetcher
+     * @param Request        $request
+     * @return JsonResponse
+     */
+	public function getAllServices(ServiceFetcher $serviceFetcher, Request $request)
+    {
+        $services = $serviceFetcher->findAll();
+        return new JsonResponse($services);
+    }
 }
